@@ -1,0 +1,94 @@
+--- 
+title: "Supplementary Information for: \\newline\\newline The sclerite bearing ancestry of Lophotrochozoa"
+author: "Martin R. Smith"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: 
+  bookdown::pdf_book:
+    includes:
+      in_header: preamble.tex
+    keep_tex: true
+documentclass: book
+classoption: openany
+bibliography: [References.bib]
+csl: http://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
+biblio-style: apalike-doi
+link-citations: yes
+github-repo: ms609/halkieria
+description: "Supplementary materials, including details of phylogenetic analysis"
+---
+
+# Supplementary Text {-}
+
+This document comtains supplementary material to @SmithInPrep.  `r if (knitr::is_latex_output()) 'It is best viewed in HTML format at [ms609.github.io/halkieria](https://ms609.github.io/halkieria/).'`
+
+It describes the [morphological dataset](#dataset) and the results of tree searches using [Fitch parsimony](#fitch) and a [Bayesian method](#bayesian): approaches that are subject to errors resulting from logically incoherent treatment of inapplicable data [@Maddison1993].
+We also present the  [results](#treesearch) of tree searches with the algorithm described by @Brazeau2018, which reduces error due to inapplicable data in a parsimony setting. Finally, we document how each character is parsimoniously [reconstructed](#reconstructions) on `r if(knitr::is_html_output()) "optimal trees" else "an optimal tree"`.
+
+Supplementary [figures](#figures) and [tables](#table) appear after the text.
+
+```{r setup-index, include=FALSE, message=FALSE}
+Sys.setlocale('LC_ALL','English_United Kingdom.1252');
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library('ape'); library('phangorn'); library('TreeSearch');
+if (!require('Inapp')) devtools::install_github('TGuillerme/Inapp')
+library('Inapp')
+if (!require('MorphoBank')) devtools::install_github('ms609/MorphoBank')
+library('MorphoBank')
+
+source('bibFunctions.R')
+source('plotFunctions.R')
+source('treeFunctions.R')
+source('italicize.R')
+```
+
+```{R setup-more, include=FALSE, message=FALSE}
+options(GitHubUser='ms609', GitHubRepo='halkieria', 
+        MorphoBankProject=3262, ProjectName='Scleritomorph_Phylogeny',
+        svgHeight=520, svgWidth=682)
+tntFiles <- list.files('TNT/', pattern='xpiwe.*\\.tre', full=TRUE)
+tntKs <- as.double(gsub(".*xpiwe([\\d\\.]+)\\..*", "\\1", tntFiles, perl=TRUE))
+tntFiles <- tntFiles[order(tntKs)]
+tntFile <- gsub(".*(mbank_.*\\.tnt).*", "\\1", readLines(tntFiles[1], n=1))
+nexusFile <- MostRecentNexus()
+my_data <- ReadAsPhyDat(nexusFile)
+#ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
+#                  'Probactrotheca') # Also manually update tnt.run using `taxcode-`
+ignored_taxa <- character(0)
+my_data[ignored_taxa] <- NULL
+
+# my_data contains an inapplicable state that we should convert to ambiguous for 
+# standard fitch, for CI etc.
+iw_data <- PrepareDataIW(my_data)
+fitch_data <- my_data
+cont <- attr(fitch_data, 'contrast')
+cont[cont[, '-'] == 1, ] <- 1
+colnames(cont)[colnames(cont) == '-'] <- '?'
+attr(fitch_data, 'contrast') <- cont
+attr(fitch_data, 'allLevels')[attr(fitch_data, 'allLevels') == '-'] <- '?'
+attr(fitch_data, 'levels')[attr(fitch_data, 'levels') == '-'] <- '?'
+fitch_data <- PrepareDataIW(fitch_data)
+
+my_chars <- ReadCharacters(nexusFile)
+char_notes <- ReadNotes(nexusFile)
+my_states <- attr(my_chars, 'state.labels')
+my_chars <- my_chars[!(rownames(my_chars) %in% ignored_taxa), ]
+
+neomorphic <- vapply(my_states, IsNeomorphic, logical(1))
+
+kValues <- c(3, 4.5, 7, 10.5, 16, 24)
+
+powersOf2 <- 2^(seq_along(my_data) - 1) # Needed for GetSplits etc
+
+outgroup <- 'Namacalathus'
+outgroup <- 'Loxosomella'
+rootingTips <- c('Tonicella', 'Serpula', 'Loxosomella')
+```
+
+(ref:first-panels) at _k_ = `r kValues[1]` and `r kValues[2]`.
+
+(ref:second-panels) at _k_ = `r kValues[3]` and `r kValues[4]`.
+
+(ref:third-panels) at _k_ = `r kValues[5]` and `r kValues[6]`.
+
