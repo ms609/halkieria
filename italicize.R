@@ -1,0 +1,35 @@
+Italicize <- function (string) {
+  string <- gsub(paste0("\\b(",
+                        paste0(gsub("_", "|", fixed = TRUE,
+                                    c(taxa_names,
+                                      'Bactrotheca', 'Bethia', 'Bowerbankia',
+                                      'Calloria',
+                                      'Disoma', 'Discinisca',
+                                      'Eichwaldia', 'Electra', 'Enchytraeus',
+                                      'Equisetum', 'Eoorthis', 'Fredericella',
+                                      'Galeolaria', 'Glottidia', 'Gompholites',
+                                      'Gryphus',
+                                      'Hadrotreta', 'Harmothoe', 'Hydroides',
+                                      'Hyolithes',
+                                      'Ischnochiton', 'Kraussina', 'Lingulella',
+                                      'Lochkothele', 'Loxosoma', 'Loxosomatoides',
+                                      'Magelona', 'Membranipora', 'Mopalia',
+                                      'Nereis', 'Neocrania', 'Notosaria',
+                                      'Neoancistrocrania', 'Oikozetetes',
+                                      'Paracraniops', 'Paramicrocornus',
+                                      'Phascolion', 'Phoronopsis', 'Recilites',
+                                      'Scolelepis',
+                                      'Terebratalia', 'Themiste', 'Tubulipora',
+
+                                      'atkinsae', 'comleyensis', 'cyrene', 'decaius',
+                                      'deleta', 'minuta', 'murmanica',
+                                      'schucherti', 'tenuis', 'worsleyi',
+
+                                      'vascula', 'genitalia','lateralia',
+                                      'media', 'myaria', 'terminalia',
+                                      'levator ani',
+                                      'et al\\.', 'et al', 'sensu')),
+                               collapse='|'),
+                        ")\\b"), "_\\1_", string, perl=TRUE, ignore.case=FALSE)
+  gsub("\\b([A-Z]\\.) _([a-z])", "_\\1 \\2", string, perl=TRUE)
+}

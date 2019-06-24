@@ -1,0 +1,1146 @@
+--- 
+title: "Supplementary Information for: \\newline\\newline The sclerite bearing ancestry of Lophotrochozoa"
+author: "Martin R. Smith"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: 
+  bookdown::pdf_book:
+    includes:
+      in_header: preamble.tex
+    keep_tex: true
+documentclass: book
+classoption: openany
+bibliography: [References.bib]
+csl: http://raw.githubusercontent.com/citation-style-language/styles/master/apa-old-doi-prefix.csl
+biblio-style: apalike-doi
+link-citations: yes
+github-repo: ms609/halkieria
+description: "Supplementary materials, including details of phylogenetic analysis"
+---
+
+# Supplementary Text {-}
+
+This document comtains supplementary material to @SmithInPrep.  `r if (knitr::is_latex_output()) 'It is best viewed in HTML format at [ms609.github.io/halkieria](https://ms609.github.io/halkieria/).'`
+
+It describes the [morphological dataset](#dataset) and the results of tree searches using [Fitch parsimony](#fitch) and a [Bayesian method](#bayesian): approaches that are subject to errors resulting from logically incoherent treatment of inapplicable data [@Maddison1993].
+We also present the  [results](#treesearch) of tree searches with the algorithm described by @Brazeau2018, which reduces error due to inapplicable data in a parsimony setting. Finally, we document how each character is parsimoniously [reconstructed](#reconstructions) on `r if(knitr::is_html_output()) "optimal trees" else "an optimal tree"`.
+
+Supplementary [figures](#figures) and [tables](#table) appear after the text.
+
+```{r setup-index, include=FALSE, message=FALSE}
+Sys.setlocale('LC_ALL','English_United Kingdom.1252');
+set.seed(0)
+knitr::opts_chunk$set(echo = TRUE)
+library('ape'); library('phangorn'); library('TreeSearch');
+if (!require('Inapp')) devtools::install_github('TGuillerme/Inapp')
+library('Inapp')
+if (!require('MorphoBank')) devtools::install_github('ms609/MorphoBank')
+library('MorphoBank')
+
+source('bibFunctions.R')
+source('plotFunctions.R')
+source('treeFunctions.R')
+source('italicize.R')
+```
+```{R Morphobank bibliography, echo=FALSE, message=FALSE}
+mbBib <- list.files(pattern='morphobank_bibliography.*\\.txt', full.names=TRUE)
+mbRecent <- mbBib[which.max(file.mtime(mbBib))]
+refs <- trimws(enc2utf8(as.matrix(read.delim(mbRecent, sep="\t", header=TRUE, skip=1, row.names=NULL))))
+
+#bibFile <- file("MorphoBank.bib", encoding='UTF-8')
+#writeLines(apply(refs, 1, BibEntry), bibFile)
+#close(bibFile)
+refKeys <- apply(refs, 1, RefKey) # Needed before ReadNotes
+```
+```{R setup-more, include=FALSE, message=FALSE}
+options(GitHubUser='ms609', GitHubRepo='hyoliths', 
+        MorphoBankProject=2800, ProjectName='Brachiopod_Phylogeny',
+        svgHeight=520, svgWidth=682)
+tntFiles <- list.files('TNT/', pattern='xpiwe.*\\.tre', full=TRUE)
+tntKs <- as.double(gsub(".*xpiwe([\\d\\.]+)\\..*", "\\1", tntFiles, perl=TRUE))
+tntFiles <- tntFiles[order(tntKs)]
+tntFile <- gsub(".*(mbank_.*\\.tnt).*", "\\1", readLines(tntFiles[1], n=1))
+nexusFile <- MostRecentNexus()
+my_data <- ReadAsPhyDat(nexusFile)
+#ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
+#                  'Probactrotheca') # Also manually update tnt.run using `taxcode-`
+ignored_taxa <- character(0)
+my_data[ignored_taxa] <- NULL
+
+# my_data contains an inapplicable state that we should convert to ambiguous for 
+# standard fitch, for CI etc.
+iw_data <- PrepareDataIW(my_data)
+fitch_data <- my_data
+cont <- attr(fitch_data, 'contrast')
+cont[cont[, '-'] == 1, ] <- 1
+colnames(cont)[colnames(cont) == '-'] <- '?'
+attr(fitch_data, 'contrast') <- cont
+attr(fitch_data, 'allLevels')[attr(fitch_data, 'allLevels') == '-'] <- '?'
+attr(fitch_data, 'levels')[attr(fitch_data, 'levels') == '-'] <- '?'
+fitch_data <- PrepareDataIW(fitch_data)
+
+my_chars <- ReadCharacters(nexusFile)
+char_notes <- ReadNotes(nexusFile)
+my_states <- attr(my_chars, 'state.labels')
+my_chars <- my_chars[!(rownames(my_chars) %in% ignored_taxa), ]
+
+neomorphic <- vapply(my_states, IsNeomorphic, logical(1))
+
+kValues <- c(3, 4.5, 7, 10.5, 16, 24)
+
+powersOf2 <- 2^(seq_along(my_data) - 1) # Needed for GetSplits etc
+
+outgroup <- 'Namacalathus'
+outgroup <- 'Loxosomella'
+rootingTips <- c('Tonicella', 'Serpula', 'Loxosomella')
+
+# Copied from latest GitHub version of TreeSearch
+RootTree <- function (tree, outgroupTips) {
+  tipLabel <- tree$tip.label
+  tipNos <- which(tipLabel %in% outgroupTips)
+  ancestry <- unlist(Ancestors(tree, tipNos))
+  ancestryTable <- table(ancestry)
+  lineage <- as.integer(names(ancestryTable))
+  lca <- max(lineage[ancestryTable == length(outgroupTips)])
+  rootNode <- length(tipLabel) + 1L
+  if (lca == rootNode) {
+    lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
+  }
+  Renumber(root(tree, Descendants(tree, lca)[[1]], resolve.root = TRUE))
+}
+
+```
+
+(ref:first-panels) at _k_ = `r kValues[1]` and `r kValues[2]`.
+
+(ref:second-panels) at _k_ = `r kValues[3]` and `r kValues[4]`.
+
+(ref:third-panels) at _k_ = `r kValues[5]` and `r kValues[6]`.
+
+
+<!--chapter:end:index.Rmd-->
+
+---
+title: "Phylogenetic dataset"
+author: "Martin R. Smith"
+date: "`r Sys.Date()`"
+---
+
+<!--\SItext-->
+# Phylogenetic dataset {#dataset}
+
+Analysis was performed on a new matrix of `r length(names(my_data))` lophotrochozoan taxa, coded for `r sum(attr(my_data, 'weight'))` morphological characters (`r sum(neomorphic)` neomorphic, `r sum(!neomorphic)` transformational).
+The matrix can be viewed interactively at Morphobank `r MorphoLink(checkAccess=FALSE)`;
+a static version can be downloaded directly `r if (knitr::is_html_output()) paste0("in ", GitLink(gsub('^\\./', '', nexusFile), 'Nexus'), " or ", GitLink(tntFile, 'TNT'), " format") else paste0(": \n\n - ", GitLink(gsub('^\\./', '', nexusFile)), " (Nexus format)\n\n - ", GitLink(tntFile), " (TNT format)")`.
+
+
+Taxa include sipunculans and molluscs, which have previously been interpreted as having affinities with hyoliths.   Other lophotrochozoan groups help to constrain the outgroup topology, and a diversity of brachiozoans helps to resolve the position of hyoliths within this group.
+
+Characters are coded following the [recommendations](https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/) of @Brazeau2018:
+
+- We have employed reductive coding [@Wilkinson1995], using a distinct state to mark character inapplicability. Character specifications follow the structural syntax of @Sereno2007 in order to highlight ontological dependence between characters and emphasize the structure of the dataset.
+
+- We have distinguished between neomorphic and transformational characters [_sensu_ @Sereno2007] by reserving the token `0` to refer to the absence of a neomorphic (i.e. presence/absence) character.  The states of transformational characters (i.e. characters that describe a property of a feature) are represented by the tokens `1`, `2`, `3`, ...
+
+- We code the absence of neomorphic ontologically dependent characters [_sensu_ @Vogt2017] as absence, rather than inapplicability.
+
+
+The complete dataset comprises `r sum(!my_chars %in% c('-', '?'))` character codings, plus `r sum(my_chars == '-')` inapplicable codings.  (The amount and quality of data that _is_ coded is more instructive than the number of cells that are ambiguous [@Wiens1998;@Wiens2003], which, for completeness, is `r sum(my_chars == '?')`). Of the `r ncol(my_chars)` characters, the number that were coded with an applicable token for each taxon is:
+
+```{r Coded per taxon, echo=FALSE, asis=TRUE}
+coded <- apply(my_chars, 1, function (x) sum(!(x %in% c('?', '-'))))
+coded <- coded[order(names(coded))]
+columns <- 3
+roundLength <- ceiling(length(coded) / columns) * columns
+padding <- rep('', roundLength - length(coded))
+colStart <- ceiling(seq(1, roundLength + 1, len=columns + 1))[-(columns+1)]
+colEnd <- c(colStart[-1] - 1, length(coded))
+codeMat <- matrix('', ncol=columns * 2, nrow=colEnd[1])
+codeMat[, seq_len(columns) * 2 - 1] <-
+  c(paste0('_', gsub('_', ' ', names(coded), fixed=TRUE), '_'), padding)
+codeMat[, seq_len(columns) * 2] <- c(paste0(coded, "   "), padding)
+
+knitr::kable(codeMat, col.names=rep('', columns * 2))
+```
+
+
+<!--chapter:end:11_Dataset.Rmd-->
+
+---
+title: "Standard (Fitch) parsimony results"
+author: "Martin R. Smith"
+date: "`r Sys.Date()`"
+---
+
+# Fitch parsimony {#fitch}
+
+Parsimony search with the @Fitch1971 algorithm was conducted in TNT v1.5 [@Goloboff2016] using Ratchet and tree drifting heuristics [@Goloboff1999;@Nixon1999], repeating the search until the optimal score had been hit by 1500 independent searches:
+
+> xmult:rat25 drift25 hits 1500 level 4 chklevel 5;
+
+Searches were conducted under equal weights and results saved to file:
+
+> piwe-; xmult; <span class="comment">/&#42; Conduct search with equal weighting &#42;/</span>
+>
+> tsav &#42;TNT/ew.tre;sav;tsav/; <span class="comment">/&#42; Save results to file &#42;/</span>
+>
+
+Node support was estimated by calculating the proportion of jackknife replicates in which each group occurred, using 5000 symmetric resampling iterations, following the recommendations of @Kopuchian2010 and @Simmons2011.
+
+> var: nt; <span class="comment">/&#42; Define a variable to track tree address &#42;/</span>
+>
+> nelsen *; <span class="comment">/&#42; Generate strict consensus tree &#42;/</span>
+>
+> set nt ntrees; ttag=; <span class="comment">/&#42; Prepare for resampling &#42;/</span>
+>
+> resample=sym 5000 frequency from &#39;nt&#39;; <span class="comment">/&#42; Symmetric resampling, counting frequencies &#42;/</span>
+>
+> log TNT/ew.sym; ttag/; log/; <span class="comment">/&#42; Write results to log &#42;/</span>
+>
+> keep 0; ttag-; hold 10000; <span class="comment">/&#42; Clear memory &#42;/</span>
+
+Further searches were conducted under extended implied weighting [@Goloboff1997;@Goloboff2014], under the concavity constants `r paste(kValues[-length(kValues)], collapse=', ')` and `r kValues[length(kValues)]`:
+
+> xpiwe=; <span class="comment">/&#42; Enable extended implied weighting &#42;/</span>
+>
+> piwe=3; xmult; <span class="comment">/&#42; Conduct analysis at k = 3 &#42;/</span>
+>
+> tsav &#42;TNT/xpiwe3.tre; sav; tsav/; <span class="comment">/&#42; Save results to file &#42;/</span>
+>
+> nelsen *; set nt ntrees; ttag=; <span class="comment">/&#42; Prepare for resampling &#42;/</span>
+>
+> resample=frequency from &#39;nt&#39;; <span class="comment">/&#42; Symmetric resampling &#42;/</span>
+>
+> log TNT/xpiwe3.sym; ttag/; log/; <span class="comment">/&#42; Write results to log &#42;/</span>
+> 
+> keep 0; ttag-; hold 10000; <span class="comment">/&#42; Clear memory &#42;/</span>
+>
+> <span class="comment">/&#42; Repeat this block for each value of k &#42;/</span>
+
+Results can be replicated by:
+
+- Downloading `r GitLink(tntFile, 'the data in TNT format', raw=TRUE)`.
+- Saving `r GitLink('tnt.run', 'the script above', raw=TRUE)` to the same directory, with the filename `tnt.run`.
+- Opening TNT, typing `piwe=` before you load the downloaded dataset (to enable extended implied weighting), then typing `tnt` into the command box to run the script.
+
+We acknowledge the Willi Hennig Society for their sponsorship of the TNT software.
+
+## Results
+
+```{R tnt-results-init, echo=FALSE}
+tnTrees <- lapply(tntFiles, ReadTntTree, relativePath='.', keepEnd=1)
+tnTrees <- lapply(tnTrees, as.multiPhylo)
+tnTrees <- lapply(tnTrees, function (x) lapply(x, drop.tip, ignored_taxa))
+tnConsensi <- lapply(tnTrees, consensus)
+```
+
+Optimal trees can be downloaded in TNT Newick format from `r GitLink('TNT', raw=FALSE)`.
+
+(ref:tnt-maj-cons) Majority-rule consensus of all trees that are optimal under implied weights.
+
+(ref:tnt-node-freq) Node labels denote, where less than 100%, the frequency of each node in the set of all optimal trees.
+
+(ref:tnt-jacks) Nodes labelled with jackknife frequencies (%).
+
+```{R tnt-iw-overview, echo=FALSE, fig.cap="(ref:tnt-maj-cons) (ref:tnt-node-freq)"}
+omit <- c("Micrina", "Micromitra",
+          "Longtancunella_chengjiangensis",# "Yuganotheca_elegans",
+          "Salanygolina", "Askepasma_toddense")#, "Tomteluva_perturbata")
+#majCon <- RootTree(ConsensusWithout(tnConsensi, omit, p=0.5), rootingTips)
+omit <- character(0)
+majCon <- RootTree(consensus(tnConsensi, p=0.5), rootingTips)
+ColPlot(majCon)
+#ColMissing(omit)
+
+source('treeFunctions.R')
+tnFlattened <- list()
+for (i in seq_along(tnTrees)) {
+  tnFlattened <- c(tnFlattened, tnTrees[[i]])
+}
+tnFlattened <- lapply(tnFlattened, drop.tip, omit)
+tnSplits <- ForestSplits(tnFlattened)
+
+supporters <- SplitFrequency(majCon, tnSplits)
+nodelabels(paste0("\n\n", signif(supporters / length(tnFlattened), 2)),
+           col=SupportColour(round(supporters / length(tnFlattened), 2), show1=FALSE),
+           adj=0, pos=2, frame='none', cex=0.75)
+```
+
+(ref:tnt-iw-results) Strict consensus of all optimal trees under Fitch parsimony with implied weighting
+
+
+```{R tnt-iw-indiv-1, fig.wid=7.1, fig.height=8, fig.cap="(ref:tnt-iw-results) (ref:first-panels) (ref:tnt-jacks)", echo=FALSE}
+par(mfrow=c(1, 2))
+PlotPanel(tnConsensi, 1, './TNT/xpiwe3.sym')
+PlotPanel(tnConsensi, 2, './TNT/xpiwe4.5.sym')
+```
+
+```{R tnt-iw-indiv-2, fig.width=7.1, fig.height=8, fig.cap="(ref:tnt-iw-results), (ref:second-panels)", echo=FALSE}
+par(mfrow=c(1, 2))
+PlotPanel(tnConsensi, 3, './TNT/xpiwe7.sym')
+PlotPanel(tnConsensi, 4, './TNT/xpiwe10.5.sym')
+```
+```{R tnt-iw-indiv-3, fig.width=7.1, fig.height=8, fig.cap="(ref:tnt-iw-results), (ref:third-panels)", echo=FALSE}
+par(mfrow=c(1, 2))
+PlotPanel(tnConsensi, 5, './TNT/xpiwe16.sym')
+PlotPanel(tnConsensi, 6, './TNT/xpiwe24.sym')
+```
+
+<!--### Consensus of all IW trees, without wildcards
+
+Even with the anomalous results at $k = 4.5$, the essential relationships between most taxa are recovered under all weighting situations:
+
+```{R tnt-pruned-consensus, echo=FALSE, fig.cap="TNT implied weights consensus"}
+#omit <- c('Clupeafumosus_socialis', 'Micrina', 'Mickwitzia_muralensis', 'Paterimitra', 'Heliomedusa_orienta', 'Tomteluva_perturbata', 'Yuganotheca_elegans', 'Salanygolina', 'Gasconsia', 'Mummpikia_nuda')
+omit <- c("none")
+ColPlot(ConsensusWithout(tnConsensi, omit))
+ColMissing(omit)
+```
+-->
+\newpage
+
+(ref:tnt-ew-cons) Consensus of all trees that are optimal under equally weighted Fitch parsimony.  
+
+```{R tnt-ew-consensus, echo=FALSE, fig.cap="(ref:tnt-ew-cons) (ref:tnt-jacks)"}
+jacks <- GetJacks('./TNT/ew.sym')
+ColPlot(jacks$tree)
+nodeScores <- as.integer(jacks$freq)
+nodelabels(paste0(c('', nodeScores), "\n"),
+           col=c('black', SupportColour(nodeScores / 200L + 0.5, show1=FALSE)),
+           adj=0, pos=2, frame='none', cex=0.75)
+
+#omit <- c("Micrina", "Mickwitzia_muralensis")
+#ColPlot(RootTree(ConsensusWithout(tntEwTrees, omit), rootingTips))
+#ColMissing(omit)
+```
+
+<!--chapter:end:12_TNT.Rmd-->
+
+---
+title: "TreeSearch results"
+author: "Martin R. Smith"
+---
+
+# Corrected parsimony {#treesearch}
+
+The phylogenetic dataset contains a considerable proportion of inapplicable codings (`r sum(my_chars == '-')`, = `r round(100 * sum(my_chars == '-') / sum(my_chars != '?'), 1)`% of `r sum(my_chars != '?')` non-ambiguous tokens;  `r round(sum(my_chars == '-') / length(my_chars), 3) * 100`% of r `r length(my_chars)` total cells), which are known to introduce error and bias to phylogenetic reconstruction when the Fitch algorithm is employed [@Maddison1993;@Brazeau2018].  As such, we used the R package _TreeSearch_ v0.1.2 [@Smith2018TreeSearch] to conduct phylogenetic tree search with a tree-scoring algorithm that avoids logically impossible character transformations when handling inapplicable data [@Brazeau2018], implemented in the _MorphyLib_ C library [@Brazeau2017Morphylib].
+
+## Search parameters
+
+Heuristic searches were conducted using the parsimony ratchet [@Nixon1999] under equal and implied weights [@Goloboff1997].  The consensus tree presented in the main manuscript represents a strict consensus of all trees that are most parsimonious under one or more of the concavity constants (_k_) `r paste(kValues[-length(kValues)], collapse=', ')` and `r kValues[length(kValues)]`, an approach that has been shown to produce higher accuracy (i.e. more nodes and quartets resolved correctly) than equal weights at any given level of precision [@Smith2017].
+
+## Analysis 
+
+The R commands used to conduct the analysis are reproduced below.
+The results can most readily be replicated using the [R markdown files](https://github.com/ms609/hyoliths/) used to generate these pages:
+in Rstudio, run `r GitLink("index.Rmd", "index.Rmd")`, then run each block in 
+`r GitLink("13_TreeSearch.Rmd", "TreeSearch.Rmd")`.  The complete analysis will take several hours.
+
+### Initialize and load data
+
+```{r treesearch-load-morphoBank, echo=TRUE, eval=FALSE}
+# Load data from locally downloaded copy of MorphoBank matrix
+my_data <- ReadAsPhyDat(nexusFile)
+my_data[ignored_taxa] <- NULL
+iw_data <- PrepareDataIW(my_data)
+```
+
+### Generate starting tree
+
+Start by quickly rearranging a neighbour-joining tree, rooted on the outgroup.
+
+```{R treesearch-starting-tree, echo=TRUE}
+nj.tree <- NJTree(my_data)
+rooted.tree <- EnforceOutgroup(nj.tree, outgroup)
+start.tree <- TreeSearch(tree=rooted.tree, dataset=my_data, maxIter=3000,
+                         EdgeSwapper=RootedNNISwap, verbosity=0)
+```
+
+### Implied weights analysis
+
+The position of the root does not affect tree score, so we keep it fixed (using `RootedXXXSwap` functions) to avoid unnecessary swaps.
+
+```{r treesearch-implied-weights-analysis, echo=TRUE, eval=FALSE}
+for (k in kValues) {
+  iw.tree <- IWRatchet(start.tree, iw_data, concavity=k,
+                       ratchHits = 20, ratchIter=4000, searchHits=56,
+                       swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap),
+                       verbosity=0L)
+  score <- IWScore(iw.tree, iw_data, concavity=k)
+  # Write a single best tree
+  write.nexus(iw.tree,
+              file=paste0("TreeSearch/hy_iw_k", k, "_", 
+                          signif(score, 5), ".nex", collapse=''))
+
+  iw.consensus <- IWRatchetConsensus(iw.tree, iw_data, concavity=k,
+                  swappers=list(RootedTBRSwap, RootedNNISwap),
+                  searchHits=55, searchIter=4000, nSearch=250, verbosity=0L)
+  write.nexus(iw.consensus,
+              file=paste0("TreeSearch/hy_iw_k", k, "_", 
+                          signif(IWScore(iw.consensus[[1]], iw_data, concavity=k), 5),
+                          ".all.nex", collapse=''))
+}
+```
+
+### Equal weights analysis
+
+```{r treesearch-equal-weights-analysis, echo=TRUE, eval=FALSE}
+ew.tree <- Ratchet(start.tree, my_data, verbosity=0L,
+                   ratchHits = 20, ratchIter=4000, searchHits=55,
+                   swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap))
+ew.consensus <- RatchetConsensus(ew.tree, my_data, nSearch=250, searchHits = 85,
+                                 swappers=list(RootedTBRSwap, RootedNNISwap),
+                                 verbosity=0L)
+write.nexus(ew.consensus, file=paste0(collapse='', "TreeSearch/hy_ew_",
+                                      Fitch(ew.tree, my_data), ".nex"))
+```
+
+```{R treesearch-deeper-iw, echo=FALSE, eval=FALSE}
+# This block provides a crude check that each run has found an optimum;
+# if not it continues searching, and you may consider increasing the 
+# ratchHits, ratchIter or searchHits parameters above.
+for (k in kValues) {
+  source('loadTrees.R')
+  
+  k.scores <- unlist(lapply(iw.exist, function (x) IWScore(x[[1]], iw_data, k)))
+  ew.scores <- vapply(ew.trees, IWScore, double(1), iw_data, k)
+  this.k <- kValues[iw.treesLoaded] == k
+  if (!any(this.k)) next
+  my.score <- k.scores[this.k]
+  ew.best <- min(ew.scores)
+  if (ew.best < min(k.scores)) {
+    start.tree <- ew.trees[which.min(ew.scores)]
+  } else if (k.scores[this.k] > min(k.scores)) {
+    start.tree <- iw.trees[[which.min(k.scores)]][[1]]
+  } else {
+    cat("\n\n * The best tree at k =", k, "is better than any other optimal tree.")
+    next
+  }
+  
+  attr(start.tree, 'score') <- NULL
+  cat("\n\n * Did not find global optimum for k =", k, "; continuing search.\n   ")
+  iw.tree <- IWRatchet(start.tree, iw_data, concavity=k,
+                       ratchHits = 30, ratchIter=4000, searchHits=56,
+                       swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap),
+                       verbosity=1L)
+  score <- IWScore(iw.tree, iw_data, concavity=k)
+  # Write a single best tree
+  write.nexus(iw.tree,
+              file=paste0("TreeSearch/hy_iw_k", k, "_", 
+                          signif(score, 5), ".nex", collapse=''))
+
+  iw.consensus <- IWRatchetConsensus(iw.tree, iw_data, concavity=k,
+                  swappers=list(RootedTBRSwap, RootedNNISwap),
+                  searchHits=55, nSearch=250, searchIter=4000, verbosity=1L)
+  write.nexus(iw.consensus,
+              file=paste0("TreeSearch/hy_iw_k", k, "_", 
+                          signif(IWScore(iw.consensus[[1]], iw_data, concavity=k), 5),
+                          ".all.nex", collapse=''))
+}
+```
+
+## Results
+
+Optimal trees can be downloaded in Nexus format from `r GitLink('TreeSearch', raw=FALSE)`.
+
+```{R treesearch-load-trees, echo=FALSE}
+source('loadTrees.R')
+tipIndex <- sort(allTrees[[1]]$tip.label)
+allSplits <- GetSplits(allTrees, tipIndex)
+```
+
+(ref:ts-all-cons) Consensus of all parsimony trees, under equal and implied weights.  
+
+(ref:node-support) Node labels denote the frequency of each clade in most parsimonious trees under all analytical conditions.  
+
+```{r treesearch-maj-consensus, fig.cap="(ref:ts-all-cons) (ref:node-support)", fig.width=6, fig.height=5.1, echo=FALSE}
+majCon <- RootTree(consensus(allTrees, p=0.5), rootingTips)
+supporters <- SplitSupport(majCon, allSplits, tipIndex)
+
+ColPlot(majCon)
+nodelabels(paste0("\n\n", signif(supporters / length(allTrees), 2)),
+           col=SupportColour(round(supporters / length(allTrees), 2)),
+           adj=0, pos=2, frame='none', cex=0.75)
+
+```
+
+(ref:ts-trim-cons) Consensus of same trees, with taxa pruned before constructing consensus to give context to clade support.  
+
+```{r treesearch-maj-consensus-pruned, fig.cap="(ref:ts-trim-cons) (ref:node-support)", fig.width=6, fig.height=5.1, echo=FALSE}
+#omit <- c("Micrina", 'Mickwitzia_muralensis', 'Heliomedusa_orienta')
+omit <- c("Cotyledion_tylodes", "Namacalathus", "Phoronis")
+allPruned <- lapply(allTrees, drop.tip, omit)
+majCon <- RootTree(consensus(allPruned, p=0.5), rootingTips)
+conTipIndex <- sort(majCon$tip.label)
+conSplits <- GetSplits(allPruned, conTipIndex)
+
+####
+supporters <- SplitSupport(majCon, conSplits, conTipIndex)
+####
+ColPlot(majCon)
+nodelabels(paste0("\n", signif(supporters / length(allTrees), 2)),
+           col=SupportColour(round(supporters / length(allTrees), 2)),
+           adj=0, pos=2, frame='none', cex=0.75)
+ColMissing(omit)
+
+```
+
+(ref:ts-iw-indiv) Strict consensus trees of implied weights analyses
+
+\clearpage 
+
+```{r treesearch-iw-indiv-1, fig.width=7.1, fig.height=5.1, fig.cap="(ref:ts-iw-indiv) (ref:first-panels)", echo=FALSE}
+# Plot consensus results
+par(mfrow=c(1, 2), mar=rep(0.2, 4))
+PlotPanel(iw.trees, 1)
+PlotPanel(iw.trees, 2)
+```
+
+\clearpage 
+
+```{R treesearch-iw-indiv-2, fig.width=7.1, fig.height=5.1, fig.cap="(ref:ts-iw-indiv) (ref:second-panels)", echo=FALSE}
+par(mfrow=c(1, 2), mar=rep(0.2, 4))
+PlotPanel(iw.trees, 3)
+PlotPanel(iw.trees, 4)
+```
+
+\clearpage 
+
+```{R treesearch-iw-indiv-3, fig.width=7.1, fig.height=5.1, fig.cap="(ref:ts-iw-indiv) (ref:third-panels)", echo=FALSE}
+par(mfrow=c(1, 2), mar=rep(0.2, 4))
+PlotPanel(iw.trees, 5)
+PlotPanel(iw.trees, 6)
+```
+
+\clearpage
+
+```{r treesearch-equal-weights-results, fig.cap="Strict consensus of most parsimonious trees under equally weighted parsimony", fig.width=6, fig.height=5.1, echo=FALSE}
+ColPlot(RootTree(consensus(ew.trees), rootingTips))
+```
+
+
+```{R treesearch-equal-weights-pruned-consensus, fig.cap="Strict consensus of equal weights results, taxa excluded", fig.width=6, fig.height=5.1, echo=FALSE, eval=FALSE}
+omit <- c("Cotyledion_tylodes", "Micrina")
+ColPlot(RootTree(ConsensusWithout(ew.trees, omit), rootingTips))
+ColMissing(omit)
+```
+
+\clearpage
+
+<!--chapter:end:13_TreeSearch.Rmd-->
+
+---
+title: "Bayesian Analysis results"
+author: "Martin R. Smith"
+date: "`r Sys.Date()`"
+---
+
+
+# Bayesian analysis {#bayesian}
+
+```{R mrbayes-ini, echo=FALSE}
+files <- list.files('MrBayes', pattern='^hyo\\..*\\.t$', full.names=TRUE)
+Mgen <- 5
+```
+```{R mrbayes-load-trees, echo=FALSE}
+bayesTrees <- lapply(files, read.nexus)
+nTrees <- length(bayesTrees[[1]])
+
+ew.files <- list.files('TreeSearch', pattern='hy_ew_\\d*\\.nex', full.names=TRUE)
+ew.abest <- read.nexus(file=ew.files[which.max(file.mtime(ew.files))])
+ew.abest <- if (class(ew.abest) == 'multiPhylo') ew.abest[[1]] else ew.abest
+
+postBurnin <- lapply(bayesTrees, function (x) x[ceiling(nTrees * 0.1):nTrees])
+```
+
+Bayesian search was conducted in MrBayes v3.2.6 [@Ronquist2012] using the Mk model [@Lewis2001] with gamma-distributed rate variation across characters:
+
+> lset coding=variable rates=gamma;
+
+Branch length was drawn from a dirichlet prior distribution, which is less informative than an exponential model [@Rannala2012], but requires a prior mean tree length within about two orders of magnitude of the true value [@Zhang2012]. To satisfy this latter criterion, we specified the prior mean tree length to be equal to the length of the most parsimonious tree under equal weights, using a Dirichlet prior with $\alpha_T = 1$, $\beta_T = 1/($_equal weights tree length_$/$_number of characters_$)$, $\alpha = c = 1$:
+
+> prset brlenspr = unconstrained: gammadir(1, `r signif(attr(my_data, 'nr')/Fitch(ew.abest, my_data), 2)`, 1, 1);
+
+Neomorphic and transformational characters [_sensu_ @Sereno2007] were allocated to two separate partitions whose proportion of invariant characters and gamma shape parameters were allowed to vary independently:
+
+> charset Neomorphic = `r paste(which(neomorphic), collapse=' ')`;
+>
+> charset Transformational = `r paste(which(!neomorphic), collapse=' ')`;
+>
+>
+> partition chartype = 2: Neomorphic, Transformational;
+>
+> set partition = chartype;
+>
+>
+> unlink shape=(all) pinvar=(all);
+
+
+Neomorphic characters were not assumed to have a symmetrical transition rate – that is, the probability of the absent → present transition was allowed to differ from that of the present → absent transition, being drawn from a uniform prior:
+
+> prset applyto=(1) symdirihyperpr=fixed(1.0);
+
+The rate of variation in neomorphic characters was also allowed to vary from that of transformational characters:
+
+> prset applyto=(1) ratepr=variable;
+
+_`r outgroup`_ was selected as an outgroup:
+
+> outgroup `r outgroup`;
+
+Four MrBayes runs were executed, each sampling eight chains for `r Mgen`&nbsp;000&nbsp;000 generations, with samples taken every 500 generations.  The first 10% of samples were discarded as burn-in.
+
+> mcmcp ngen=`r Mgen`000000 samplefreq=500 nruns=4 nchains=8 burninfrac=0.1;
+
+A posterior tree topology was derived from the combined posterior sample of all runs. Convergence was indicated by PSRF = 1.00 and an estimated sample size of > 200 for each parameter.  Nodes are labelled with posterior probabilities; recall that caution must be applied when interpreting these values [@Yang2018].
+
+The Nexus file used to generate these results in MrBayes can be `r GitLink("MrBayes/hyo.nex", "downloaded")`, 
+and run in [MrBayes](http://mrbayes.sourceforge.net/download.php) by typing `exe path/to/download`.
+
+## Parameter estimates
+
+```{R mrbayes-parameter-summary, echo=FALSE, asis=TRUE}
+pstat <- read.table('MrBayes/hyo.nex.pstat', skip=1, header=TRUE)[, -c(4:6)]
+pstat[, 2:5] <- signif(pstat[, 2:5], 3)
+pstat[, 6] <- signif(pstat[, 6], 5)
+pstat[pstat[, 4] < 200, 4] <- paste0('<mark>', pstat[pstat[, 4] < 200, 4], '</mark>')
+pstat[pstat[, 5] < 200, 5] <- paste0('<mark>', pstat[pstat[, 5] < 200, 5], '</mark>')
+knitr::kable(pstat)
+```
+
+## Results
+
+The posterior tree distribution can be downloaded in Nexus format from `r GitLink('MrBayes', raw=FALSE)`.
+
+```{R mrbayes-full-consensus, fig.width=6, fig.height=4.5, fig.cap="Results of Bayesian analysis, posterior probability > 50%, all taxa", echo=FALSE}
+omit <- c("none")
+ # 'Novocrania', 'Craniops', 'Ussunia', 'Gasconsia',
+thinned <- c(lapply(postBurnin[[1]], drop.tip, omit),
+             lapply(postBurnin[[2]], drop.tip, omit),
+             lapply(postBurnin[[3]], drop.tip, omit),
+             lapply(postBurnin[[4]], drop.tip, omit))
+class(thinned) <- 'multiPhylo'
+mbCon <- RootTree(consensus(thinned, p=0.5), rootingTips)
+tipIndex <- sort(thinned[[1]]$tip.label)
+sampleSize <- min(length(thinned), 10000L) # Not all trees, but ought to be enough for our purposes
+mbSplits <- GetSplits(sample(thinned, sampleSize), tipIndex)
+#ColPlot(UnitEdges(root(mbCon, outgroup, resolve.root=TRUE)))
+
+
+ColPlot(UnitEdges(mbCon))
+supporters <- SplitSupport(mbCon, mbSplits, tipIndex)
+nodeSupport <- c('', signif(supporters[-1] / sampleSize * 100L, 3))
+nodelabels(paste0("\n\n", nodeSupport), adj=0, pos=2, frame='none', cex=0.75,
+           col=SupportColour(round(supporters / sampleSize, 2)))
+#ColMissing(omit)
+```
+
+```{R mrbayes-pruned-consensus, fig.width=7.1, fig.height=4.2, fig.cap="Results of Bayesian analysis, posterior probability > 50%, wildcard taxa pruned", echo=FALSE}
+#omit <- c(
+#  'Lingulosacculus', 'Mummpikia_nuda', 'Lingulellotreta_malongensis', 
+#  'Clupeafumosus_socialis', #'Siphonobolus_priscus',
+#  'Micrina', 'Heliomedusa_orienta', 'Mickwitzia_muralensis',
+#  'Tomteluva_perturbata', 'Yuganotheca_elegans',
+#  'Nisusia_sulcata', 'Kutorgina_chengjiangensis'
+#  )
+omit <- c('Paterimitra', 'Micrina')
+thinned <- c(lapply(postBurnin[[1]], drop.tip, omit),
+             lapply(postBurnin[[2]], drop.tip, omit),
+             lapply(postBurnin[[3]], drop.tip, omit),
+             lapply(postBurnin[[4]], drop.tip, omit))
+class(thinned) <- 'multiPhylo'
+rootedConsensus <- RootTree(consensus(thinned, p=0.5), rootingTips)
+
+
+mbCon <- RootTree(consensus(thinned, p=0.5), rootingTips)
+tipIndex <- sort(thinned[[1]]$tip.label)
+mbSplits <- GetSplits(sample(thinned, sampleSize), tipIndex)
+
+ColPlot(UnitEdges(rootedConsensus))
+supporters <- SplitSupport(rootedConsensus, mbSplits, tipIndex)
+nodeSupport <- c('', signif(supporters[-1] / sampleSize * 100L, 3))
+nodelabels(paste0("\n\n", nodeSupport),
+           col=SupportColour(round(supporters / sampleSize, 2)),
+           adj=0, pos=2, frame='none', cex=0.75)
+ColMissing(omit)
+```
+
+<!--chapter:end:14_MrBayes.Rmd-->
+
+---
+title: "Visualizing characters"
+author: "Martin R. Smith"
+---
+
+# Character reconstructions {#reconstructions}
+
+This page provides definitions for each of the characters in our matrix, and justifies codings in particular taxa where relevant.
+Further citations for codings that are not discussed in the text can be viewed by browsing the [morphological dataset](#dataset) on MorphoBank (`r MorphoLink(checkAccess=FALSE)`).
+
+Alongside its definition, each character has been mapped onto a tree.
+ `r if (knitr::is_html_output()) 'Any of the optimal trees can be selected by modifying the tree number listed above each diagram.' else paste0('Here, we have arbitrarily selected one most parsimonious tree obtained under implied weighting. Other trees can be viewed in the HTML version of this document at ', GitHubPages('reconstructions.html'), '.')`
+Each tip is labelled according to its coding in the matrix.  These states have been used to reconstruct the condition of each internal node, using the parsimony method of @Brazeau2018 as implemented in the _R_ package _Inapp_.
+
+We emphasize that different trees give different reconstructions.  The character mappings are not intended to definitively establish how each character evolved, but to help the reader quickly establish how each character has been coded, and to visualize at a glance how each character fits onto a given tree.  `r if(knitr::is_html_output()) '<a href="javascript:toggleSVG();">Click here</a> to <span id="showOrHide">hide</span> the character reconstructions below.'`
+
+```{R load-the-characters, echo=FALSE, message=FALSE}
+source('loadTrees.R')
+if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
+  uniqueTrees <- unique(allTrees)
+} else if (length(iw.exist) > 1L) {
+  uniqueTrees <- iw.exist[[ceiling(length(iw.exist)/2L)]][1] # Single [] to keep as a list of 1 tree.
+} else {
+  uniqueTrees <- allTrees[1]
+}
+tree <- uniqueTrees[[1]]
+tree$edge.length <- rep(1, nrow(tree$edge))
+
+char_names <- gsub("^'(.+)'$", "\\1", colnames(my_chars))
+n_char <- ncol(my_chars)
+char_parts <- strsplit(char_names, ": ")
+char_nesting <- vapply(char_parts, length, 0L)
+
+taxa_names <- unique(c("Namacalathus", rownames(my_chars)))
+taxa_plaintext <- gsub("_", " ", taxa_names, fixed=TRUE)
+taxa_italic <- paste0("_", taxa_plaintext, "_")
+
+index <- attr(my_data, 'index')
+ci_text <- vapply(uniqueTrees, function (tree) {
+  fitch_consistency_index <- CI(tree, fitch_data, sitewise=TRUE)
+  fitch_steps <- fitch(tree, fitch_data, site='site')[index]
+  min_steps <- fitch_consistency_index * fitch_steps
+  # Maximum steps is tricky to calculate, so we'll leave RI [= max-obs / max-min]
+  # unless referees insist on it; neither it nor CI mean much in any case.
+  fitch_retention_index <- RI(tree, fitch_data, sitewise=TRUE)
+  fitch_retention_index <- ifelse(fitch_retention_index == 'NaN', 'n/a', signif(fitch_retention_index, 2))
+  paste0('CI = ', signif(min_steps / FitchSteps(tree, my_data)[index], 2),
+                  '; Fitch CI = ', signif(fitch_consistency_index, 2),
+                  '; Fitch RI = ', fitch_retention_index)
+}, character(n_char), USE.NAMES=FALSE)
+```
+```{R SVG-setup, echo=FALSE, results="asis"}
+fileNamer <- 'Brachiopod_phylogeny_files/figure-html/tree%s-char%s.svg'
+treeXMargins <- c(5L, 200L)
+treeYMargins <- c(7L, 8L)
+nTree <- c(length(ew.trees), vapply(iw.trees, length, 0))
+analysisNames <- c('Equal weights', paste0(c('Implied weights, k = ', rep('IW, k = ', length(kValues) - 1L)), kValues))
+analysisLabels <- c(analysisNames[-1], analysisNames[1])
+treeNames <- rep(analysisNames, nTree)
+if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
+  CheckDirExists <- function (x) if (!dir.exists(x)) dir.create(x)
+  CheckDirExists('_book')
+  CheckDirExists('_book/Brachiopod_phylogeny_files')
+  CheckDirExists('_book/Brachiopod_phylogeny_files/figure-html')
+  svgCanvas <- SVGCanvas(allTrees, rootingTips, analysisNames, 
+                         uniqueTrees=uniqueTrees,
+                         width=getOption('svgWidth'), height=getOption('svgHeight'),
+                         xMargins=treeXMargins, yMargins=treeYMargins)
+}
+```
+
+(ref:all-changes) All character changes mapped onto a single consensus tree.  Logically coherent changes are marked in <span class="color: `r brewer[[4]][4]`;">blue</span>; logically impossible changes (which are nevertheless reconstructed by the Fitch algorithm) are marked in <span class="color: `r brewer[[4]][1]`;">red</span>.  <span class="color: `r brewer[[4]][2]`;">Orange</span> denotes nodes at which homoplasy due to additional regions is mapped.[...]
+
+```{R all-changes, echo=FALSE, fig.height=6, fig.width=8, fig.cap="(ref:all-changes)", results="asis"}
+omit <- c("Micrina", "Micromitra",
+          "Longtancunella_chengjiangensis",# "Yuganotheca_elegans",
+          "Salanygolina", "Askepasma_toddense")#, "Tomteluva_perturbata")
+omit <- character(0)
+#majCon <- RootTree(ConsensusWithout(tnConsensi, omit, p=0.5), rootingTips)
+majCon <- RootTree(consensus(tnConsensi, p=0.5), rootingTips)
+
+bifurcating <- multi2di(majCon) # Nodes inserted at random
+bEdge <- bifurcating$edge
+bParent <- bEdge[, 1]
+bChild <- bEdge[, 2]
+conTips <- majCon$tip.label
+bifTips <- bifurcating$tip.label
+recons <- apply(my_chars[conTips, ], 2, function (char) {
+  inapp <- apply.reconstruction(bifurcating, char)
+  isApp <- vapply(inapp$Up2, function (x) !-1 %in% x, logical(1))
+  enterApp <- isApp[bChild] & !isApp[bParent]
+  
+  fitch <- apply.reconstruction(bifurcating, char, method='Fitch', inapplicable=1)
+  # Return:
+  list('changes' = inapp$changes,
+       'regions' = bParent[enterApp],
+       'regioncounted' = inapp$regions,
+       'fitches' = fitch$changes[!fitch$changes %in% inapp$changes])
+})
+reconLength <- length(recons[[1]])
+
+nConTip <- length(conTips)
+conSplits <- vapply(Descendants(majCon, nConTip + 1:Nnode(majCon), type='tips'),
+           function (tips) conTips %in% conTips[tips], logical(nConTip))
+bifSplits <- vapply(Descendants(bifurcating, nConTip + seq_len(nConTip - 1L), type='tips'),
+           function (tips) bifTips %in% bifTips[tips], logical(nConTip))
+conSplitNos <- apply(conSplits, 2, function (x) sum(powersOf2[x]))
+bifNos <- apply(bifSplits, 2, function (x) sum(powersOf2[x]))
+whichNode <- integer(length(bifNos))
+bifReal <- bifNos %in% conSplitNos
+whichNode[bifReal] <- vapply(bifNos[bifReal], function (x) which(conSplitNos == x), integer(1))
+whichNode[!bifReal] <- apply(bifSplits[, !bifReal, drop=FALSE], 2, function (bifSplit) {
+  extras <- colSums(conSplits[!bifSplit, ])
+  parentSplits <- apply(conSplits[bifSplit, ], 2, all)
+  which(parentSplits & extras == min(extras[parentSplits]))
+})
+whichNode <- whichNode + nConTip
+
+if (knitr::is_html_output()) {
+  
+  conLabels <- vapply(nConTip + 1:Nnode(majCon), function (node) {
+    where <- vapply(recons, function (char) vapply(char, function (x) node %in% whichNode[x - nConTip], logical(1)), logical(reconLength))
+    whichWhere <- apply(where, 1, which)
+    ret <- unlist(lapply(whichWhere, length))
+    if (is.null(ret)) return(character(reconLength))
+    # Return: 
+    ifelse(ret == 0, '', as.character(ret))
+  }, character(reconLength))
+
+  ### Calculate node coordinates for majCon
+  
+  conInternal <- nConTip + 1:Nnode(majCon)
+  conTerminal <- seq_len(nConTip)
+  conLabel <- character(nConTip)
+  conEdge <- dim(majCon$edge)[1]
+  eachConEdge <- seq_len(conEdge)
+  conParent <- majCon$edge[, 1]
+  conChild  <- majCon$edge[, 2]
+  
+  conYStep <- round((getOption('svgHeight') - treeYMargins[2] - treeYMargins[1]) / nConTip, 1)
+  
+  ancestors <- Ancestors(majCon, type='all')
+  nAncestors <- vapply(ancestors, length, 1)
+  conXStep <- round(seq(treeXMargins[1], 
+                        to=getOption('svgWidth') - treeXMargins[2],
+                        len=max(nAncestors) + 1L), 1)
+  conX <- conXStep[nAncestors + 1L]
+  conY <- double(length(nAncestors))
+  conY[conChild[conChild <= nConTip]] <-
+    seq(treeYMargins[1] + 30,
+        getOption('svgHeight') - treeYMargins[2],
+        len=nConTip)
+  
+  for (nodeI in rev(conInternal)) {
+    conY[nodeI] <- mean(conY[Children(majCon, nodeI)])
+  }
+  conY <- round(conY, 1)
+  
+  edges <- paste0('<path d="', paste0('M', conX[conParent], ',', conY[conParent],
+                                      'V', conY[conChild], 'H', conX[conChild], 
+                                      collapse=''), '" stroke="#888"></path>')
+  tips <- paste0('<text x="', (conX[conTerminal] + 0L), 
+                 '" y="', conY[conTerminal] + 3L,
+                 '" fill="', taxonColour[conTips[conTerminal]],
+                 '" class="taxonLabel">', 
+                 gsub('_', ' ', conTips[conTerminal], fixed=TRUE), '</text>',
+                 collapse='')
+  omittedTips <- if (length(omit) > 0) {
+    paste0('<g transform="translate(', getOption('svgWidth') - 4L,
+           ' ', getOption('svgHeight'), 
+           ')"><text x="0" y="0" class="taxonLabel" text-anchor="end">', 
+           paste0('<tspan x="0" dy="-1.2em" fill="', taxonColour[omit], '">', 
+                  omit, '</tspan>', collapse=''),
+           '<tspan x="0" dy="-1.2em" class="tipsHeader">Pruned taxa:</tspan>',
+           '</text></g>')
+    } else ''
+  nodes <- paste0('<g transform="translate(', conX[conInternal] + 2L, 
+                  ' ', conY[conInternal], ')" class="node-g" data-node="', conInternal, 
+                  '"><text x="0" y="-1.2em" class="node"><tspan class="b42">',
+                  conLabels['regions', ], '</tspan><tspan class="b44" x="0" dy="1.2em">',
+                  conLabels['changes', ], '</tspan><tspan class="b41" x="0" dy="1.2em">', 
+                  conLabels['fitches', ], '</tspan></text></g>', collapse='')
+  conCaption <- paste0('<g transform="translate(', getOption('svgWidth') - 4L, ' 0)">',
+                       '<text x="0" y="0" text-anchor="end" class="stepsLabel">',
+                       '<tspan x="0" dy="1.2em">',
+                       '<tspan class="score b44">Blue</tspan>: ',
+                       'Logically valid character transformations</tspan>', 
+                       '<tspan x="0" dy="1.2em"><tspan class="score b42">Orange</tspan>: ',
+                       'Applicable regions</tspan>', 
+                       '<tspan x="0" dy="1.2em"><tspan class="score b41">Red</tspan>: ',
+                       'Logically invalid Fitch steps</tspan>',
+                       '</text></g>')
+  svgSource <- paste0('<svg xmlns="http://www.w3.org/2000/svg" version="1.1',
+                ' " viewBox="0 0 ', getOption('svgWidth'),
+                ' ', getOption('svgHeight'), '" id="conTree">',
+                conCaption, tips, edges, omittedTips, nodes, '</svg>')
+  cat(svgSource)
+  
+  ## Generate detail-divs
+  majCaptions <- vapply(nConTip + 1:Nnode(majCon), function (node) {
+    where <- vapply(recons, function (char) vapply(char, function (x) node %in% whichNode[x - nConTip], logical(1)), logical(reconLength))
+    apply(where, 1, function (changes) {
+      if (any(changes)) {
+        paste0('<span class=change><span class=charNo>', which(changes), 
+               '</span>', gsub("^'|'$", "", names(changes[changes]), perl=TRUE),
+               '</span>', collapse='') 
+      } else ''
+    })
+  }, character(reconLength))
+  ncol <- colSums(majCaptions[c('regions', 'changes', 'fitches'), ] != '')
+  cat('<div id=nodeDetails>Click on the numbers by a node for details</div>',
+      paste0('<div id=nodeDetail', conInternal, ' class=nddtl><div class=nddtlhdr>',
+         'Steps incurred at node ', conInternal, ':</div>',
+         ifelse(majCaptions['changes', ] == '', '', 
+                paste0('<div class="tfm cl', ncol, '">', 
+                       majCaptions['changes', conInternal - nConTip], '</div>')), 
+         ifelse(majCaptions['regions', ] == '', '',
+                paste0('<div class="rgn cl', ncol, '">',
+                       majCaptions['regions', conInternal - nConTip], '</div>')),
+         ifelse(majCaptions['fitches', ] == '', '',
+                paste0('<div class="ftch cl', ncol, '">',
+                       majCaptions['fitches', conInternal - nConTip], '</div>')), 
+         '</div><div style="clear: both"></div>', collapse=''))
+} else {
+  ColPlot(majCon)
+  ColMissing(omit)
+  conLabels <- vapply(nConTip + 1:Nnode(majCon), function (node) {
+  where <- vapply(recons, function (char) vapply(char, function (x) node %in% whichNode[x - nConTip], logical(1)), logical(reconLength))
+  whichWhere <- apply(where, 1, which)
+  # Return: 
+  if (length(whichWhere) == 0) character(reconLength) else {
+    unlist(lapply(whichWhere, paste, collapse=', '))
+  }
+  }, character(reconLength))
+  LabelNodes(conLabels['changes', ], 4, 0)
+  LabelNodes(conLabels['regions', ], 2, 1)
+  LabelNodes(conLabels['fitches', ], 1, 2)
+}
+PrintJavascript('svgSwitcher.js')
+```
+```{R character-mapping, echo=FALSE, fig.height=6.2, fig.width=7.1, results="asis"}
+prev_char_parts <- "NONE"
+
+subheadings <- c("Digestive tract: Anus: Presence",
+                 "Gametes: Spermatozoa: Nucleus: Shape",
+                 "Gametes: Egg: Size",
+                 paste("Sclerites:",
+                       c("Bivalved", "Dorsal valve: Growth direction",
+                         "Ventral valve: Growth direction",
+                         "Ornament: Concentric ornament",
+                         "Composition: Mineralogy",
+                         "Structure: Stratiform lamellae expressed at surface")),
+                 paste("Larva:", c("Cilia: Metatroch", 
+                    "Apical organ: Muscles extending to the hyposphere")))
+
+#for (i in 14:17) {
+for (i in seq_len(n_char)) {
+  
+  # Print character heading:
+  this_char_parts <- char_parts[[i]]
+  next_char_parts <- if (i == n_char) "LAST_CHARACTER" else char_parts[[i + 1L]]
+  PrintCharacterHeading(char_names[i], i, prev_char_parts, this_char_parts, 
+                        next_char_parts, subheadings)
+  prev_char_parts <- this_char_parts
+  
+  # Plot character reconstruction:
+  PlotCharacterMapping(char = my_chars[, i], stateLabels = my_states[[i]],
+                       singleTree = uniqueTrees[[1]], legendText=ci_text[i, 1],
+                       canvas = svgCanvas, treeNames = treeNames,
+                       analysisLabels = analysisLabels, 
+                       svgFilename = paste0('_book/', sprintf(fileNamer, '%s', i)),
+                       SetPar = par(mar=rep(0.2, 4), cex=0.7))
+  
+  # Plot character details:
+  cat(paste0("  \n\n > **Character ", i, ": ", Italicize(char_names[i]), "**  \n>\n"))
+  if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
+    lineHeight <- 24L
+    
+    states_matrix <- apply.reconstruction(uniqueTrees[[1]], my_chars[, i])
+    matrix_data <- MatrixData(states_matrix, states_matrix, state.labels=my_states[[i]])
+    legend_labels <- matrix_data$legend
+    legend_col    <- matrix_data$legend_col
+    legendY <- round(lineHeight * seq_along(legend_labels), 1)
+    cat(paste0('>  <svg xmlns="http://www.w3.org/2000/svg" version="1.1',
+              '" viewBox="0 0 ', getOption('svgWidth'), ' ', 
+              lineHeight * length(legend_labels) + lineHeight - 5L,
+               # For T/N statement
+               '" class="statesLegend">',
+        paste0('<path d="M0,', legendY - 15L, 'h22" stroke="', legend_col,
+               ifelse(legend_col == 'lightgrey', '" class="inapplicable', ''),
+               '"></path>', collapse=''),
+        '<text x="30" y="-10" class="legendLabels">', 
+        paste0('<tspan x="30" dy="', lineHeight, '">', legend_labels, '</tspan>', collapse=''),
+        '<tspan x=0 dy="', lineHeight, '">', 
+        ifelse (IsTransformational(my_states[[i]]), "Transformational", "Neomorphic"),
+        ' character.</tspan>',
+        '</text></svg> \n>\n'))
+  } else {
+    PrintStates(Italicize(my_states[[i]]))
+  }
+  cat("  \n\n")
+  char_notes_i <- char_notes[[i]]
+  state_notes_i <- char_notes_i[[2]]
+  state_notes_i <- state_notes_i[!names(state_notes_i) %in% ignored_taxa]
+  if (length(char_notes_i[[1]]) > 0) cat(Italicize(char_notes_i[[1]]), "  \n")
+  if (length(state_notes_i) > 0) {
+    PrintStateNotes(state_notes_i, taxa_names, taxa_italic, i, Italicize)
+  }
+  if (my_states[[i]][[1]] != "''") PrintNaughtyInapplicables(my_chars[, i])
+  cat("  \n") # Clear line, ready for next block
+}
+PrintSwitcher(length(uniqueTrees))
+```
+
+<!--chapter:end:15_Characters.Rmd-->
+
+---
+title: "Taxonomic implications"
+author: "Martin R. Smith"
+---
+
+# Taxonomic implications
+
+This section briefly places key features of our results in the context of previous phylogenetic hypotheses.  For brevity, we refer to the method of @Brazeau2018 as "inapplicable-corrected" parsimony, as it corrects for errors arising from the handling of inapplicable data in standard Fitch parsimony.
+
+Crown- and stem-group terminology has great value in clarifying the early evolution of major lineages [@Budd2000;@Carlson2009].  The crown group of a lineage is defined as the last common ancestor of all living members of a group, and all its descendants; the stem group as all taxa more closely related to the crown group than to any other extant taxon.  In our selection of taxa, the brachiopod crown group corresponds to the last common ancestor of _Terebratulina_, _Novocrania_, _Pelagodiscus_ and _Lingula_; the brachiopod stem group comprises anything between this node and the branching point of _Phoronis_, which marks the base of the Brachiozoan crown group.
+
+Hyoliths
+: Hyoliths as a whole are interpreted as stem-group Brachiopods, which refines the broader phylogenetic position proposed by @Moysiuk2017Hyolithsare.  This is to say, they sit closer to brachiopods than the phoronids do, but no analysis places them within the Brachiopod crown group.
+: Tommotiids lie both stemwards (e.g. _Eccentrotheca_) and crownwards (_Mickwitzia_) of hyoliths, which thus represent derived tommotiids.  
+: Within the hyoliths, orthothecids are consistently recovered as a grade that is paraphyletic to the hyolithids.  
+
+Tommotiids
+: Tommotiids represent a basal grade, paraphyletic to phoronids and crown-group brachiopods, in line with previous interpretations.  
+: _Mickwitzia_ is consistently the most crownwards of the tommotiids, falling as sister to the brachiopod crown group (except in the Bayesian results, where they fall within the paraphyletic craniiform grade).   _Mickwitzia_ is closely related to _Micrina_ and _Heliomedusa_, though the exact nature of this relationship varies from analysis to analysis. The latter affilitation reflects similarities emphasized by Holmer and Popov in @Williams2007Supplement. <!--, but plots instead within the Craniiforms under certain analytical conditions, in line with earlier interpretations [@Williams2000LinguliformeaCraniiformea].-->
+: _Dailyatia_ tends to plot closely with _Halkieria_, reflecting the similarity in the form of their proposed scleritome [@Skovsted2015Theearly].  Bayesian analysis recovers this pair as sister to annelids and molluscs; Fitch parsimony places them in the molluscan stem group.  Inapplicable-corrected parsimony instead places these taxa as sister to hyoliths + brachiopods [cf. @Zhao2017].
+
+Craniiforms
+: Trimerellids are reconstructed as paraphyletic with respect to Craniiforms.  This is consistent with the affinity commonly drawn between these groups [e.g. @Williams2000LinguliformeaCraniiformea], and helps to account for the stratigraphically late (Ordovician) appearance of Craniids in the fossil record.  (Aragonite is underrepresented in early Palaeozoic strata due to taphonomic bias.)  
+: The position of the craniiforms is not conclusively resolved; shell characters point to a relationship with the Rhynchonelliforms, which is countered by similarities between the spermatozoa of phoronids and terebratulids, indicating a craniiform + linguliform clade.  This latter relationship is preferred by Fitch and inapplicable-corrected parsimony analyses.
+: The Bayesian results offer a more surprising interpretation that places the craniiforms as paraphyletic with respect to all other brachiopods, with _Gasconsia_ representing the basalmost member of the Rhynchonellid lineage, upholding suggestions [@Holmer2014OrdovicianSilurian] of a chileid rather than trimerellid affinity.  To our knowledge, the hypothesis of a paraphyletic craniiform + trimerellid grade has never been proposed, and represents a poor fit to stratigraphic data; potentially it represents an artefact resulting from the incorrect handling of inapplicable data within the Mk model.
+
+Rhynchonelliforms
+: The position of kutorginids within the rhynchonelliform stem lineage has been tricky to resolve [@Holmer2018Theattachment]. Inapplicable-corrected parsimony places them sister to Rhynchonelliforms; Fitch parsimony places them as sister to the Chileids; and Bayesian analysis conservatively fails to distinguish between these two possibilities. These results are broadly in accord with previous proposals [@Holmer2018Evolutionarysignificance]. The protorthid _Glyptoria_ is the earliest diverging of the included rhynchonelliform lineages. 
+
+: _Salanygolina_ has been interpreted as a stem-group rhynchonelliform based on its combination of paterinid and chileate features [@Holmer2009Theenigmatic].  Our results position _Salanygolina_ as sister either to the Chileids or the Chileids + Rhynchonelliforms, corroborating this interpretation.
+
+: Basal rhynchonellids are characterized by a circular umbonal perforation in the ventral valve, associated with a colleplax.  Partly on this basis, the aberrant taxa _Yuganotheca_ and _Tomteluva_ tend to plot close to the chileids under Fitch and Bayesian analysis, though a variety of positions in this region of the tree are equally plausible.  Inapplicable-corrected parsimony, in contrast, supports the interpretation of _Yuganotheca_ as a stem-group brachiopod  [@Zhang2014Anearly].
+
+Paterinids
+: Paterinids have traditionally been placed within the Linguliforms on the basis of their phosphatic shell [@Williams2007Supplement], which we identify as ancestral within the brachiopod crown group; consequently, our analysis places the paterinids within the Rhynchonelliforms instead.  Characters supporting this position include the strophic hinge line, planar cardinal area, the absence of a pedicle nerve impression, and the morphology of the mantle canals.
+: More generally, although some lingulids can be found which share more generic characters (e.g. shell growth direction) with paterinids, the particular combination of characters exhibited in paterinids does not occur anywhere in the linguliform lineage, but is more similar to that of basal rhynchonelliforms, particularly _Salanygolina_ [as noted by @Holmer2009Theenigmatic].
+
+Linguliforms
+: The reconstruction of Linguloformea comprising Linguloidea as sister to Discinoidea is as expected.  Lingulellotretids also sit within this linguliform grouping; a position in the phoronid stem lineage [advocated by @Balthasar2009EarlyCambrian] is not upheld.  Acrotretids and Siphonotretids form a clade with _Lingulosacculus_.
+: More novel is the reconstruction of the calcitic obolellid _Mummpikia_ in the linguliform total group: a rhynchonelliform affinity has been assumed based on its calcitic mineralogy. This said, @Balthasar2008iMummpikia has highlighted the similarities between obolellids and linguliform brachiopods, including sub-&mu;m vertical canals and the detailed configuration of the posterior shell margin.
+Our analyses uphold the case for a linguliform affinity for _Mummpikia_; a calcitic shell seemingly arose through an independent change within this taxon  As such, _Mummpikia_ has no direct bearing on the origin of 'Calciata', save that shell mineralogy is perhaps less static than commonly assumed.
+: More generally, our results identify Class Obolellata as polyphyletic:  _Alisina_ (Trematobolidae) plots within Rhynchonellata;  _Tomteluva_ is harder to place, but tends to group with _Salanygolina_ stemwards of the chileids.
+
+Outgroup
+: All analyses recover the same phylum-level relationships between the outgroup taxa.  Whereas the rooting of Lophotrochozoa is beyond the scope of this analysis, annelids and molluscs are recovered as more closely related to each other than to any other group, with Entoprocta (Kamptozoa) representing their closest relative.  Ectoprocta (Bryozoa) are recovered as the closest relatives of Brachiozoa (=Phoroinda + Brachiopoda).
+: As the analysis was not constructed to test the relationships of outgroup taxa, some caution is due in interpreting these results; outgroup taxa include single representatives of diverse and ancient phyla, and are thus prone to long branch error [@Parks2014].  The relationships of the lophotrochozoan phyla were not the primary object of this study, and have long resisted elucidation; this said, we have attempted to incorporate all morphological evidence that has been interpreted as informing relationships between these groups.  
+: In this context, it is perhaps unsurprising that the narrow selection of fossil representatives of outgroup taxa, included to break long branches at the base of each clade, plot somewhat differently in different analyses.  _Wiwaxia_ consistently plots with a molluscan affiliation, but Bayesian and inapplicable-corrected parsimony analyses place it as a stem-group mollusc, whereas Fitch parsimony includes it in the molluscan crown.  _Halkieria_, _Cotyledion_, _Eccentrotheca_ and _Dailyatia_ are recovered as close relatives, forming a grade in the brachiopod stem group under inapplicable-corrected parsimony, a clade in the molluscan stem group in Fitch parsimony, and a polytomy at a deeper node under Bayesian analysis.  
+_Namacalathus_ is reconstructed as a basal Brachiozoan under inapplicable-corrected parsimony and Bayesian analysis, and a stem-group brachiopod under Fitch parsimony.
+
+<!--chapter:end:16_Implications.Rmd-->
+
+# Supplementary Figures {-#figures}
+
+```{R more-specimens, echo=FALSE, out.width="80%", fig.align='center'}
+knitr::include_graphics('images/image1.png')
+```
+**Fig. S1. _Pedunculotheca diania_ Sun, Zhao et Zhu gen. et sp. nov. from the Chengjiang Biota, Yunnan Province, China.**
+(a) NIGPAS 166601, external mould of dorsum with dorsal apex and pedicle foramen. (b) NIGPAS 166597, preserving conical shell, operculum and internal soft tissue, showing a compressed elliptic cross-section; backscatter electron micrograph of boxed region shown in (c).
+(d) NIGPAS 166599b, counterpart, juvenile conical shell with operculum showing two longitudinal ventral grooves and circular larval shell. 
+(e) NIGPAS 166602, conical shell with incomplete attachment structure.
+(f) NIGPAS 166598, broken shell with two ventral furrows and incomplete attachment structure. (g) NIGPAS 166596, incomplete shell with one medial ventral furrow and short attachment structure with coelomic cavity; detail of boxed region shown in (h).
+(i) NIGPAS 166603, exterior of operculum.
+Scale bars: 2mm (for a, b and e–g); 500&nbsp;µm (for c, h and i).
+
+Abbreviations: an = anus, cc = coelomic cavity, da = dorsal apex, es = esophagus, in = intestine, mo = mouth, pe = pedicle, st = stomach.
+
+\clearpage
+
+```{R gut-elemental, echo=FALSE, out.width="80%", fig.align="center", cache=TRUE}
+knitr::include_graphics('images/image2.png')
+```
+
+**Fig. S2. Elemental distribution in the gut of _Pedunculotheca diania_ Sun, Zhao et Zhu gen. et sp. nov.** NIGPAS 166597. Region corresponds to boxed region in Fig. S1c. 
+Scale bar = 100&nbsp;µm.
+
+Abbreviations: BE = backscatter electron image, O = Oxygen, Si = Silicon, Al = Aluminium, Fe = Iron, C = Carbon.
+
+
+\clearpage
+`r rollOver <- 3`
+
+```{R brach-diversity, echo=FALSE, fig.width=7, cache=TRUE}
+# Definitions
+cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7") # Colour-blind friendly palette
+PDBGenera <-  R.cache::addMemoization(function (taxon) read.csv(paste0('https://paleobiodb.org/data1.2/occs/diversity.txt?base_name=', taxon, '&count=genera')))
+timescale <- geoscale::timescales[[1]]
+rollmean <- zoo::rollmean
+plotDiv <- function (dataset, rollOver = 5, col) {
+  if (dataset[2, 'max_ma'] > dataset[1, 'max_ma']) {
+    dataset <- dataset[rev(rownames(dataset)), ]
+  }
+  attach(dataset)
+  on.exit(detach(dataset))
+  points(sampled_in_bin ~ I(-(max_ma + min_ma) / 2), col=paste0(cbPalette[col], 77))
+  points(sampled_in_bin ~ I(-(max_ma + min_ma) / 2), pch='.', cex=2, col=cbPalette[col])
+  lines(rollmean(sampled_in_bin, rollOver) ~ rollmean(-(max_ma + min_ma) / 2, rollOver), col=cbPalette[col])
+}
+ 
+# Read and sanitize data                        
+all.ages <- timescale[timescale$Type == 'Age', ]
+ages <- all.ages[all.ages$Part_of != 'Quaternary', ]
+ages$Name <- as.character(ages$Name)
+n.ages <- nrow(ages)
+
+hyo  <- PDBGenera('Hyolitha')
+ling <- PDBGenera('Linguliformea')
+rhyn <- PDBGenera('Rhynchonelliformea')
+tomm <- PDBGenera('Tommotiida')
+ecc  <- PDBGenera('Eccentrotheca')
+
+addities <- c('sampled_in_bin', 'n_occs')
+tomm[tomm$interval_name == 'Stage 3', addities] <- tomm[tomm$interval_name == 'Stage 3', addities] + ecc[ecc$interval_name == 'Stage 3', addities]
+tomm[tomm$interval_name == 'Stage 2', addities] <- tomm[tomm$interval_name == 'Stage 2', addities] + ecc[ecc$interval_name == 'Stage 2', addities]
+
+allIntervals <- unique(as.character(rhyn$interval_name, ling$interval_name, hyo$interval_name))
+
+# Plot
+yMax <- 200
+par(cex=0.8)
+
+plot(99, 0, ylim=c(0, yMax), xlim=c(-540, -400), 
+     xlab='Million years ago', ylab='Genera', xaxt='n')
+ticks <- seq(540, 400, length.out = 8)
+axis(1, at = -ticks, labels=ticks)
+bottom <- yMax * 0.6; gap <- yMax * 0.08
+text(-542, bottom + (4 * gap), lab='Rhynchonelliformea', col=cbPalette[5], pos=4)
+text(-542, bottom + (3 * gap), lab='Linguliformea',     col=cbPalette[3], pos=4)
+text(-542, bottom + (2 * gap), lab='Hyolitha',          col=cbPalette[4], pos=4)
+text(-542, bottom + (1 * gap), lab='Tommotiida',        col=cbPalette[2], pos=4)
+
+plotDiv(ling, rollOver=rollOver, col=3)
+plotDiv(rhyn, rollOver=rollOver, col=5)
+plotDiv(hyo , rollOver=rollOver, col=4)
+plotDiv(tomm , rollOver=3, col=2)
+```
+
+**Fig. S3. Global diversity of brachiopods through the Paleozoic.** Points represent number of genera reported in each time bin; lines represent rolling mean diversity over `r WriteNumber(rollOver)` consecutive time bins.  Data from Paleobiology database. 
+
+\clearpage
+
+<!--chapter:end:21_SupplementaryFigures.Rmd-->
+
+# Supplementary Table {-#table}
+
+```{r table-s1, echo=FALSE, asis=TRUE}
+prov <- matrix(c("166593, 166617", "Shankou Village, Anning", "24°49’53’’ N, 102°24’47.9” E", "166594, 166595", "Yaoying Village, Wuding", "25°36’01.2” N, 102°20’04.6” E", "166596--166616", "Ma'anshan Village, Chengjiang", "24°40’37.2” N, 102°58’40.2” E"), nrow=3, ncol=3, byrow=TRUE)
+colnames(prov) <- c("NIGPAS Specimen numbers", "Fossil locality", "Coordinates")
+knitr::kable(prov)
+```
+
+**Table S1. Provenance of fossil material.** Individuals from the Yaoying section are usually bigger, with a thicker body wall, and have a smaller ratio of apertural width to shell length than specimens from other areas. 
+In the absence of other differentiating features, we consider these deviations to represent ecophenotypical variation within a single species, perhaps reflecting the increased energetics and predation pressure that accompany the shallower water depth reported at the Yaoying section [@Zhao2012].
+
+\clearpage
+
+<!--chapter:end:22_SupplementaryTable.Rmd-->
+
+`r if (knitr::is_html_output()) '# References {-}'`
+
+<!--chapter:end:99_References.Rmd-->
+
