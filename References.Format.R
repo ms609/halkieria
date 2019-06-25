@@ -7,10 +7,13 @@ refLines <- gsub("^(\\w+\\s*=\\s*\\{)", "  \\1", refLines, perl=TRUE)
 refLines <- gsub("\\{\\\\~\\{\\}\\}(\\w)", "\\\\textit{\\1", refLines, perl=TRUE)
 refLines <- gsub("(\\w)\\{\\\\~\\{\\}\\}(\\W)", "\\1}\\2", refLines, perl=TRUE)
 trimmedLines <- trimws(refLines)
-remove <- substr(trimmedLines, 1, 9) %in% c('abstract ', 'keywords ') |
+remove <-
+  substr(trimmedLines, 1, 11) %in% c('shorttitle ') |
+  substr(trimmedLines, 1, 9) %in% c('abstract ', 'keywords ', 'language ') |
+  substr(trimmedLines, 1, 8) %in% c('urldate ') |
   substr(trimmedLines, 1, 7) %in% c('annote ') |
   substr(trimmedLines, 1, 6) %in% c('month ') |
-  substr(trimmedLines, 1, 5) %in% c('file ', 'issn ', 'isbn ') |
+  substr(trimmedLines, 1, 5) %in% c('file ', 'issn ', 'isbn ', 'note ') |
   substr(trimmedLines, 1, 4) == 'url '
 refLines <- refLines[!remove]
 
