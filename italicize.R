@@ -4,7 +4,7 @@ Italicize <- function (string) {
                                     c(taxa_names,
                                       'Bactrotheca', 'Bethia', 'Bowerbankia',
                                       'Calloria',
-                                      'Disoma', 'Discinisca',
+                                      'Diadeloplax', 'Disoma', 'Discinisca',
                                       'Eichwaldia', 'Electra', 'Enchytraeus',
                                       'Equisetum', 'Eoorthis', 'Fredericella',
                                       'Galeolaria', 'Glottidia', 'Gompholites',
@@ -17,7 +17,8 @@ Italicize <- function (string) {
                                       'Nereis', 'Neocrania', 'Notosaria',
                                       'Neoancistrocrania', 'Oikozetetes',
                                       'Paracraniops', 'Paramicrocornus',
-                                      'Phascolion', 'Phoronopsis', 'Recilites',
+                                      'Phascolion', 'Phoronopsis', 'Protobalanus',
+                                      'Recilites',
                                       'Scolelepis',
                                       'Terebratalia', 'Themiste', 'Tubulipora',
 
