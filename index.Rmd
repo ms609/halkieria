@@ -53,9 +53,11 @@ tntFiles <- tntFiles[order(tntKs)]
 tntFile <- gsub(".*(mbank_.*\\.tnt).*", "\\1", readLines(tntFiles[1], n=1))
 nexusFile <- MostRecentNexus()
 my_data <- ReadAsPhyDat(nexusFile)
-#ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
-#                  'Probactrotheca') # Also manually update tnt.run using `taxcode-`
-ignored_taxa <- character(0)
+ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
+                  'Probactrotheca', 'Chaetoderma', 'Leptochiton', 
+                  'Mopalia', 'Neopilina', 'Siphogonuchites_multa', 
+                  'Wirenia', 'Yochelcionella_greenlandica') # Also manually update tnt.run using `taxcode-`
+#ignored_taxa <- character(0)
 my_data[ignored_taxa] <- NULL
 
 # my_data contains an inapplicable state that we should convert to ambiguous for 
@@ -77,13 +79,15 @@ my_chars <- my_chars[!(rownames(my_chars) %in% ignored_taxa), ]
 
 neomorphic <- vapply(my_states, IsNeomorphic, logical(1))
 
-kValues <- c(3, 4.5, 7, 10.5, 16, 24)
+#kValues <- c(3, 4.5, 7, 10.5, 16, 24)
+kValues <- c(4.5, 10.5, 24)
 
 powersOf2 <- 2^(seq_along(my_data) - 1) # Needed for GetSplits etc
 
 outgroup <- 'Namacalathus'
 outgroup <- 'Loxosomella'
 rootingTips <- c('Tonicella', 'Serpula', 'Loxosomella')
+rootingTips <- outgroup
 ```
 
 (ref:first-panels) at _k_ = `r kValues[1]` and `r kValues[2]`.
