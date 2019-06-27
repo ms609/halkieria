@@ -55,8 +55,7 @@ nexusFile <- MostRecentNexus()
 my_data <- ReadAsPhyDat(nexusFile)
 ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
                   'Probactrotheca', 'Chaetoderma', 'Leptochiton', 
-                  'Mopalia', 'Neopilina', 'Siphogonuchites_multa', 
-                  'Wirenia', 'Yochelcionella_greenlandica') # Also manually update tnt.run using `taxcode-`
+                  'Mopalia') # Also manually update tnt.run using `taxcode-`
 #ignored_taxa <- character(0)
 my_data[ignored_taxa] <- NULL
 
