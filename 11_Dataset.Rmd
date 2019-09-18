@@ -1,0 +1,43 @@
+---
+title: "Phylogenetic dataset"
+author: "Martin R. Smith"
+date: "`r Sys.Date()`"
+---
+
+<!--\SItext-->
+# Phylogenetic dataset {#dataset}
+
+Analysis was performed on a new matrix of `r length(names(my_data))` lophotrochozoan taxa, coded for `r sum(attr(my_data, 'weight'))` morphological characters (`r sum(neomorphic)` neomorphic, `r sum(!neomorphic)` transformational).
+The matrix can be viewed interactively at Morphobank `r MorphoLink(checkAccess=FALSE)`;
+a static version can be downloaded directly `r if (knitr::is_html_output()) paste0("in ", GitLink(gsub('^\\./', '', nexusFile), 'Nexus'), " or ", GitLink(tntFile, 'TNT'), " format") else paste0(": \n\n - ", GitLink(gsub('^\\./', '', nexusFile)), " (Nexus format)\n\n - ", GitLink(tntFile), " (TNT format)")`.
+
+
+Taxa include sipunculans and molluscs, which have previously been interpreted as having affinities with hyoliths.   Other lophotrochozoan groups help to constrain the outgroup topology, and a diversity of brachiozoans helps to resolve the position of hyoliths within this group.
+
+Characters are coded following the [recommendations](https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/) of @Brazeau2018:
+
+- We have employed reductive coding [@Wilkinson1995], using a distinct state to mark character inapplicability. Character specifications follow the structural syntax of @Sereno2007 in order to highlight ontological dependence between characters and emphasize the structure of the dataset.
+
+- We have distinguished between neomorphic and transformational characters [_sensu_ @Sereno2007] by reserving the token `0` to refer to the absence of a neomorphic (i.e. presence/absence) character.  The states of transformational characters (i.e. characters that describe a property of a feature) are represented by the tokens `1`, `2`, `3`, ...
+
+- We code the absence of neomorphic ontologically dependent characters [_sensu_ @Vogt2017] as absence, rather than inapplicability.
+
+
+The complete dataset comprises `r sum(!my_chars %in% c('-', '?'))` character codings, plus `r sum(my_chars == '-')` inapplicable codings.  (The amount and quality of data that _is_ coded is more instructive than the number of cells that are ambiguous [@Wiens1998;@Wiens2003], which, for completeness, is `r sum(my_chars == '?')`). Of the `r ncol(my_chars)` characters, the number that were coded with an applicable token for each taxon is:
+
+```{r Coded per taxon, echo=FALSE, asis=TRUE}
+coded <- apply(my_chars, 1, function (x) sum(!(x %in% c('?', '-'))))
+coded <- coded[order(names(coded))]
+columns <- 3
+roundLength <- ceiling(length(coded) / columns) * columns
+padding <- rep('', roundLength - length(coded))
+colStart <- ceiling(seq(1, roundLength + 1, len=columns + 1))[-(columns+1)]
+colEnd <- c(colStart[-1] - 1, length(coded))
+codeMat <- matrix('', ncol=columns * 2, nrow=colEnd[1])
+codeMat[, seq_len(columns) * 2 - 1] <-
+  c(paste0('_', gsub('_', ' ', names(coded), fixed=TRUE), '_'), padding)
+codeMat[, seq_len(columns) * 2] <- c(paste0(coded, "   "), padding)
+
+knitr::kable(codeMat, col.names=rep('', columns * 2))
+```
+

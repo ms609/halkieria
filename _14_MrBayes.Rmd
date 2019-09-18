@@ -1,0 +1,135 @@
+---
+title: "Bayesian Analysis results"
+author: "Martin R. Smith"
+date: "`r Sys.Date()`"
+---
+
+
+# Bayesian analysis {#bayesian}
+
+```{R mrbayes-ini, echo=FALSE}
+files <- list.files('MrBayes', pattern='^hyo\\..*\\.t$', full.names=TRUE)
+Mgen <- 5
+```
+```{R mrbayes-load-trees, echo=FALSE}
+bayesTrees <- lapply(files, read.nexus)
+nTrees <- length(bayesTrees[[1]])
+
+ew.files <- list.files('TreeSearch', pattern='hk_ew_\\d*\\.nex', full.names=TRUE)
+ew.abest <- read.nexus(file=ew.files[which.max(file.mtime(ew.files))])
+ew.abest <- if (class(ew.abest) == 'multiPhylo') ew.abest[[1]] else ew.abest
+
+postBurnin <- lapply(bayesTrees, function (x) x[ceiling(nTrees * 0.1):nTrees])
+```
+
+Bayesian search was conducted in MrBayes v3.2.6 [@Ronquist2012] using the Mk model [@Lewis2001] with gamma-distributed rate variation across characters:
+
+> lset coding=variable rates=gamma;
+
+Branch length was drawn from a dirichlet prior distribution, which is less informative than an exponential model [@Rannala2012], but requires a prior mean tree length within about two orders of magnitude of the true value [@Zhang2012]. To satisfy this latter criterion, we specified the prior mean tree length to be equal to the length of the most parsimonious tree under equal weights, using a Dirichlet prior with $\alpha_T = 1$, $\beta_T = 1/($_equal weights tree length_$/$_number of characters_$)$, $\alpha = c = 1$:
+
+> prset brlenspr = unconstrained: gammadir(1, `r signif(attr(my_data, 'nr')/Fitch(ew.abest, my_data), 2)`, 1, 1);
+
+Neomorphic and transformational characters [_sensu_ @Sereno2007] were allocated to two separate partitions whose proportion of invariant characters and gamma shape parameters were allowed to vary independently:
+
+> charset Neomorphic = `r paste(which(neomorphic), collapse=' ')`;
+>
+> charset Transformational = `r paste(which(!neomorphic), collapse=' ')`;
+>
+>
+> partition chartype = 2: Neomorphic, Transformational;
+>
+> set partition = chartype;
+>
+>
+> unlink shape=(all) pinvar=(all);
+
+
+Neomorphic characters were not assumed to have a symmetrical transition rate – that is, the probability of the absent → present transition was allowed to differ from that of the present → absent transition, being drawn from a uniform prior:
+
+> prset applyto=(1) symdirihyperpr=fixed(1.0);
+
+The rate of variation in neomorphic characters was also allowed to vary from that of transformational characters:
+
+> prset applyto=(1) ratepr=variable;
+
+_`r outgroup`_ was selected as an outgroup:
+
+> outgroup `r outgroup`;
+
+Four MrBayes runs were executed, each sampling eight chains for `r Mgen`&nbsp;000&nbsp;000 generations, with samples taken every 500 generations.  The first 10% of samples were discarded as burn-in.
+
+> mcmcp ngen=`r Mgen`000000 samplefreq=500 nruns=4 nchains=8 burninfrac=0.1;
+
+A posterior tree topology was derived from the combined posterior sample of all runs. Convergence was indicated by PSRF = 1.00 and an estimated sample size of > 200 for each parameter.  Nodes are labelled with posterior probabilities; recall that caution must be applied when interpreting these values [@Yang2018].
+
+The Nexus file used to generate these results in MrBayes can be `r GitLink("MrBayes/hyo.nex", "downloaded")`, 
+and run in [MrBayes](http://mrbayes.sourceforge.net/download.php) by typing `exe path/to/download`.
+
+## Parameter estimates
+
+```{R mrbayes-parameter-summary, echo=FALSE, asis=TRUE}
+pstat <- read.table('MrBayes/hyo.nex.pstat', skip=1, header=TRUE)[, -c(4:6)]
+pstat[, 2:5] <- signif(pstat[, 2:5], 3)
+pstat[, 6] <- signif(pstat[, 6], 5)
+pstat[pstat[, 4] < 200, 4] <- paste0('<mark>', pstat[pstat[, 4] < 200, 4], '</mark>')
+pstat[pstat[, 5] < 200, 5] <- paste0('<mark>', pstat[pstat[, 5] < 200, 5], '</mark>')
+knitr::kable(pstat)
+```
+
+## Results
+
+The posterior tree distribution can be downloaded in Nexus format from `r GitLink('MrBayes', raw=FALSE)`.
+
+```{R mrbayes-full-consensus, fig.width=6, fig.height=4.5, fig.cap="Results of Bayesian analysis, posterior probability > 50%, all taxa", echo=FALSE}
+omit <- c("none")
+ # 'Novocrania', 'Craniops', 'Ussunia', 'Gasconsia',
+thinned <- c(lapply(postBurnin[[1]], drop.tip, omit),
+             lapply(postBurnin[[2]], drop.tip, omit),
+             lapply(postBurnin[[3]], drop.tip, omit),
+             lapply(postBurnin[[4]], drop.tip, omit))
+class(thinned) <- 'multiPhylo'
+mbCon <- RootTree(consensus(thinned, p=0.5), rootingTips)
+tipIndex <- sort(thinned[[1]]$tip.label)
+sampleSize <- min(length(thinned), 10000L) # Not all trees, but ought to be enough for our purposes
+mbSplits <- GetSplits(sample(thinned, sampleSize), tipIndex)
+#ColPlot(UnitEdges(root(mbCon, outgroup, resolve.root=TRUE)))
+
+
+ColPlot(UnitEdges(mbCon))
+supporters <- SplitSupport(mbCon, mbSplits, tipIndex)
+nodeSupport <- c('', signif(supporters[-1] / sampleSize * 100L, 3))
+nodelabels(paste0("\n\n", nodeSupport), adj=0, pos=2, frame='none', cex=0.75,
+           col=SupportColour(round(supporters / sampleSize, 2)))
+#ColMissing(omit)
+```
+
+```{R mrbayes-pruned-consensus, fig.width=7.1, fig.height=4.2, fig.cap="Results of Bayesian analysis, posterior probability > 50%, wildcard taxa pruned", echo=FALSE}
+#omit <- c(
+#  'Lingulosacculus', 'Mummpikia_nuda', 'Lingulellotreta_malongensis', 
+#  'Clupeafumosus_socialis', #'Siphonobolus_priscus',
+#  'Micrina', 'Heliomedusa_orienta', 'Mickwitzia_muralensis',
+#  'Tomteluva_perturbata', 'Yuganotheca_elegans',
+#  'Nisusia_sulcata', 'Kutorgina_chengjiangensis'
+#  )
+omit <- c('Paterimitra', 'Micrina')
+thinned <- c(lapply(postBurnin[[1]], drop.tip, omit),
+             lapply(postBurnin[[2]], drop.tip, omit),
+             lapply(postBurnin[[3]], drop.tip, omit),
+             lapply(postBurnin[[4]], drop.tip, omit))
+class(thinned) <- 'multiPhylo'
+rootedConsensus <- RootTree(consensus(thinned, p=0.5), rootingTips)
+
+
+mbCon <- RootTree(consensus(thinned, p=0.5), rootingTips)
+tipIndex <- sort(thinned[[1]]$tip.label)
+mbSplits <- GetSplits(sample(thinned, sampleSize), tipIndex)
+
+ColPlot(UnitEdges(rootedConsensus))
+supporters <- SplitSupport(rootedConsensus, mbSplits, tipIndex)
+nodeSupport <- c('', signif(supporters[-1] / sampleSize * 100L, 3))
+nodelabels(paste0("\n\n", nodeSupport),
+           col=SupportColour(round(supporters / sampleSize, 2)),
+           adj=0, pos=2, frame='none', cex=0.75)
+ColMissing(omit)
+```

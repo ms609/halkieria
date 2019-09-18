@@ -1,0 +1,212 @@
+---
+title: "TreeSearch results"
+author: "Martin R. Smith"
+---
+
+# Corrected parsimony {#treesearch}
+
+The phylogenetic dataset contains a considerable proportion of inapplicable codings (`r sum(my_chars == '-')`, = `r round(100 * sum(my_chars == '-') / sum(my_chars != '?'), 1)`% of `r sum(my_chars != '?')` non-ambiguous tokens;  `r round(sum(my_chars == '-') / length(my_chars), 3) * 100`% of `r length(my_chars)` total cells), which are known to introduce error and bias to phylogenetic reconstruction when the Fitch algorithm is employed [@Maddison1993;@Brazeau2018].  As such, we used the R package _TreeSearch_ v0.1.2 [@Smith2018TreeSearch] to conduct phylogenetic tree search with a tree-scoring algorithm that avoids logically impossible character transformations when handling inapplicable data [@Brazeau2018], implemented in the _MorphyLib_ C library [@Brazeau2017Morphylib].
+
+## Search parameters
+
+Heuristic searches were conducted using the parsimony ratchet [@Nixon1999] under equal and implied weights [@Goloboff1997].  The consensus tree presented in the main manuscript represents a strict consensus of all trees that are most parsimonious under one or more of the concavity constants (_k_) `r paste(kValues[-length(kValues)], collapse=', ')` and `r kValues[length(kValues)]`, an approach that has been shown to produce higher accuracy (i.e. more nodes and quartets resolved correctly) than equal weights at any given level of precision [@Smith2017].
+
+## Analysis 
+
+The R commands used to conduct the analysis are reproduced below.
+The results can most readily be replicated using the [R markdown files](https://github.com/ms609/hyoliths/) used to generate these pages:
+in Rstudio, run `r GitLink("index.Rmd", "index.Rmd")`, then run each block in 
+`r GitLink("13_TreeSearch.Rmd", "TreeSearch.Rmd")`.  The complete analysis will take several hours.
+
+### Initialize and load data
+
+```{r treesearch-load-morphoBank, echo=TRUE, eval=FALSE}
+# Load data from locally downloaded copy of MorphoBank matrix
+my_data <- ReadAsPhyDat(nexusFile)
+my_data[ignored_taxa] <- NULL
+iw_data <- PrepareDataIW(my_data)
+```
+
+### Generate starting tree
+
+Start by quickly rearranging a neighbour-joining tree, rooted on the outgroup.
+
+```{R treesearch-starting-tree, echo=TRUE}
+nj.tree <- NJTree(my_data)
+rooted.tree <- EnforceOutgroup(nj.tree, outgroup)
+start.tree <- TreeSearch(tree=rooted.tree, dataset=my_data, maxIter=3000,
+                         EdgeSwapper=RootedNNISwap, verbosity=0)
+```
+
+### Implied weights analysis
+
+The position of the root does not affect tree score, so we keep it fixed (using `RootedXXXSwap` functions) to avoid unnecessary swaps.
+
+```{r treesearch-implied-weights-analysis, echo=TRUE, eval=FALSE}
+for (k in kValues) {
+  iw.tree <- IWRatchet(start.tree, iw_data, concavity=k,
+                       ratchHits = 20, ratchIter=4000, searchHits=56,
+                       swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap),
+                       verbosity=0L)
+  score <- IWScore(iw.tree, iw_data, concavity=k)
+  # Write a single best tree
+  write.nexus(iw.tree,
+              file=paste0("TreeSearch/hk_iw_k", k, "_", 
+                          signif(score, 5), ".nex", collapse=''))
+
+  iw.consensus <- IWRatchetConsensus(iw.tree, iw_data, concavity=k,
+                  swappers=list(RootedTBRSwap, RootedNNISwap),
+                  searchHits=55, searchIter=4000, nSearch=250, verbosity=0L)
+  write.nexus(iw.consensus,
+              file=paste0("TreeSearch/hk_iw_k", k, "_", 
+                          signif(IWScore(iw.consensus[[1]], iw_data, concavity=k), 5),
+                          ".all.nex", collapse=''))
+}
+```
+
+
+```{R treesearch-deeper-iw, echo=FALSE, eval=FALSE}
+# This block provides a crude check that each run has found an optimum;
+# if not it continues searching, and you may consider increasing the 
+# ratchHits, ratchIter or searchHits parameters above.
+for (k in kValues) {
+  source('loadTrees.R')
+  
+  k.scores <- unlist(lapply(iw.exist, function (x) IWScore(x[[1]], iw_data, k)))
+  ew.scores <- vapply(ew.trees, IWScore, double(1), iw_data, k)
+  this.k <- kValues[iw.treesLoaded] == k
+  if (!any(this.k)) next
+  my.score <- k.scores[this.k]
+  ew.best <- min(ew.scores)
+  if (ew.best < min(k.scores)) {
+    start.tree <- ew.trees[which.min(ew.scores)]
+  } else if (k.scores[this.k] > min(k.scores)) {
+    start.tree <- iw.trees[[which.min(k.scores)]][[1]]
+  } else {
+    cat("\n\n * The best tree at k =", k, "is better than any other optimal tree.")
+    next
+  }
+  
+  attr(start.tree, 'score') <- NULL
+  cat("\n\n * Did not find global optimum for k =", k, "; continuing search.\n   ")
+  iw.tree <- IWRatchet(start.tree, iw_data, concavity=k,
+                       ratchHits = 30, ratchIter=4000, searchHits=56,
+                       swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap),
+                       verbosity=1L)
+  score <- IWScore(iw.tree, iw_data, concavity=k)
+  # Write a single best tree
+  write.nexus(iw.tree,
+              file=paste0("TreeSearch/hk_iw_k", k, "_", 
+                          signif(score, 5), ".nex", collapse=''))
+
+  iw.consensus <- IWRatchetConsensus(iw.tree, iw_data, concavity=k,
+                  swappers=list(RootedTBRSwap, RootedNNISwap),
+                  searchHits=55, nSearch=250, searchIter=4000, verbosity=1L)
+  write.nexus(iw.consensus,
+              file=paste0("TreeSearch/hk_iw_k", k, "_", 
+                          signif(IWScore(iw.consensus[[1]], iw_data, concavity=k), 5),
+                          ".all.nex", collapse=''))
+}
+```
+
+### Equal weights analysis
+
+```{r treesearch-equal-weights-analysis, echo=TRUE, eval=FALSE}
+ew.tree <- Ratchet(start.tree, my_data, verbosity=0L,
+                   ratchHits = 20, ratchIter=4000, searchHits=55,
+                   swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap))
+ew.consensus <- RatchetConsensus(ew.tree, my_data, nSearch=250, searchHits = 85,
+                                 swappers=list(RootedTBRSwap, RootedNNISwap),
+                                 verbosity=0L)
+write.nexus(ew.consensus, file=paste0(collapse='', "TreeSearch/hk_ew_",
+                                      Fitch(ew.tree, my_data), ".nex"))
+```
+
+## Results
+
+Optimal trees can be downloaded in Nexus format from `r GitLink('TreeSearch', raw=FALSE)`.
+
+```{R treesearch-load-trees, echo=FALSE}
+source('loadTrees.R')
+tipIndex <- sort(allTrees[[1]]$tip.label)
+allSplits <- GetSplits(allTrees, tipIndex)
+```
+
+(ref:ts-all-cons) Consensus of all parsimony trees, under equal and implied weights.  
+
+(ref:node-support) Node labels denote the frequency of each clade in most parsimonious trees under all analytical conditions.  
+
+```{r treesearch-maj-consensus, fig.cap="(ref:ts-all-cons) (ref:node-support)", fig.width=6, fig.height=5.1, echo=FALSE}
+majCon <- RootTree(consensus(allTrees, p=0.5), rootingTips)
+supporters <- SplitSupport(majCon, allSplits, tipIndex)
+
+ColPlot(majCon)
+nodelabels(paste0("\n\n", signif(supporters / length(allTrees), 2)),
+           col=SupportColour(round(supporters / length(allTrees), 2)),
+           adj=0, pos=2, frame='none', cex=0.75)
+
+```
+
+(ref:ts-trim-cons) Consensus of same trees, with taxa pruned before constructing consensus to give context to clade support.  
+
+```{r treesearch-maj-consensus-pruned, fig.cap="(ref:ts-trim-cons) (ref:node-support)", fig.width=6, fig.height=5.1, echo=FALSE}
+#omit <- c("Micrina", 'Mickwitzia_muralensis', 'Heliomedusa_orienta')
+omit <- c("Cotyledion_tylodes", "Namacalathus", "Phoronis")
+allPruned <- lapply(allTrees, drop.tip, omit)
+majCon <- RootTree(consensus(allPruned, p=0.5), rootingTips)
+conTipIndex <- sort(majCon$tip.label)
+conSplits <- GetSplits(allPruned, conTipIndex)
+
+####
+supporters <- SplitSupport(majCon, conSplits, conTipIndex)
+####
+ColPlot(majCon)
+nodelabels(paste0("\n", signif(supporters / length(allTrees), 2)),
+           col=SupportColour(round(supporters / length(allTrees), 2)),
+           adj=0, pos=2, frame='none', cex=0.75)
+ColMissing(omit)
+
+```
+
+(ref:ts-iw-indiv) Strict consensus trees of implied weights analyses
+
+\clearpage 
+
+```{r treesearch-iw-indiv-1, fig.width=7.1, fig.height=5.1, fig.cap="(ref:ts-iw-indiv) (ref:first-panels)", echo=FALSE}
+# Plot consensus results
+par(mfrow=c(1, 2), mar=rep(0.2, 4))
+PlotPanel(iw.trees, 1)
+PlotPanel(iw.trees, 2)
+```
+
+\clearpage 
+
+```{R treesearch-iw-indiv-2, fig.width=7.1, fig.height=5.1, fig.cap="(ref:ts-iw-indiv) (ref:second-panels)", echo=FALSE}
+par(mfrow=c(1, 2), mar=rep(0.2, 4))
+PlotPanel(iw.trees, 3)
+PlotPanel(iw.trees, 4)
+```
+
+\clearpage 
+
+```{R treesearch-iw-indiv-3, fig.width=7.1, fig.height=5.1, fig.cap="(ref:ts-iw-indiv) (ref:third-panels)", echo=FALSE}
+par(mfrow=c(1, 2), mar=rep(0.2, 4))
+PlotPanel(iw.trees, 5)
+PlotPanel(iw.trees, 6)
+```
+
+\clearpage
+
+```{r treesearch-equal-weights-results, fig.cap="Strict consensus of most parsimonious trees under equally weighted parsimony", fig.width=6, fig.height=7.1, echo=FALSE}
+ew.trees <- lapply(ew.trees, drop.tip, 'Siphogonuchites_multa')
+ColPlot(RootTree(consensus(ew.trees), rootingTips))
+```
+
+
+```{R treesearch-equal-weights-pruned-consensus, fig.cap="Strict consensus of equal weights results, taxa excluded", fig.width=6, fig.height=5.1, echo=FALSE, eval=FALSE}
+omit <- c("Cotyledion_tylodes", "Micrina")
+ColPlot(RootTree(ConsensusWithout(ew.trees, omit), rootingTips))
+ColMissing(omit)
+```
+
+\clearpage

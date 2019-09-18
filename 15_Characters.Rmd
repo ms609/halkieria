@@ -1,0 +1,313 @@
+---
+title: "Visualizing characters"
+author: "Martin R. Smith"
+---
+
+# Character reconstructions {#reconstructions}
+
+This page provides definitions for each of the characters in our matrix, and justifies codings in particular taxa where relevant.
+Further citations for codings that are not discussed in the text can be viewed by browsing the [morphological dataset](#dataset) on MorphoBank (`r MorphoLink(checkAccess=FALSE)`).
+
+Alongside its definition, each character has been mapped onto a tree.
+ `r if (knitr::is_html_output()) 'Any of the optimal trees can be selected by modifying the tree number listed above each diagram.' else paste0('Here, we have arbitrarily selected one most parsimonious tree obtained under implied weighting. Other trees can be viewed in the HTML version of this document at ', GitHubPages('reconstructions.html'), '.')`
+Each tip is labelled according to its coding in the matrix.  These states have been used to reconstruct the condition of each internal node, using the parsimony method of @Brazeau2018 as implemented in the _R_ package _Inapp_.
+
+We emphasize that different trees give different reconstructions.  The character mappings are not intended to definitively establish how each character evolved, but to help the reader quickly establish how each character has been coded, and to visualize at a glance how each character fits onto a given tree.  `r if(knitr::is_html_output()) '<a href="javascript:toggleSVG();">Click here</a> to <span id="showOrHide">hide</span> the character reconstructions below.'`
+
+```{R load-the-characters, echo=FALSE, message=FALSE}
+source('loadTrees.R')
+if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
+  uniqueTrees <- unique(allTrees)
+} else if (length(iw.exist) > 1L) {
+  uniqueTrees <- iw.exist[[ceiling(length(iw.exist)/2L)]][1] # Single [] to keep as a list of 1 tree.
+} else {
+  uniqueTrees <- allTrees[1]
+}
+tree <- uniqueTrees[[1]]
+tree$edge.length <- rep(1, nrow(tree$edge))
+
+char_names <- gsub("^'(.+)'$", "\\1", colnames(my_chars))
+n_char <- ncol(my_chars)
+char_parts <- strsplit(char_names, ": ")
+char_nesting <- vapply(char_parts, length, 0L)
+
+taxa_names <- unique(c("Namacalathus", rownames(my_chars)))
+taxa_plaintext <- gsub("_", " ", taxa_names, fixed=TRUE)
+taxa_italic <- paste0("_", taxa_plaintext, "_")
+
+index <- attr(my_data, 'index')
+ci_text <- vapply(uniqueTrees, function (tree) {
+  fitch_consistency_index <- CI(tree, fitch_data, sitewise=TRUE)
+  fitch_steps <- fitch(tree, fitch_data, site='site')[index]
+  min_steps <- fitch_consistency_index * fitch_steps
+  # Maximum steps is tricky to calculate, so we'll leave RI [= max-obs / max-min]
+  # unless referees insist on it; neither it nor CI mean much in any case.
+  fitch_retention_index <- RI(tree, fitch_data, sitewise=TRUE)
+  fitch_retention_index <- ifelse(fitch_retention_index == 'NaN', 'n/a', signif(fitch_retention_index, 2))
+  paste0('CI = ', signif(min_steps / FitchSteps(tree, my_data)[index], 2),
+                  '; Fitch CI = ', signif(fitch_consistency_index, 2),
+                  '; Fitch RI = ', fitch_retention_index)
+}, character(n_char), USE.NAMES=FALSE)
+```
+```{R SVG-setup, echo=FALSE, results="asis"}
+fileNamer <- 'Brachiopod_phylogeny_files/figure-html/tree%s-char%s.svg'
+treeXMargins <- c(5L, 200L)
+treeYMargins <- c(7L, 8L)
+nTree <- c(length(ew.trees), vapply(iw.trees, length, 0))
+analysisNames <- c('Equal weights', paste0(c('Implied weights, k = ', rep('IW, k = ', length(kValues) - 1L)), kValues))
+analysisLabels <- c(analysisNames[-1], analysisNames[1])
+treeNames <- rep(analysisNames, nTree)
+if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
+  CheckDirExists <- function (x) if (!dir.exists(x)) dir.create(x)
+  CheckDirExists('_book')
+  CheckDirExists('_book/Brachiopod_phylogeny_files')
+  CheckDirExists('_book/Brachiopod_phylogeny_files/figure-html')
+  svgCanvas <- SVGCanvas(allTrees, rootingTips, analysisNames, 
+                         uniqueTrees=uniqueTrees,
+                         width=getOption('svgWidth'), height=getOption('svgHeight'),
+                         xMargins=treeXMargins, yMargins=treeYMargins)
+}
+```
+
+(ref:all-changes) All character changes mapped onto a single consensus tree.  Logically coherent changes are marked in <span class="color: `r brewer[[4]][4]`;">blue</span>; logically impossible changes (which are nevertheless reconstructed by the Fitch algorithm) are marked in <span class="color: `r brewer[[4]][1]`;">red</span>.  <span class="color: `r brewer[[4]][2]`;">Orange</span> denotes nodes at which homoplasy due to additional regions is mapped.[...]
+
+```{R all-changes, echo=FALSE, fig.height=6, fig.width=8, fig.cap="(ref:all-changes)", results="asis"}
+omit <- c("Micrina", "Micromitra",
+          "Longtancunella_chengjiangensis",# "Yuganotheca_elegans",
+          "Salanygolina", "Askepasma_toddense")#, "Tomteluva_perturbata")
+omit <- character(0)
+#majCon <- RootTree(ConsensusWithout(tnConsensi, omit, p=0.5), rootingTips)
+majCon <- RootTree(consensus(tnConsensi, p=0.5), rootingTips)
+
+bifurcating <- multi2di(majCon) # Nodes inserted at random
+bEdge <- bifurcating$edge
+bParent <- bEdge[, 1]
+bChild <- bEdge[, 2]
+conTips <- majCon$tip.label
+bifTips <- bifurcating$tip.label
+recons <- apply(my_chars[conTips, ], 2, function (char) {
+  inapp <- apply.reconstruction(bifurcating, char)
+  isApp <- vapply(inapp$Up2, function (x) !-1 %in% x, logical(1))
+  enterApp <- isApp[bChild] & !isApp[bParent]
+  
+  fitch <- apply.reconstruction(bifurcating, char, method='Fitch', inapplicable=1)
+  # Return:
+  list('changes' = inapp$changes,
+       'regions' = bParent[enterApp],
+       'regioncounted' = inapp$regions,
+       'fitches' = fitch$changes[!fitch$changes %in% inapp$changes])
+})
+reconLength <- length(recons[[1]])
+
+nConTip <- length(conTips)
+conSplits <- vapply(Descendants(majCon, nConTip + 1:Nnode(majCon), type='tips'),
+           function (tips) conTips %in% conTips[tips], logical(nConTip))
+bifSplits <- vapply(Descendants(bifurcating, nConTip + seq_len(nConTip - 1L), type='tips'),
+           function (tips) bifTips %in% bifTips[tips], logical(nConTip))
+conSplitNos <- apply(conSplits, 2, function (x) sum(powersOf2[x]))
+bifNos <- apply(bifSplits, 2, function (x) sum(powersOf2[x]))
+whichNode <- integer(length(bifNos))
+bifReal <- bifNos %in% conSplitNos
+whichNode[bifReal] <- vapply(bifNos[bifReal], function (x) which(conSplitNos == x), integer(1))
+whichNode[!bifReal] <- apply(bifSplits[, !bifReal, drop=FALSE], 2, function (bifSplit) {
+  extras <- colSums(conSplits[!bifSplit, ])
+  parentSplits <- apply(conSplits[bifSplit, ], 2, all)
+  which(parentSplits & extras == min(extras[parentSplits]))
+})
+whichNode <- whichNode + nConTip
+
+if (knitr::is_html_output()) {
+  
+  conLabels <- vapply(nConTip + 1:Nnode(majCon), function (node) {
+    where <- vapply(recons, function (char) vapply(char, function (x) node %in% whichNode[x - nConTip], logical(1)), logical(reconLength))
+    whichWhere <- apply(where, 1, which)
+    ret <- unlist(lapply(whichWhere, length))
+    if (is.null(ret)) return(character(reconLength))
+    # Return: 
+    ifelse(ret == 0, '', as.character(ret))
+  }, character(reconLength))
+
+  ### Calculate node coordinates for majCon
+  
+  conInternal <- nConTip + 1:Nnode(majCon)
+  conTerminal <- seq_len(nConTip)
+  conLabel <- character(nConTip)
+  conEdge <- dim(majCon$edge)[1]
+  eachConEdge <- seq_len(conEdge)
+  conParent <- majCon$edge[, 1]
+  conChild  <- majCon$edge[, 2]
+  
+  conYStep <- round((getOption('svgHeight') - treeYMargins[2] - treeYMargins[1]) / nConTip, 1)
+  
+  ancestors <- Ancestors(majCon, type='all')
+  nAncestors <- vapply(ancestors, length, 1)
+  conXStep <- round(seq(treeXMargins[1], 
+                        to=getOption('svgWidth') - treeXMargins[2],
+                        len=max(nAncestors) + 1L), 1)
+  conX <- conXStep[nAncestors + 1L]
+  conY <- double(length(nAncestors))
+  conY[conChild[conChild <= nConTip]] <-
+    seq(treeYMargins[1] + 30,
+        getOption('svgHeight') - treeYMargins[2],
+        len=nConTip)
+  
+  for (nodeI in rev(conInternal)) {
+    conY[nodeI] <- mean(conY[Children(majCon, nodeI)])
+  }
+  conY <- round(conY, 1)
+  
+  edges <- paste0('<path d="', paste0('M', conX[conParent], ',', conY[conParent],
+                                      'V', conY[conChild], 'H', conX[conChild], 
+                                      collapse=''), '" stroke="#888"></path>')
+  tips <- paste0('<text x="', (conX[conTerminal] + 0L), 
+                 '" y="', conY[conTerminal] + 3L,
+                 '" fill="', taxonColour[conTips[conTerminal]],
+                 '" class="taxonLabel">', 
+                 gsub('_', ' ', conTips[conTerminal], fixed=TRUE), '</text>',
+                 collapse='')
+  omittedTips <- if (length(omit) > 0) {
+    paste0('<g transform="translate(', getOption('svgWidth') - 4L,
+           ' ', getOption('svgHeight'), 
+           ')"><text x="0" y="0" class="taxonLabel" text-anchor="end">', 
+           paste0('<tspan x="0" dy="-1.2em" fill="', taxonColour[omit], '">', 
+                  omit, '</tspan>', collapse=''),
+           '<tspan x="0" dy="-1.2em" class="tipsHeader">Pruned taxa:</tspan>',
+           '</text></g>')
+    } else ''
+  nodes <- paste0('<g transform="translate(', conX[conInternal] + 2L, 
+                  ' ', conY[conInternal], ')" class="node-g" data-node="', conInternal, 
+                  '"><text x="0" y="-1.2em" class="node"><tspan class="b42">',
+                  conLabels['regions', ], '</tspan><tspan class="b44" x="0" dy="1.2em">',
+                  conLabels['changes', ], '</tspan><tspan class="b41" x="0" dy="1.2em">', 
+                  conLabels['fitches', ], '</tspan></text></g>', collapse='')
+  conCaption <- paste0('<g transform="translate(', getOption('svgWidth') - 4L, ' 0)">',
+                       '<text x="0" y="0" text-anchor="end" class="stepsLabel">',
+                       '<tspan x="0" dy="1.2em">',
+                       '<tspan class="score b44">Blue</tspan>: ',
+                       'Logically valid character transformations</tspan>', 
+                       '<tspan x="0" dy="1.2em"><tspan class="score b42">Orange</tspan>: ',
+                       'Applicable regions</tspan>', 
+                       '<tspan x="0" dy="1.2em"><tspan class="score b41">Red</tspan>: ',
+                       'Logically invalid Fitch steps</tspan>',
+                       '</text></g>')
+  svgSource <- paste0('<svg xmlns="http://www.w3.org/2000/svg" version="1.1',
+                ' " viewBox="0 0 ', getOption('svgWidth'),
+                ' ', getOption('svgHeight'), '" id="conTree">',
+                conCaption, tips, edges, omittedTips, nodes, '</svg>')
+  cat(svgSource)
+  
+  ## Generate detail-divs
+  majCaptions <- vapply(nConTip + 1:Nnode(majCon), function (node) {
+    where <- vapply(recons, function (char) vapply(char, function (x) node %in% whichNode[x - nConTip], logical(1)), logical(reconLength))
+    apply(where, 1, function (changes) {
+      if (any(changes)) {
+        paste0('<span class=change><span class=charNo>', which(changes), 
+               '</span>', gsub("^'|'$", "", names(changes[changes]), perl=TRUE),
+               '</span>', collapse='') 
+      } else ''
+    })
+  }, character(reconLength))
+  ncol <- colSums(majCaptions[c('regions', 'changes', 'fitches'), ] != '')
+  cat('<div id=nodeDetails>Click on the numbers by a node for details</div>',
+      paste0('<div id=nodeDetail', conInternal, ' class=nddtl><div class=nddtlhdr>',
+         'Steps incurred at node ', conInternal, ':</div>',
+         ifelse(majCaptions['changes', ] == '', '', 
+                paste0('<div class="tfm cl', ncol, '">', 
+                       majCaptions['changes', conInternal - nConTip], '</div>')), 
+         ifelse(majCaptions['regions', ] == '', '',
+                paste0('<div class="rgn cl', ncol, '">',
+                       majCaptions['regions', conInternal - nConTip], '</div>')),
+         ifelse(majCaptions['fitches', ] == '', '',
+                paste0('<div class="ftch cl', ncol, '">',
+                       majCaptions['fitches', conInternal - nConTip], '</div>')), 
+         '</div><div style="clear: both"></div>', collapse=''))
+} else {
+  ColPlot(majCon)
+  ColMissing(omit)
+  conLabels <- vapply(nConTip + 1:Nnode(majCon), function (node) {
+  where <- vapply(recons, function (char) vapply(char, function (x) node %in% whichNode[x - nConTip], logical(1)), logical(reconLength))
+  whichWhere <- apply(where, 1, which)
+  # Return: 
+  if (length(whichWhere) == 0) character(reconLength) else {
+    unlist(lapply(whichWhere, paste, collapse=', '))
+  }
+  }, character(reconLength))
+  LabelNodes(conLabels['changes', ], 4, 0)
+  LabelNodes(conLabels['regions', ], 2, 1)
+  LabelNodes(conLabels['fitches', ], 1, 2)
+}
+PrintJavascript('svgSwitcher.js')
+```
+```{R character-mapping, echo=FALSE, fig.height=6.2, fig.width=7.1, results="asis"}
+prev_char_parts <- "NONE"
+
+subheadings <- c("Digestive tract: Anus: Presence",
+                 "Gametes: Spermatozoa: Nucleus: Shape",
+                 "Gametes: Egg: Size",
+                 paste("Sclerites:",
+                       c("Bivalved", "Dorsal valve: Growth direction",
+                         "Ventral valve: Growth direction",
+                         "Ornament: Concentric ornament",
+                         "Composition: Mineralogy",
+                         "Structure: Stratiform lamellae expressed at surface")),
+                 paste("Larva:", c("Cilia: Metatroch", 
+                    "Apical organ: Muscles extending to the hyposphere")))
+
+#for (i in 14:17) {
+for (i in seq_len(n_char)) {
+  
+  # Print character heading:
+  this_char_parts <- char_parts[[i]]
+  next_char_parts <- if (i == n_char) "LAST_CHARACTER" else char_parts[[i + 1L]]
+  PrintCharacterHeading(char_names[i], i, prev_char_parts, this_char_parts, 
+                        next_char_parts, subheadings)
+  prev_char_parts <- this_char_parts
+  
+  # Plot character reconstruction:
+  PlotCharacterMapping(char = my_chars[, i], stateLabels = my_states[[i]],
+                       singleTree = uniqueTrees[[1]], legendText = ci_text[i, 1],
+                       canvas = svgCanvas, treeNames = treeNames,
+                       analysisLabels = analysisLabels, charIndex = i,
+                       svgFilename = paste0('_book/', sprintf(fileNamer, '%s', i)),
+                       SetPar = par(mar=rep(0.2, 4), cex=0.7))
+  
+  # Plot character details:
+  cat(paste0("  \n\n > **Character ", i, ": ", Italicize(char_names[i]), "**  \n>\n"))
+  if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
+    lineHeight <- 24L
+    
+    states_matrix <- apply.reconstruction(uniqueTrees[[1]], my_chars[, i])
+    matrix_data <- MatrixData(states_matrix, states_matrix, state.labels=my_states[[i]])
+    legend_labels <- matrix_data$legend
+    legend_col    <- matrix_data$legend_col
+    legendY <- round(lineHeight * seq_along(legend_labels), 1)
+    cat(paste0('>  <svg xmlns="http://www.w3.org/2000/svg" version="1.1',
+              '" viewBox="0 0 ', getOption('svgWidth'), ' ', 
+              lineHeight * length(legend_labels) + lineHeight - 5L,
+               # For T/N statement
+               '" class="statesLegend">',
+        paste0('<path d="M0,', legendY - 15L, 'h22" stroke="', legend_col,
+               ifelse(legend_col == 'lightgrey', '" class="inapplicable', ''),
+               '"></path>', collapse=''),
+        '<text x="30" y="-10" class="legendLabels">', 
+        paste0('<tspan x="30" dy="', lineHeight, '">', legend_labels, '</tspan>', collapse=''),
+        '<tspan x=0 dy="', lineHeight, '">', 
+        ifelse (IsTransformational(my_states[[i]]), "Transformational", "Neomorphic"),
+        ' character.</tspan>',
+        '</text></svg> \n>\n'))
+  } else {
+    PrintStates(Italicize(my_states[[i]]))
+  }
+  cat("  \n\n")
+  char_notes_i <- char_notes[[i]]
+  state_notes_i <- char_notes_i[[2]]
+  state_notes_i <- state_notes_i[!names(state_notes_i) %in% ignored_taxa]
+  if (length(char_notes_i[[1]]) > 0) cat(Italicize(char_notes_i[[1]]), "  \n")
+  if (length(state_notes_i) > 0) {
+    PrintStateNotes(state_notes_i, taxa_names, taxa_italic, i, Italicize)
+  }
+  if (my_states[[i]][[1]] != "''") PrintNaughtyInapplicables(my_chars[, i])
+  cat("  \n") # Clear line, ready for next block
+}
+PrintSwitcher(length(uniqueTrees))
+```
