@@ -129,7 +129,6 @@ Optimal trees can be downloaded in Nexus format from `r GitLink('TreeSearch', ra
 ```{R treesearch-load-trees, echo=FALSE}
 source('loadTrees.R')
 tipIndex <- sort(allTrees[[1]]$tip.label)
-allSplits <- GetSplits(allTrees, tipIndex)
 ```
 
 (ref:ts-all-cons) Consensus of all parsimony trees, under equal and implied weights.  
@@ -138,7 +137,7 @@ allSplits <- GetSplits(allTrees, tipIndex)
 
 ```{r treesearch-maj-consensus, fig.cap="(ref:ts-all-cons) (ref:node-support)", fig.width=6, fig.height=5.1, echo=FALSE}
 majCon <- RootTree(consensus(allTrees, p=0.5), rootingTips)
-supporters <- SplitSupport(majCon, allSplits, tipIndex)
+supporters <- SplitFrequency(majCon, allTrees)
 
 ColPlot(majCon)
 nodelabels(paste0("\n\n", signif(supporters / length(allTrees), 2)),
@@ -154,11 +153,9 @@ nodelabels(paste0("\n\n", signif(supporters / length(allTrees), 2)),
 omit <- c("Cotyledion_tylodes", "Namacalathus", "Phoronis")
 allPruned <- lapply(allTrees, drop.tip, omit)
 majCon <- RootTree(consensus(allPruned, p=0.5), rootingTips)
-conTipIndex <- sort(majCon$tip.label)
-conSplits <- GetSplits(allPruned, conTipIndex)
 
 ####
-supporters <- SplitSupport(majCon, conSplits, conTipIndex)
+supporters <- SplitFrequency(majCon, allPruned)
 ####
 ColPlot(majCon)
 nodelabels(paste0("\n", signif(supporters / length(allTrees), 2)),

@@ -104,6 +104,9 @@ conSplits <- vapply(Descendants(majCon, nConTip + 1:Nnode(majCon), type='tips'),
            function (tips) conTips %in% conTips[tips], logical(nConTip))
 bifSplits <- vapply(Descendants(bifurcating, nConTip + seq_len(nConTip - 1L), type='tips'),
            function (tips) bifTips %in% bifTips[tips], logical(nConTip))
+
+# TODO: Are these lines superceded by SplitFrequency?
+powersOf2 <- 2^(seq_along(my_data) - 1) 
 conSplitNos <- apply(conSplits, 2, function (x) sum(powersOf2[x]))
 bifNos <- apply(bifSplits, 2, function (x) sum(powersOf2[x]))
 whichNode <- integer(length(bifNos))

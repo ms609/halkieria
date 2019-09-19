@@ -90,14 +90,10 @@ thinned <- c(lapply(postBurnin[[1]], drop.tip, omit),
              lapply(postBurnin[[4]], drop.tip, omit))
 class(thinned) <- 'multiPhylo'
 mbCon <- RootTree(consensus(thinned, p=0.5), rootingTips)
-tipIndex <- sort(thinned[[1]]$tip.label)
 sampleSize <- min(length(thinned), 10000L) # Not all trees, but ought to be enough for our purposes
-mbSplits <- GetSplits(sample(thinned, sampleSize), tipIndex)
-#ColPlot(UnitEdges(root(mbCon, outgroup, resolve.root=TRUE)))
-
 
 ColPlot(UnitEdges(mbCon))
-supporters <- SplitSupport(mbCon, mbSplits, tipIndex)
+supporters <- SplitFrequency(mbCon, thinned)
 nodeSupport <- c('', signif(supporters[-1] / sampleSize * 100L, 3))
 nodelabels(paste0("\n\n", nodeSupport), adj=0, pos=2, frame='none', cex=0.75,
            col=SupportColour(round(supporters / sampleSize, 2)))
@@ -122,11 +118,9 @@ rootedConsensus <- RootTree(consensus(thinned, p=0.5), rootingTips)
 
 
 mbCon <- RootTree(consensus(thinned, p=0.5), rootingTips)
-tipIndex <- sort(thinned[[1]]$tip.label)
-mbSplits <- GetSplits(sample(thinned, sampleSize), tipIndex)
 
 ColPlot(UnitEdges(rootedConsensus))
-supporters <- SplitSupport(rootedConsensus, mbSplits, tipIndex)
+supporters <- SplitFrequency(rootedConsensus, thinned)
 nodeSupport <- c('', signif(supporters[-1] / sampleSize * 100L, 3))
 nodelabels(paste0("\n\n", nodeSupport),
            col=SupportColour(round(supporters / sampleSize, 2)),
