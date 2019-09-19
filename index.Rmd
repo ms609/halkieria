@@ -46,7 +46,7 @@ source('italicize.R')
 ```{R setup-more, include=FALSE, message=FALSE}
 options(GitHubUser='ms609', GitHubRepo='halkieria', 
         MorphoBankProject=3262, ProjectName='Scleritomorph_Phylogeny',
-        svgHeight=520, svgWidth=682)
+        svgHeight=720, svgWidth=682)
 tntFiles <- list.files('TNT/', pattern='xpiwe.*\\.tre', full=TRUE)
 tntKs <- as.double(gsub(".*xpiwe([\\d\\.]+)\\..*", "\\1", tntFiles, perl=TRUE))
 tntFiles <- tntFiles[order(tntKs)]
@@ -79,8 +79,6 @@ neomorphic <- vapply(my_states, IsNeomorphic, logical(1))
 
 #kValues <- c(3, 4.5, 7, 10.5, 16, 24)
 kValues <- c(4.5, 10.5, 24)
-
-powersOf2 <- 2^(seq_along(my_data) - 1) # Needed for GetSplits etc
 
 outgroup <- 'Namacalathus'
 outgroup <- 'Loxosomella'
