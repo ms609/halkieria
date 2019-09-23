@@ -6,7 +6,7 @@ ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
                   'Probactrotheca') # Also manually update tnt.run using `taxcode-`
 my_data[ignored_taxa] <- NULL
 iw_data <- PrepareDataIW(my_data)
-outgroup <- 'Loxosomella'
+outgroup <- 'Yilingia_spiciformis'
 
 nj.tree <- NJTree(my_data)
 rooted.tree <- EnforceOutgroup(nj.tree, outgroup)
