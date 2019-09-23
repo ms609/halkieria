@@ -241,7 +241,7 @@ if (knitr::is_html_output()) {
 }
 PrintJavascript('svgSwitcher.js')
 ```
-```{R character-mapping, echo=FALSE, fig.height=6.2, fig.width=7.1, results="asis"}
+```{R character-mapping, echo=FALSE, fig.height=8, fig.width=7.1, results="asis"}
 prev_char_parts <- "NONE"
 
 subheadings <- c("Digestive tract: Anus: Presence",
