@@ -50,7 +50,7 @@ ci_text <- vapply(uniqueTrees, function (tree) {
 }, character(n_char), USE.NAMES=FALSE)
 ```
 ```{R SVG-setup, echo=FALSE, results="asis"}
-fileNamer <- 'Brachiopod_phylogeny_files/figure-html/tree%s-char%s.svg'
+fileNamer <- 'Scleritomorph_phylogeny_files/figure-html/tree%s-char%s.svg'
 treeXMargins <- c(5L, 200L)
 treeYMargins <- c(7L, 8L)
 nTree <- c(length(ew.trees), vapply(iw.trees, length, 0))
@@ -60,8 +60,8 @@ treeNames <- rep(analysisNames, nTree)
 if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
   CheckDirExists <- function (x) if (!dir.exists(x)) dir.create(x)
   CheckDirExists('_book')
-  CheckDirExists('_book/Brachiopod_phylogeny_files')
-  CheckDirExists('_book/Brachiopod_phylogeny_files/figure-html')
+  CheckDirExists('_book/Scleritomorph_phylogeny_files')
+  CheckDirExists('_book/Scleritomorph_phylogeny_files/figure-html')
   svgCanvas <- SVGCanvas(allTrees, rootingTips, analysisNames, 
                          uniqueTrees=uniqueTrees,
                          width=getOption('svgWidth'), height=getOption('svgHeight'),
