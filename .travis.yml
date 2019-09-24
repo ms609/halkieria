@@ -10,9 +10,20 @@ git:
 branches:
   only: master
 
+r_binary_packages:
+  - ape
+  - knitr
+  - phangorn
+  - R.cache
+  - stringi
+
+r_packages:
+  - bookdown
+
 r_github_packages:
   - ms609/TreeSearch
   - ms609/Morphobank
+  - TGuillerme/Inapp
 
 before_install:
   - sudo add-apt-repository -y ppa:cran/imagemagick
