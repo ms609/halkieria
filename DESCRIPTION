@@ -1,0 +1,20 @@
+Package: placeholder
+Type: Book
+Title: placeholder
+Version: 0.0.1
+Imports: 
+  bookdown
+Suggests:
+  ape,
+  Inapp (> 0.3.0),
+  knitr,
+  phangorn,
+  phytools,
+  R.cache,
+  rcrossref (>= 0.8.1),
+  stringi,
+  TreeSearch (> 0.1.2),
+  zoo
+Remotes: 
+  ms609/MorphoBank,
+  TGuillerme/Inapp
