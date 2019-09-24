@@ -19,11 +19,11 @@ r_binary_packages:
   - knitr
   - phangorn
   - R.cache
+  - rcrossref
   - stringi
 
 r_packages:
   - bookdown
-  - rcrossref
 
 r_github_packages:
   - ms609/TreeSearch
