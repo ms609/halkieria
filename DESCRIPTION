@@ -10,6 +10,7 @@ Suggests:
   knitr,
   phangorn,
   R.cache,
+  rcrossref,
   stringi,
   TreeSearch (> 0.1.2)
 Remotes: 
