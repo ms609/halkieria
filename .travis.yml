@@ -3,6 +3,10 @@ r: release
 cache: packages
 sudo: required
 pandoc_version: 1.19.2.1
+addons:
+  apt:
+    packages:
+      - ghostscript
 
 git:
   depth: 1
@@ -39,7 +43,3 @@ script:
   - travis_wait 43 ./_build.sh
   - ./_deploy.sh
 
-addons:
-  apt:
-    packages:
-      - ghostscript
