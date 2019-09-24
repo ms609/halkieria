@@ -11,7 +11,7 @@ GetSplits <- function (trees, tipIndex) {
 as.multiPhylo <- function (obj) {
   switch(class(obj),
          multiPhylo = obj,
-         phylo = strucure(list(obj), class = 'multiphylo'),
+         phylo = structure(list(obj), class = 'multiPhylo'),
          structure(obj, class='multiPhylo')
   )
 }
