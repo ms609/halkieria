@@ -9,11 +9,9 @@ Suggests:
   Inapp (> 0.3.0),
   knitr,
   phangorn,
-  phytools,
   R.cache,
   stringi,
-  TreeSearch (> 0.1.2),
-  zoo
+  TreeSearch (> 0.1.2)
 Remotes: 
   ms609/MorphoBank,
   TGuillerme/Inapp

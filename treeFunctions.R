@@ -8,7 +8,13 @@ GetSplits <- function (trees, tipIndex) {
   }, character(2 * (nTip - 1L))))
 }
 
-as.multiPhylo <- phytools::as.multiPhylo
+as.multiPhylo <- function (obj) {
+  switch(class(obj),
+         multiPhylo = obj,
+         phylo = strucure(list(obj), class = 'multiphylo'),
+         structure(obj, class='multiPhylo')
+  )
+}
 
 GetJacks <- function (jackFile) {
   jackLines <- readLines(jackFile)
