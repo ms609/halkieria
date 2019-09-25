@@ -44,7 +44,7 @@ ci_text <- vapply(uniqueTrees, function (tree) {
   # unless referees insist on it; neither it nor CI mean much in any case.
   fitch_retention_index <- RI(tree, fitch_data, sitewise=TRUE)
   fitch_retention_index <- ifelse(fitch_retention_index == 'NaN', 'n/a', signif(fitch_retention_index, 2))
-  paste0('CI = ', signif(min_steps / FitchSteps(tree, my_data)[index], 2),
+  paste0('CI = ', signif(min_steps / CharacterLength(tree, my_data)[index], 2),
                   '; Fitch CI = ', signif(fitch_consistency_index, 2),
                   '; Fitch RI = ', fitch_retention_index)
 }, character(n_char), USE.NAMES=FALSE)
