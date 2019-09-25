@@ -17,10 +17,9 @@ iw.trees <- lapply(kValues, function (k) {
     list()
   } else {
     loadedTrees <- read.nexus(iw.best[which.max(vapply(iw.best, ApeTime, double(1)))])
-    ret <- lapply(if (class(loadedTrees) == 'multiPhylo') unique(loadedTrees) else as.multiPhylo(loadedTrees),
-           RenumberTips, tipIndex)
-    ret <- lapply(ret, SortTree)
-    class(ret) <- 'multiPhylo'
+    ret <- lapply(if (class(loadedTrees) == 'multiPhylo') unique(loadedTrees)
+                  else as.multiPhylo(loadedTrees), RenumberTips, tipIndex)
+    ret <- structure(lapply(ret, SortTree), class= 'multiPhylo')
     ret
   }
 })
