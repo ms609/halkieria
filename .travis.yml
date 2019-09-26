@@ -6,7 +6,6 @@ latex: false
 addons:
   apt:
     packages:
-      - ghostscript
       - libmagick++-dev
 
 git:
