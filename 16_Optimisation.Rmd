@@ -185,5 +185,4 @@ if (knitr::is_html_output()) {
   LabelNodes(conLabels['regions', ], 2, 1)
   LabelNodes(conLabels['fitches', ], 1, 2)
 }
-PrintJavascript('svgSwitcher.js')
 ```

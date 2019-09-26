@@ -66,6 +66,7 @@ if (!is.null(getOption('localInstance')) || knitr::is_html_output()) {
                          width=getOption('svgWidth'), height=getOption('svgHeight'),
                          xMargins=treeXMargins, yMargins=treeYMargins)
 }
+PrintJavascript('svgSwitcher.js')
 ```
 
 ```{R character-mapping, echo=FALSE, fig.height=8, fig.width=7.1, results="asis"}
