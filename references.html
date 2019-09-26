@@ -69,41 +69,68 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -597,7 +624,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Baxter, J. M., Jones, A. M., &amp; Sturrock, M. G. (1987). The infrastructure of aesthetes in <em>Tonicella marmorea</em> (Polyplacophora; Ischnochitonina) and a new functional hypothesis. <em>Journal of Zoology</em>, <em>211</em>(4), 589–604. doi: <a href="https://doi.org/10.1111/j.1469-7998.1987.tb04473.x">10.1111/j.1469-7998.1987.tb04473.x</a></p>
 </div>
 <div>
-<p>Bengtson, S. (1992). The cap-shaped Cambrian fossil <em>Maikhanella</em> and the relationship between coeloscleritophorans and molluscs. <em>Lethaia</em>, <em>25</em>(4), 401–420.</p>
+<p>Bengtson, S. (1992). The cap-shaped Cambrian fossil <em>maikhanella</em> and the relationship between coeloscleritophorans and molluscs. <em>Lethaia</em>, <em>25</em>(4), 401–420.</p>
 </div>
 <div>
 <p>Bereiter-Hahn, J., Matoltsy, A. G., &amp; Slyvia Richards, K. (1984). <em>Biology of the Integument</em> (p. 858). Springer.</p>
@@ -660,7 +687,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Conway Morris, S., &amp; Caron, J.-B. (2007). Halwaxiids and the early evolution of the lophotrochozoans. <em>Science</em>, <em>315</em>(5816), 1255–1258. doi: <a href="https://doi.org/10.1126/science.1137187">10.1126/science.1137187</a></p>
 </div>
 <div>
-<p>Conway Morris, S., &amp; Chapman, A. J. (1996). Lower Cambrian coeloscleritophorans (<em>Ninella</em>, <em>Siphogonuchites</em>) from Xinjiang and Shaanxi, China. <em>Geological Magazine</em>, <em>133</em>(01), 33. doi: <a href="https://doi.org/10.1017/S0016756800007238">10.1017/S0016756800007238</a></p>
+<p>Conway Morris, S., &amp; Chapman, A. J. (1996). Lower Cambrian coeloscleritophorans (<em>ninella</em>, <em>siphogonuchites</em>) from Xinjiang and Shaanxi, China. <em>Geological Magazine</em>, <em>133</em>(01), 33. doi: <a href="https://doi.org/10.1017/S0016756800007238">10.1017/S0016756800007238</a></p>
 </div>
 <div>
 <p>Curry, G. B., &amp; Williams, A. (1983). Epithelial moulds on the shells of the early Palaeozoic brachiopod <em>Lingulella</em>. <em>Lethaia</em>, <em>16</em>(2), 111–118. doi: <a href="https://doi.org/10.1111/j.1502-3931.1983.tb01706.x">10.1111/j.1502-3931.1983.tb01706.x</a></p>
@@ -681,16 +708,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Dzik, J. (1980). Ontogeny of <em>Bactrotheca</em> and related hyoliths. <em>Geologiska Föreningen i Stockholm Förhandlingar</em>, <em>102</em>(3), 223–233. doi: <a href="https://doi.org/10.1080/11035898009455162">10.1080/11035898009455162</a></p>
 </div>
 <div>
-<p>Eckelbarger, K. J., &amp; Grassle, J. P. (1983). Ultrastructural differences in the eggs and ovarian follicle cells of <em>Capitella</em> (Polychaeta) sibling species. <em>The Biological Bulletin</em>, <em>165</em>(2), 379–393. doi: <a href="https://doi.org/10.2307/1541203">10.2307/1541203</a></p>
+<p>Eckelbarger, K. J., &amp; Grassle, J. P. (1983). Ultrastructural differences in the eggs and ovarian follicle cells of <em>capitella</em> (Polychaeta) sibling species. <em>The Biological Bulletin</em>, <em>165</em>(2), 379–393. doi: <a href="https://doi.org/10.2307/1541203">10.2307/1541203</a></p>
 </div>
 <div>
-<p>Eckelbarger, K. J., &amp; Grassle, J. P. (1987). Spermatogenesis, sperm storage and comparative sperm morphology in nine species of <em>Capitella</em>, <em>Capitomastus</em> and <em>Capitellides</em> (Polychaeta: Capitellidae). <em>Marine Biology</em>, <em>95</em>(3), 415–429. doi: <a href="https://doi.org/10.1007/BF00409572">10.1007/BF00409572</a></p>
+<p>Eckelbarger, K. J., &amp; Grassle, J. P. (1987). Spermatogenesis, sperm storage and comparative sperm morphology in nine species of <em>capitella</em>, <em>capitomastus</em> and <em>Capitellides</em> (Polychaeta: Capitellidae). <em>Marine Biology</em>, <em>95</em>(3), 415–429. doi: <a href="https://doi.org/10.1007/BF00409572">10.1007/BF00409572</a></p>
 </div>
 <div>
 <p>Ehrlich, H. (2010). <em>Biological materials of marine origin: Invertebrates</em>. Springer.</p>
 </div>
 <div>
-<p>Eibye-Jacobsen, D. (2004). A reevaluation of <em>Wiwaxia</em> and the polychaetes of the Burgess Shale. <em>Lethaia</em>, <em>37</em>(3), 317–335. doi: <a href="https://doi.org/10.1080/00241160410002027">10.1080/00241160410002027</a></p>
+<p>Eibye-Jacobsen, D. (2004). A reevaluation of <em>wiwaxia</em> and the polychaetes of the Burgess Shale. <em>Lethaia</em>, <em>37</em>(3), 317–335. doi: <a href="https://doi.org/10.1080/00241160410002027">10.1080/00241160410002027</a></p>
 </div>
 <div>
 <p>Faller, S., Rothe, B. H., Todt, C., Schmidt-Rhaesa, A., &amp; Loesel, R. (2012). Comparative neuroanatomy of Caudofoveata, Solenogastres, Polyplacophora, and Scaphopoda (Mollusca) and its phylogenetic implications. <em>Zoomorphology</em>, <em>131</em>(2), 149–170.</p>
@@ -714,10 +741,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Franzén, Å. (2000). Spermiogenesis, sperm ultrastructure and sperm transport in <em>Loxosoma pectinaricola</em> (Entoprocta). <em>Invertebrate Reproduction and Development</em>, <em>37</em>(2), 129–136. doi: <a href="https://doi.org/10.1080/07924259.2000.9652411">10.1080/07924259.2000.9652411</a></p>
 </div>
 <div>
-<p>Fuchs, J., &amp; Wanninger, A. (2008). Reconstruction of the neuromuscular system of the swimming-type larva of <em>Loxosomella atkinsae</em> (Entoprocta) as inferred by fluorescence labelling and confocal microscopy. <em>Organisms Diversity and Evolution</em>, <em>8</em>(4), 325–335. doi: <a href="https://doi.org/10.1016/j.ode.2008.05.002">10.1016/j.ode.2008.05.002</a></p>
+<p>Fuchs, J., Bright, M., Funch, P., &amp; Wanninger, A. (2006). Immunocytochemistry of the neuromuscular systems of <em>Loxosomella vivipara</em> and <em>L. parguerensis</em> (Entoprocta: Loxosomatidae). <em>Journal of Morphology</em>, <em>267</em>(7), 866–883. doi: <a href="https://doi.org/10.1002/jmor.10446">10.1002/jmor.10446</a></p>
 </div>
 <div>
-<p>Fuchs, J., Bright, M., Funch, P., &amp; Wanninger, A. (2006). Immunocytochemistry of the neuromuscular systems of <em>Loxosomella vivipara</em> and <em>L. parguerensis</em> (Entoprocta: Loxosomatidae). <em>Journal of Morphology</em>, <em>267</em>(7), 866–883. doi: <a href="https://doi.org/10.1002/jmor.10446">10.1002/jmor.10446</a></p>
+<p>Fuchs, J., &amp; Wanninger, A. (2008). Reconstruction of the neuromuscular system of the swimming-type larva of <em>Loxosomella atkinsae</em> (Entoprocta) as inferred by fluorescence labelling and confocal microscopy. <em>Organisms Diversity and Evolution</em>, <em>8</em>(4), 325–335. doi: <a href="https://doi.org/10.1016/j.ode.2008.05.002">10.1016/j.ode.2008.05.002</a></p>
 </div>
 <div>
 <p>Gao, P., Liao, Z., Wang, X.-x., Bao, L.-f., Fan, M.-h., Li, X.-m., … Xia, S.-w. (2015). Layer-by-layer proteomic analysis of <em>Mytilus galloprovincialis</em> Shell. <em>PLoS One</em>, <em>10</em>(7), e0133913. doi: <a href="https://doi.org/10.1371/journal.pone.0133913">10.1371/journal.pone.0133913</a></p>
@@ -753,7 +780,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Goodrich, E. S. (1945). The study of nephridia and genital ducts since 1895. <em>The Quarterly Journal of Microscopical Science</em>, <em>86</em>(344), 113–392.</p>
 </div>
 <div>
-<p>Gordon, D. P. (1975). The resemblance of bryozoan gizzard teeth to “annelid-like” setae. <em>Acta Zoologica</em>, <em>56</em>(4), 283–289. doi: <a href="https://doi.org/10.1111/j.1463-6395.1975.tb00105.x">10.1111/j.1463-6395.1975.tb00105.x</a></p>
+<p>Gordon, D. P. (1975). The resemblance of bryozoan gizzard teeth to &quot;annelid-like&quot; setae. <em>Acta Zoologica</em>, <em>56</em>(4), 283–289. doi: <a href="https://doi.org/10.1111/j.1463-6395.1975.tb00105.x">10.1111/j.1463-6395.1975.tb00105.x</a></p>
 </div>
 <div>
 <p>Grobe, P. (2007). <em>Larval development, the origin of the coelom and the phylogenetic relationships of the Phoronida</em> (PhD thesis; p. 91). Free University, Berlin.</p>
@@ -810,7 +837,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Hoare, R. D. (2009). Aesthete canals in the Chiton <em>Euleptochiton spatulatus</em> (Polyplacophora, Mollusca) from the Pennsylvanian of Ohio. <em>The Ohio Journal of Science</em>, <em>109</em>(3), 48–51.</p>
 </div>
 <div>
-<p>Hoare, R. D., &amp; Mapes, R. H. (1986). The polyplacophoran “<em>Chiton</em>” <em>carbonarius</em> Stevens, 1858, in North America and new related species. <em>Journal of Paleontology</em>, <em>60</em>(3), 627–635. doi: <a href="https://doi.org/10.1017/S0022336000022150">10.1017/S0022336000022150</a></p>
+<p>Hoare, R. D., &amp; Mapes, R. H. (1986). The polyplacophoran “<em>chiton</em>” <em>carbonarius</em> Stevens, 1858, in North America and new related species. <em>Journal of Paleontology</em>, <em>60</em>(3), 627–635. doi: <a href="https://doi.org/10.1017/S0022336000022150">10.1017/S0022336000022150</a></p>
 </div>
 <div>
 <p>Hodgson, A. N., &amp; Reunov, A. A. (1994). Ultrastructure of the spermatozoon and spermatogenesis of the brachiopods <em>Discinisca tenuis</em> (Inarticulata) and <em>Kraussina rubra</em> (Articulata). <em>Invertebrate Reproduction &amp; Development</em>, <em>25</em>(1), 23–31. doi: <a href="https://doi.org/10.1080/07924259.1994.9672365">10.1080/07924259.1994.9672365</a></p>
@@ -831,7 +858,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Holmer, L. E., Popov, L. E., Koneva, S. P., &amp; Rong, J.-Y. (1997). Early Cambrian <em>Lingulellotreta</em> (Lingulata, Brachiopoda) from south Kazakhstan (Malyi Karatau Range) and South China (eastern Yunnan). <em>Journal of Paleontology</em>, <em>71</em>(4), 577–584. doi: <a href="https://doi.org/10.1017/s0022336000040063">10.1017/s0022336000040063</a></p>
 </div>
 <div>
-<p>Holmer, L. E., Popov, L. E., Pour, M. G., Claybourn, T., Zhang, Z.-L., Brock, G. A., &amp; Zhang, Z.-F. (2018a). Evolutionary significance of a middle Cambrian (Series 3) <em>in situ</em> occurrence of the pedunculate rhynchonelliform brachiopod <em>Nisusia sulcata</em>. <em>Lethaia</em>. doi: <a href="https://doi.org/10.1111/let.12254">10.1111/let.12254</a></p>
+<p>Holmer, L. E., Popov, L. E., Pour, M. G., Claybourn, T., Zhang, Z.-L., Brock, G. A., &amp; Zhang, Z.-F. (2018). Evolutionary significance of a middle Cambrian (Series 3) <em>in situ</em> occurrence of the pedunculate rhynchonelliform brachiopod <em>Nisusia sulcata</em>. <em>Lethaia</em>. doi: <a href="https://doi.org/10.1111/let.12254">10.1111/let.12254</a></p>
 </div>
 <div>
 <p>Holmer, L. E., Skovsted, C. B., &amp; Brock, G. A. (2006). First record of canaliform shell structure from the Lower Cambrian paterinate brachiopod ~Askepasma~ from South Australia. <em>Memoirs of the Association of Australasian Palaeontologists</em>, <em>32</em>(1998), 1–5. doi: <a href="https://doi.org/10.1016/j.jep.2011.11.008.An">10.1016/j.jep.2011.11.008.An</a></p>
@@ -843,7 +870,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Holmer, L. E., Skovsted, C. B., Larsson, C., Brock, G. A., &amp; Zhang, Z.-F. (2011). First record of a bivalved larval shell in Early Cambrian tommotiids and its phylogenetic significance. <em>Palaeontology</em>, <em>54</em>(2), 235–239. doi: <a href="https://doi.org/10.1111/j.1475-4983.2010.01030.x">10.1111/j.1475-4983.2010.01030.x</a></p>
 </div>
 <div>
-<p>Holmer, L. E., Zhang, Z.-F., Topper, T. P., Popov, L. E., &amp; Claybourn, T. M. (2018b). The attachment strategies of Cambrian kutorginate brachiopods: the curious case of two pedicle openings and their phylogenetic significance. <em>Journal of Paleontology</em>, <em>92</em>(1), 33–39. doi: <a href="https://doi.org/10.1017/jpa.2017.76">10.1017/jpa.2017.76</a></p>
+<p>Holmer, L. E., Zhang, Z.-F., Topper, T. P., Popov, L. E., &amp; Claybourn, T. M. (2018). The attachment strategies of Cambrian kutorginate brachiopods: the curious case of two pedicle openings and their phylogenetic significance. <em>Journal of Paleontology</em>, <em>92</em>(1), 33–39. doi: <a href="https://doi.org/10.1017/jpa.2017.76">10.1017/jpa.2017.76</a></p>
 </div>
 <div>
 <p>Holthe, T. (1986). Evolution, systematics, and distribution of the Polychaeta Terebellomorpha, with a catalogue of the taxa and a bibliography. <em>Gunneria</em>, <em>55</em>, 1–236.</p>
@@ -858,16 +885,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Jacquet, S. M., Brock, G. A., &amp; Paterson, J. R. (2014). New data on <em>Oikozetetes</em> (Mollusca, Halkieriidae) from the lower Cambrian of South Australia. <em>Journal of Paleontology</em>, <em>88</em>(5), 1072–1084. doi: <a href="https://doi.org/10.1666/13-137">10.1666/13-137</a></p>
 </div>
 <div>
-<p>Jaeckle, W. B., &amp; Manahan, D. T. (1989). Feeding by a “nonfeeding” larva: Uptake of dissolved amino acids from seawater by lecithotrophic larvae of the gastropod <em>Haliotis rufescens</em>. <em>Marine Biology</em>, <em>103</em>(1), 87–94. doi: <a href="https://doi.org/10.1007/BF00391067">10.1007/BF00391067</a></p>
+<p>Jaeckle, W. B., &amp; Manahan, D. T. (1989). Feeding by a &quot;nonfeeding&quot; larva: Uptake of dissolved amino acids from seawater by lecithotrophic larvae of the gastropod <em>Haliotis rufescens</em>. <em>Marine Biology</em>, <em>103</em>(1), 87–94. doi: <a href="https://doi.org/10.1007/BF00391067">10.1007/BF00391067</a></p>
 </div>
 <div>
 <p>Jeuniaux, C. (1971). Chitinous structures. <em>Comprehensive Biochemistry</em>, <em>26</em>(C), 595–632.</p>
 </div>
 <div>
-<p>Kaas, P. (1981). Scandinavian species of <em>Leptochiton</em> Gray, 1847 (Mollusca, Polyplacophora). <em>Sarsia</em>, <em>66</em>(3), 217–229. doi: <a href="https://doi.org/10.1080/00364827.1981.10414541">10.1080/00364827.1981.10414541</a></p>
+<p>Kaas, P. (1981). Scandinavian species of <em>leptochiton</em> Gray, 1847 (Mollusca, Polyplacophora). <em>Sarsia</em>, <em>66</em>(3), 217–229. doi: <a href="https://doi.org/10.1080/00364827.1981.10414541">10.1080/00364827.1981.10414541</a></p>
 </div>
 <div>
-<p>Kaas, P. (1994). A new species of <em>Leptochiton</em> Gray 1847 (Mollusca: Polyplacophora) from the South Barbados accretionary prism. <em>Zool. Med. Leiden</em>, <em>68</em>, 3.</p>
+<p>Kaas, P. (1994). A new species of <em>leptochiton</em> Gray 1847 (Mollusca: Polyplacophora) from the South Barbados accretionary prism. <em>Zool. Med. Leiden</em>, <em>68</em>, 3.</p>
 </div>
 <div>
 <p>Katsuno, S., &amp; Sasaki, T. (2008). Comparative histology of radula-supporting structures in Gastropoda. <em>Malacologia</em>, <em>50</em>(1), 13–56. doi: <a href="https://doi.org/10.4002/0076-2997-50.1.13">10.4002/0076-2997-50.1.13</a></p>
@@ -876,7 +903,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Keay, J. (2007). <em>Larval development of the polychaete annelid, <span style="font-style:normal;">Serpula vermicularis</span></em>. Oregon Institute of Marine Biology.</p>
 </div>
 <div>
-<p>Kniprath, E. (1980). Larval development of the shell and the shell gland in <em>Mytilus</em> (Bivalvia). <em>Wilhelm Roux’s Archives of Developmental Biology</em>, <em>188</em>(3), 201–204. doi: <a href="https://doi.org/10.1007/BF00849049">10.1007/BF00849049</a></p>
+<p>Kniprath, E. (1980). Larval development of the shell and the shell gland in <em>mytilus</em> (Bivalvia). <em>Wilhelm Roux’s Archives of Developmental Biology</em>, <em>188</em>(3), 201–204. doi: <a href="https://doi.org/10.1007/BF00849049">10.1007/BF00849049</a></p>
 </div>
 <div>
 <p>Kopuchian, C., &amp; Ramírez, M. J. (2010). Behaviour of resampling methods under different weighting schemes, measures and variable resampling strengths. <em>Cladistics</em>, <em>26</em>(1), 86–97. doi: <a href="https://doi.org/10.1111/j.1096-0031.2009.00269.x">10.1111/j.1096-0031.2009.00269.x</a></p>
@@ -906,7 +933,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Li, G.-X., &amp; Holmer, L. E. (2004). Early Cambrian lingulate brachiopods from the Shaanxi Province, China. <em>GFF</em>, <em>126</em>(2), 193–211. doi: <a href="https://doi.org/10.1080/11035890401262193">10.1080/11035890401262193</a></p>
 </div>
 <div>
-<p>Li, L., Zhang, X., Yun, H., &amp; Li, G. (2017). Complex hierarchical microstructures of Cambrian mollusk <em>Pelagiella</em>: Insight into early biomineralization and evolution. <em>Scientific Reports</em>, <em>7</em>(1), 1935. doi: <a href="https://doi.org/10.1038/s41598-017-02235-9">10.1038/s41598-017-02235-9</a></p>
+<p>Li, L., Zhang, X., Yun, H., &amp; Li, G. (2017). Complex hierarchical microstructures of Cambrian mollusk <em>pelagiella</em>: Insight into early biomineralization and evolution. <em>Scientific Reports</em>, <em>7</em>(1), 1935. doi: <a href="https://doi.org/10.1038/s41598-017-02235-9">10.1038/s41598-017-02235-9</a></p>
 </div>
 <div>
 <p>Lindberg, D. R. (1985). Aplacophorans, Monoplacophorans, Polyplacophorans, Scaphopods: The Lesser Classes. <em>Notes for a Short Course: Studies in Geology</em>, <em>13</em>, 230–247. doi: <a href="https://doi.org/10.1017/S0271164800001202">10.1017/S0271164800001202</a></p>
@@ -960,7 +987,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Marois, R., &amp; Carew, T. J. (1997). Ontogeny of serotonergic neurons in <em>Aplysia californica</em>. <em>The Journal of Comparative Neurology</em>, <em>386</em>(3), 477–490. doi: <a href="https://doi.org/10.1002/(SICI)1096-9861(19970929)386:3&lt;477::AID-CNE10&gt;3.0.CO;2-8">10.1002/(SICI)1096-9861(19970929)386:3&lt;477::AID-CNE10&gt;3.0.CO;2-8</a></p>
 </div>
 <div>
-<p>Martel, A. L. (2000). Identification of settling and early postlarval stages of mussels (<em>Mytilus</em> spp.) from the Pacific coast of North America, using prodissoconch morphology and genomic DNA. <em>Marine Biology</em>, <em>137</em>, 811–818. doi: <a href="https://doi.org/10.1007/s002270000">10.1007/s002270000</a></p>
+<p>Martel, A. L. (2000). Identification of settling and early postlarval stages of mussels (<em>mytilus</em> spp.) from the Pacific coast of North America, using prodissoconch morphology and genomic DNA. <em>Marine Biology</em>, <em>137</em>, 811–818. doi: <a href="https://doi.org/10.1007/s002270000">10.1007/s002270000</a></p>
 </div>
 <div>
 <p>Martin, G. G., Romero, K., &amp; Miller-Walker, C. (1983). Fine structure of the ovary in the red abalone <em>Haliotis rufescens</em> (Mollusca: Gastropoda). <em>Zoomorphology</em>, <em>103</em>(2), 89–102. doi: <a href="https://doi.org/10.1007/BF00312240">10.1007/BF00312240</a></p>
@@ -972,7 +999,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>McLean, J. H. (1979). A new monoplacophoran limpet from the continental shelf off southern California. <em>Contributions to Science and Natural History, Los Angeles County Museum</em>, <em>307</em>, 1–19.</p>
 </div>
 <div>
-<p>Menzies, R. J., &amp; Layton, W. (1962). A new species of monoplacophoran mollusc, <em>Neopilina</em> (<em>Neopilina</em>) <em>veleronis</em> from the slope of the Cedros Trench, Mexico. <em>Journal of Natural History Series 13</em>, <em>5</em>(55), 401–406. doi: <a href="https://doi.org/10.1080/00222936208651264">10.1080/00222936208651264</a></p>
+<p>Menzies, R. J., &amp; Layton, W. (1962). A new species of monoplacophoran mollusc, <em>neopilina</em> (<em>neopilina</em>) <em>veleronis</em> from the slope of the Cedros Trench, Mexico. <em>Journal of Natural History Series 13</em>, <em>5</em>(55), 401–406. doi: <a href="https://doi.org/10.1080/00222936208651264">10.1080/00222936208651264</a></p>
 </div>
 <div>
 <p>Meyer, N. P., Boyle, M. J., Martindale, M. Q., &amp; Seaver, E. C. (2010). A comprehensive fate map by intracellular injection of identified blastomeres in the marine polychaete <em>Capitella teleta</em>. <em>EvoDevo</em>, <em>1</em>, 8. doi: <a href="https://doi.org/10.1186/2041-9139-1-8">10.1186/2041-9139-1-8</a></p>
@@ -1005,10 +1032,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Nielsen, C. (1991). The development of the brachiopod <em>Crania</em> (<em>Neocrania</em>) <em>anomala</em> (O. F. Müller) and its phylogenetic significance. <em>Acta Zoologica</em>, <em>72</em>(1), 7–28. doi: <a href="https://doi.org/10.1111/j.1463-6395.1991.tb00312.x">10.1111/j.1463-6395.1991.tb00312.x</a></p>
 </div>
 <div>
-<p>Nielsen, C., &amp; Rostgaard, J. (1976). Structure and function of an entoproct tentacle with a discussion of ciliary feeding types. <em>Ophelia</em>, <em>15</em>(2), 115–140. doi: <a href="https://doi.org/10.1080/00785326.1976.10425453">10.1080/00785326.1976.10425453</a></p>
+<p>Nielsen, C., Haszprunar, G., Ruthensteiner, B., &amp; Wanninger, A. (2007). Early development of the aplacophoran mollusc <em>chaetoderma</em>. <em>Acta Zoologica</em>, <em>88</em>(3), 231–247. doi: <a href="https://doi.org/10.1111/j.1463-6395.2007.00270.x">10.1111/j.1463-6395.2007.00270.x</a></p>
 </div>
 <div>
-<p>Nielsen, C., Haszprunar, G., Ruthensteiner, B., &amp; Wanninger, A. (2007). Early development of the aplacophoran mollusc <em>Chaetoderma</em>. <em>Acta Zoologica</em>, <em>88</em>(3), 231–247. doi: <a href="https://doi.org/10.1111/j.1463-6395.2007.00270.x">10.1111/j.1463-6395.2007.00270.x</a></p>
+<p>Nielsen, C., &amp; Rostgaard, J. (1976). Structure and function of an entoproct tentacle with a discussion of ciliary feeding types. <em>Ophelia</em>, <em>15</em>(2), 115–140. doi: <a href="https://doi.org/10.1080/00785326.1976.10425453">10.1080/00785326.1976.10425453</a></p>
 </div>
 <div>
 <p>Niijima, L. (1965). The acrosome reaction in <em>Mytilus edulis</em>: I. Fine structure of the intact acrosome. <em>The Journal of Cell Biology</em>, <em>25</em>(2), 243–248. doi: <a href="https://doi.org/10.1083/jcb.25.2.243">10.1083/jcb.25.2.243</a></p>
@@ -1128,13 +1155,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Rouse, G. W., &amp; Fauchald, K. (1997). Cladistics and polychaetes. <em>Zoologica Scripta</em>, <em>26</em>(2), 139–204. doi: <a href="https://doi.org/10.1111/j.1463-6409.1997.tb00412.x">10.1111/j.1463-6409.1997.tb00412.x</a></p>
 </div>
 <div>
+<p>Runnegar, B., &amp; Bentley, C. (1983). Anatomy, ecology and affinities of the Australian Early Cambrian bivalve <em>Pojetaia runnegari</em> Jell. <em>Journal of Paleontology</em>, <em>57</em>(1), 73–92.</p>
+</div>
+<div>
 <p>Runnegar, B. N. (1978). Origin and evolution of the Class Rostroconchia. <em>Philosophical Transactions of the Royal Society B: Biological Sciences</em>, <em>284</em>, 319–333.</p>
 </div>
 <div>
 <p>Runnegar, B. N. (1985). Shell microstructures of Cambrian molluscs replicated by phosphate. <em>Alcheringa</em>, <em>9</em>(4), 245–257. doi: <a href="https://doi.org/10.1080/03115518508618971">10.1080/03115518508618971</a></p>
-</div>
-<div>
-<p>Runnegar, B., &amp; Bentley, C. (1983). Anatomy, ecology and affinities of the Australian Early Cambrian bivalve <em>Pojetaia runnegari</em> Jell. <em>Journal of Paleontology</em>, <em>57</em>(1), 73–92.</p>
 </div>
 <div>
 <p>Ruppert, E. E., &amp; Carle, K. J. (1983). Morphology of metazoan circulatory systems. <em>Zoomorphology</em>, <em>103</em>(3), 193–208. doi: <a href="https://doi.org/10.1007/BF00310477">10.1007/BF00310477</a></p>
@@ -1149,7 +1176,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Santagata, S. (2004). Larval evelopment of <em>Phoronis pallida</em> (Phoronida): implications for morphological convergence and divergence among larval body plans. <em>Journal of Morphology</em>, <em>259</em>(3), 347–358. doi: <a href="https://doi.org/10.1002/jmor.10205">10.1002/jmor.10205</a></p>
 </div>
 <div>
-<p>Sasaki, T., Shigeno, S., &amp; Tanabe, K. (2010). Anatomy of living <em>Nautilus</em>: Reevaluation of primitiveness and comparison with Coleoidea. In K. Tanabe, Y. Shigeta, T. Sasaki, &amp; H. Hirano (Eds.), <em>Cephalopods: Present and Past</em> (pp. 35–66). Tokyo: Tokai University Press.</p>
+<p>Sasaki, T., Shigeno, S., &amp; Tanabe, K. (2010). Anatomy of living <em>nautilus</em>: Reevaluation of primitiveness and comparison with Coleoidea. In K. Tanabe, Y. Shigeta, T. Sasaki, &amp; H. Hirano (Eds.), <em>Cephalopods: Present and Past</em> (pp. 35–66). Tokyo: Tokai University Press.</p>
 </div>
 <div>
 <p>Scheltema, A. H. (1976). Two new species of Chaetoderma from off West Africa (Aplacophora, Chaetodermatidae). <em>Journal of Molluscan Studies</em>, <em>42</em>, 223–234. doi: <a href="https://doi.org/10.1093/oxfordjournals.mollus.a065328">10.1093/oxfordjournals.mollus.a065328</a></p>
@@ -1185,10 +1212,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Shunkina, K. V., Zaytseva, O. V., Starunov, V. V., &amp; Ostrovsky, A. N. (2015). Comparative morphology of the nervous system in three phylactolaemate bryozoans. <em>Frontiers in Zoology</em>, <em>12</em>, 28. doi: <a href="https://doi.org/10.1186/s12983-015-0112-2">10.1186/s12983-015-0112-2</a></p>
 </div>
 <div>
-<p>Sigwart, J. D., &amp; Sutton, M. D. (2007). Deep molluscan phylogeny: Synthesis of palaeontological and neontological data. <em>Proceedings of the Royal Society B: Biological Sciences</em>, <em>274</em>, 2413–2419. doi: <a href="https://doi.org/10.1098/rspb.2007.0701">10.1098/rspb.2007.0701</a></p>
+<p>Sigwart, J. D., Green, P. A., &amp; Crofts, S. B. (2015). Functional morphology in chitons (Mollusca, Polyplacophora): Influences of environment and ocean acidification. <em>Marine Biology</em>, <em>162</em>(11), 2257–2264. doi: <a href="https://doi.org/10.1007/s00227-015-2761-2">10.1007/s00227-015-2761-2</a></p>
 </div>
 <div>
-<p>Sigwart, J. D., Green, P. A., &amp; Crofts, S. B. (2015). Functional morphology in chitons (Mollusca, Polyplacophora): Influences of environment and ocean acidification. <em>Marine Biology</em>, <em>162</em>(11), 2257–2264. doi: <a href="https://doi.org/10.1007/s00227-015-2761-2">10.1007/s00227-015-2761-2</a></p>
+<p>Sigwart, J. D., &amp; Sutton, M. D. (2007). Deep molluscan phylogeny: Synthesis of palaeontological and neontological data. <em>Proceedings of the Royal Society B: Biological Sciences</em>, <em>274</em>, 2413–2419. doi: <a href="https://doi.org/10.1098/rspb.2007.0701">10.1098/rspb.2007.0701</a></p>
 </div>
 <div>
 <p>Simmons, M. P., &amp; Freudenstein, J. V. (2011). Spurious 99% bootstrap and jackknife support for unsupported clades. <em>Molecular Phylogenetics and Evolution</em>, <em>61</em>(1), 177–191. doi: <a href="https://doi.org/10.1016/j.ympev.2011.06.003">10.1016/j.ympev.2011.06.003</a></p>
@@ -1203,7 +1230,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Skovsted, C. B., Brock, G. A., Paterson, J. R., Holmer, L. E., &amp; Budd, G. E. (2008). The scleritome of <em>Eccentrotheca</em> from the Lower Cambrian of South Australia: Lophophorate affinities and implications for tommotiid phylogeny. <em>Geology</em>, <em>36</em>, 171–174. doi: <a href="https://doi.org/10.1130/g24385a.1">10.1130/g24385a.1</a></p>
 </div>
 <div>
-<p>Skovsted, C. B., Holmer, L. E., Larsson, C. M., Högström, A. E. S., Brock, G. A., Topper, T. P., … Paterson, J. R. (2009). The scleritome of <em>Paterimitra</em>: An Early Cambrian stem group brachiopod from South Australia. <em>Proceedings of the Royal Society B: Biological Sciences</em>, <em>276</em>, 1651–1656. doi: <a href="https://doi.org/10.1098/rspb.2008.1655">10.1098/rspb.2008.1655</a></p>
+<p>Skovsted, C. B., Holmer, L. E., Larsson, C. M., Högström, A. E. S., Brock, G. A., Topper, T. P., … Paterson, J. R. (2009). The scleritome of <em>paterimitra</em>: An Early Cambrian stem group brachiopod from South Australia. <em>Proceedings of the Royal Society B: Biological Sciences</em>, <em>276</em>, 1651–1656. doi: <a href="https://doi.org/10.1098/rspb.2008.1655">10.1098/rspb.2008.1655</a></p>
 </div>
 <div>
 <p>Skovsted, C. B., Pan, B., Topper, T. P., Betts, M. J., Li, G., &amp; Brock, G. A. (2016). The operculum and mode of life of the lower Cambrian hyolith <em>Cupitheca</em> from South Australia and North China. <em>Palaeogeography, Palaeoclimatology, Palaeoecology</em>, <em>443</em>, 123–130. doi: <a href="https://doi.org/10.1016/j.palaeo.2015.11.042">10.1016/j.palaeo.2015.11.042</a></p>
@@ -1227,7 +1254,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Smith, M. R. (2019). Bayesian and parsimony approaches reconstruct informative trees from simulated morphological datasets. <em>Biology Letters</em>, <em>15</em>(2), 20180632. doi: <a href="https://doi.org/10.1098/rsbl.2018.0632">10.1098/rsbl.2018.0632</a></p>
 </div>
 <div>
-<p>Smith, M. R. (n.d.). The affinity of _halkieria_. <em>In Preparation</em>.</p>
+<p>Smith, M. R. (n.d.). <em>In Preparation</em>.</p>
 </div>
 <div>
 <p>Sperling, E. A., Vinther, J., Moy, V. N., Wheeler, B. M., Sémon, M., Briggs, D. E. G., &amp; Peterson, K. J. (2009). MicroRNAs resolve an apparent conflict between annelid systematics and their fossil record. <em>Proceedings of the Royal Society B: Biological Sciences</em>, <em>276</em>(1677), 4315–4322. doi: <a href="https://doi.org/10.1098/rspb.2009.1340">10.1098/rspb.2009.1340</a></p>
@@ -1257,13 +1284,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Sun, Y., &amp; Qiu, J.-W. (2012). Serpulidae (Annelida: Polychaeta) from Hong Kong. <em>Zootaxa</em>, <em>3423</em>, 1–42.</p>
 </div>
 <div>
-<p>Sutton, M. D., &amp; Sigwart, J. D. (2012). A chiton without a foot. <em>Palaeontology</em>, <em>55</em>(2), 401–411. doi: <a href="https://doi.org/10.1111/j.1475-4983.2011.01126.x">10.1111/j.1475-4983.2011.01126.x</a></p>
-</div>
-<div>
 <p>Sutton, M. D., Briggs, D. E. G., Siveter, D. J., &amp; Siveter, D. J. (2004). Computer reconstruction and analysis of the vermiform mollusc <em>Acaenoplax hayae</em> from the Herefordshire lagerstätte (Silurian, England), and implications for molluscan phylogeny. <em>Palaeontology</em>, <em>47</em>(2), 293–318. doi: <a href="https://doi.org/10.1111/j.0031-0239.2004.00374.x">10.1111/j.0031-0239.2004.00374.x</a></p>
 </div>
 <div>
 <p>Sutton, M. D., Briggs, D. E. G., Siveter, D. J., Siveter, D. J., &amp; Sigwart, J. D. (2012). A Silurian armoured aplacophoran and implications for molluscan phylogeny. <em>Nature</em>, <em>490</em>(7418), 94–97. doi: <a href="https://doi.org/10.1038/nature11328">10.1038/nature11328</a></p>
+</div>
+<div>
+<p>Sutton, M. D., &amp; Sigwart, J. D. (2012). A chiton without a foot. <em>Palaeontology</em>, <em>55</em>(2), 401–411. doi: <a href="https://doi.org/10.1111/j.1475-4983.2011.01126.x">10.1111/j.1475-4983.2011.01126.x</a></p>
 </div>
 <div>
 <p>Temereva, E. N. (2016). Phoronida. In A. Schmidt-Rhaesa, S. Harzsch, &amp; G. Purschke (Eds.), <em>Structure and evolution of invertebrate nervous systems</em> (pp. 351–359). Oxford: Oxford University Press.</p>
@@ -1278,7 +1305,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Temereva, E. N., &amp; Kuzmina, T. V. (2017). The first data on the innervation of the lophophore in the rhynchonelliform brachiopod <em>Hemithiris psittacea</em>: what is the ground pattern of the lophophore in lophophorates? <em>BMC Evolutionary Biology</em>, <em>17</em>(1), 172. doi: <a href="https://doi.org/10.1186/s12862-017-1029-5">10.1186/s12862-017-1029-5</a></p>
 </div>
 <div>
-<p>Thomas, R. D., &amp; Vinther, J. (2012). Implications of the occurrence of paired anterior chaetae in the late early Cambrian mollusc <em>Pelagiella</em> from the Kinzers Formation of Pennsylvania for relationships among taxa and early evolution of the Mollusca. <em>Geological Society of America (GSA) Annual Meeting 2012 Abstracts</em>, 326.</p>
+<p>Thomas, R. D., &amp; Vinther, J. (2012). Implications of the occurrence of paired anterior chaetae in the late early Cambrian mollusc <em>pelagiella</em> from the Kinzers Formation of Pennsylvania for relationships among taxa and early evolution of the Mollusca. <em>Geological Society of America (GSA) Annual Meeting 2012 Abstracts</em>, 326.</p>
 </div>
 <div>
 <p>Tilic, E., Bartolomaeus, T., &amp; Rouse, G. W. (2016). Chaetal type diversity increases during evolution of Eunicida (Annelida). <em>Organisms Diversity and Evolution</em>, <em>16</em>(1), 105–119. doi: <a href="https://doi.org/10.1007/s13127-015-0257-z">10.1007/s13127-015-0257-z</a></p>
@@ -1302,25 +1329,25 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Valent, M., Fatka, O., Szabad, M., Micka, V., &amp; Marek, L. (2012). Two new orthothecids from the Cambrian of the Barrandian area (Hyolitha, Skryje-Týřovice Basin, Czech Republic). <em>Bulletin of Geosciences</em>, <em>87</em>(2), 241–248. doi: <a href="https://doi.org/10.3140/bull.geosci.1142">10.3140/bull.geosci.1142</a></p>
 </div>
 <div>
-<p>Vendrasco, M. J., &amp; Runnegar, B. N. (2004). Late Cambrian and Early Ordovician stem group chitons (Mollusca: Polyplacophora) from Utah and Missouri. <em>Journal of Paleontology</em>, <em>78</em>(4), 675–689.</p>
-</div>
-<div>
 <p>Vendrasco, M. J., Checa, A. G., &amp; Porter, S. M. (2017). Periostracum and fibrous shell microstructure in the unusual Cambrian hyolith <em>Cupitheca</em>. <em>Spanish Journal of Palaeontology</em>, <em>32</em>(1), 95–108.</p>
 </div>
 <div>
 <p>Vendrasco, M. J., Fernandez, C. Z., Eernisse, D. J., &amp; Runnegar, B. N. (2008). Aesthete canal morphology in the Mopaliidae (Polyplacophora). <em>American Malacological Bulletin</em>, <em>25</em>(1), 51–69.</p>
 </div>
 <div>
+<p>Vendrasco, M. J., &amp; Runnegar, B. N. (2004). Late Cambrian and Early Ordovician stem group chitons (Mollusca: Polyplacophora) from Utah and Missouri. <em>Journal of Paleontology</em>, <em>78</em>(4), 675–689.</p>
+</div>
+<div>
 <p>Vendrasco, M. J., Wood, T. E., &amp; Runnegar, B. N. (2004). Articulated Palaeozoic fossil with 17 plates greatly expands disparity of early chitons. <em>Nature</em>, <em>429</em>(6989), 288–291.</p>
 </div>
 <div>
-<p>Vinther, J. (2009). The canal system in sclerites of Lower Cambrian <em>Sinosachites</em> (Halkieriidae: Sachitida): Significance for the molluscan affinities of the sachitids. <em>Palaeontology</em>, <em>52</em>(4), 689–712. doi: <a href="https://doi.org/10.1111/j.1475-4983.2009.00881.x">10.1111/j.1475-4983.2009.00881.x</a></p>
-</div>
-<div>
-<p>Vinther, J., &amp; Nielsen, C. (2005). The Early Cambrian <em>Halkieria</em> is a mollusc. <em>Zoologica Scripta</em>, <em>34</em>(1), 81–89. doi: <a href="https://doi.org/10.1111/j.1463-6409.2005.00177.x">10.1111/j.1463-6409.2005.00177.x</a></p>
+<p>Vinther, J. (2009). The canal system in sclerites of Lower Cambrian <em>sinosachites</em> (Halkieriidae: Sachitida): Significance for the molluscan affinities of the sachitids. <em>Palaeontology</em>, <em>52</em>(4), 689–712. doi: <a href="https://doi.org/10.1111/j.1475-4983.2009.00881.x">10.1111/j.1475-4983.2009.00881.x</a></p>
 </div>
 <div>
 <p>Vinther, J., Jell, P. A., Kampouris, G., Carney, R., Racicot, R. A., &amp; Briggs, D. E. G. (2012). The origin of multiplacophorans – convergent evolution in aculiferan molluscs. <em>Palaeontology</em>, <em>55</em>(5), 1007–1019. doi: <a href="https://doi.org/10.1111/j.1475-4983.2012.01180.x">10.1111/j.1475-4983.2012.01180.x</a></p>
+</div>
+<div>
+<p>Vinther, J., &amp; Nielsen, C. (2005). The Early Cambrian <em>Halkieria</em> is a mollusc. <em>Zoologica Scripta</em>, <em>34</em>(1), 81–89. doi: <a href="https://doi.org/10.1111/j.1463-6409.2005.00177.x">10.1111/j.1463-6409.2005.00177.x</a></p>
 </div>
 <div>
 <p>Vinther, J., Parry, L., Briggs, D. E. G., &amp; Van Roy, P. (2017). Ancestral morphology of crown-group molluscs revealed by a new Ordovician stem aculiferan. <em>Nature</em>, <em>542</em>, 471–474. doi: <a href="https://doi.org/10.1038/nature21055">10.1038/nature21055</a></p>
@@ -1344,6 +1371,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Wanninger, A. (2009). Shaping the things to come: ontogeny of lophotrochozoan neuromuscular systems and the tetraneuralia concept. <em>Biological Bulletin</em>, <em>216</em>(3), 293–306. doi: <a href="https://doi.org/10.1086/bblv216n3p293">10.1086/bblv216n3p293</a></p>
 </div>
 <div>
+<p>Wanninger, A., Fuchs, J., &amp; Haszprunar, G. (2007). Anatomy of the serotonergic nervous system of an entoproct creeping-type larva and its phylogenetic implications. <em>Invertebrate Biology</em>, <em>126</em>(3), 268–278. doi: <a href="https://doi.org/10.1111/j.1744-7410.2007.00097.x">10.1111/j.1744-7410.2007.00097.x</a></p>
+</div>
+<div>
 <p>Wanninger, A., &amp; Haszprunar, G. (2001). The expression of an engrailed protein during embryonic shell formation of the tusk-shell, <em>Antalis entalis</em> (Mollusca, Scaphopoda). <em>Evolution &amp; Development</em>, <em>3</em>(5), 312. doi: <a href="https://doi.org/10.1046/j.1525-142X.2001.01034.x">10.1046/j.1525-142X.2001.01034.x</a></p>
 </div>
 <div>
@@ -1351,9 +1381,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div>
 <p>Wanninger, A., &amp; Haszprunar, G. (2002b). Muscle development in <em>Antalis entalis</em> (Mollusca, Scaphopoda) and its significance for scaphopod relationships. <em>Journal of Morphology</em>, <em>254</em>(1), 53–64. doi: <a href="https://doi.org/10.1002/jmor.10004">10.1002/jmor.10004</a></p>
-</div>
-<div>
-<p>Wanninger, A., Fuchs, J., &amp; Haszprunar, G. (2007). Anatomy of the serotonergic nervous system of an entoproct creeping-type larva and its phylogenetic implications. <em>Invertebrate Biology</em>, <em>126</em>(3), 268–278. doi: <a href="https://doi.org/10.1111/j.1744-7410.2007.00097.x">10.1111/j.1744-7410.2007.00097.x</a></p>
 </div>
 <div>
 <p>Wanninger, A., Koop, D., Bromham, L., Noonan, E., &amp; Degnan, B. M. (2005). Nervous and muscle system development in <em>Phascolion strombus</em> (Sipuncula). <em>Development Genes and Evolution</em>, <em>215</em>(10), 509–518. doi: <a href="https://doi.org/10.1007/s00427-005-0012-0">10.1007/s00427-005-0012-0</a></p>
@@ -1401,7 +1428,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Zardus, J. D., &amp; Morse, M. P. (1998). Embryogenesis, morphology and ultrastructure of the pericalymma larva of <em>Acila castrensis</em> (Bivalvia: Protobranchia: Nuculoida). <em>Invertebrate Biology</em>, <em>117</em>(3), 221. doi: <a href="https://doi.org/10.2307/3226988">10.2307/3226988</a></p>
 </div>
 <div>
-<p>Zhang, Z.-F., Han, J., Zhang, X.-L., Liu, J.-N., Guo, J.-F., &amp; Shu, D.-G. (2007a). Note on the gut preserved in the Lower Cambrian <em>Lingulellotreta</em> (Lingulata, Brachiopoda) from southern China. <em>Acta Zoologica</em>, <em>88</em>(1), 65–70. doi: <a href="https://doi.org/10.1111/j.1463-6395.2007.00252.x">10.1111/j.1463-6395.2007.00252.x</a></p>
+<p>Zhang, Z.-F., Han, J., Zhang, X.-L., Liu, J.-N., Guo, J.-F., &amp; Shu, D.-G. (2007). Note on the gut preserved in the Lower Cambrian <em>Lingulellotreta</em> (Lingulata, Brachiopoda) from southern China. <em>Acta Zoologica</em>, <em>88</em>(1), 65–70. doi: <a href="https://doi.org/10.1111/j.1463-6395.2007.00252.x">10.1111/j.1463-6395.2007.00252.x</a></p>
 </div>
 <div>
 <p>Zhang, Z.-F., Holmer, L. E., Popov, L. E., &amp; Shu, D.-G. (2011). An obolellate brachiopod with soft-part preservation from the Early Cambrian Chengjiang fauna of China. <em>Journal of Paleontology</em>, <em>85</em>(3), 460–463. doi: <a href="https://doi.org/10.1666/10-121.1">10.1666/10-121.1</a></p>
@@ -1413,7 +1440,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Zhang, Z.-F., Li, G.-X., Holmer, L. E., Brock, G. A., Balthasar, U., Skovsted, C. B., … Shu, D.-G. (2014). An early Cambrian agglutinated tubular lophophorate with brachiopod characters. <em>Scientific Reports</em>, <em>4</em>, 4682. doi: <a href="https://doi.org/10.1038/srep04682">10.1038/srep04682</a></p>
 </div>
 <div>
-<p>Zhang, Z.-F., Shu, D.-G., Emig, C. C., Zhang, X.-L., Han, J., Liu, J.-N., … Guo, J.-F. (2007b). Rhynchonelliformean brachiopods with soft-tissue preservation from the early Cambrian Chengjiang Lagerstätte of South China. <em>Palaeontology</em>, <em>50</em>, 1391–1402. doi: <a href="https://doi.org/10.1111/j.1475-4983.2007.00725.x">10.1111/j.1475-4983.2007.00725.x</a></p>
+<p>Zhang, Z.-F., Shu, D.-G., Emig, C. C., Zhang, X.-L., Han, J., Liu, J.-N., … Guo, J.-F. (2007). Rhynchonelliformean brachiopods with soft-tissue preservation from the early Cambrian Chengjiang Lagerstätte of South China. <em>Palaeontology</em>, <em>50</em>, 1391–1402. doi: <a href="https://doi.org/10.1111/j.1475-4983.2007.00725.x">10.1111/j.1475-4983.2007.00725.x</a></p>
 </div>
 <div>
 <p>Zhang, Z.-F., Shu, D.-G., Han, J., &amp; Liu, J.-N. (2005). Morpho-anatomical differences of the Early Cambrian Chengjiang and Recent lingulids and their implications. <em>Acta Zoologica</em>, <em>86</em>, 277–288. doi: <a href="https://doi.org/10.1111/j.1463-6395.2005.00211.x">10.1111/j.1463-6395.2005.00211.x</a></p>

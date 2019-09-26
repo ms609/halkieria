@@ -69,41 +69,68 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -561,14 +588,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <dd><em>Dailyatia</em> tends to plot closely with <em>Halkieria</em>, reflecting the similarity in the form of their proposed scleritome <span class="citation">(Skovsted et al., <a href="#ref-Skovsted2015Theearly">2015</a>)</span>. Bayesian analysis recovers this pair as sister to annelids and molluscs; Fitch parsimony places them in the molluscan stem group. Inapplicable-corrected parsimony instead places these taxa as sister to hyoliths + brachiopods <span class="citation">(cf. Zhao et al., <a href="#ref-Zhao2017">2017</a>)</span>.
 </dd>
 <dt>Craniiforms</dt>
-<dd>Trimerellids are reconstructed as paraphyletic with respect to Craniiforms. This is consistent with the affinity commonly drawn between these groups <span class="citation">(e.g. Williams et al., <a href="#ref-Williams2000LinguliformeaCraniiformea">2000</a><a href="#ref-Williams2000LinguliformeaCraniiformea">a</a>)</span>, and helps to account for the stratigraphically late (Ordovician) appearance of Craniids in the fossil record. (Aragonite is underrepresented in early Palaeozoic strata due to taphonomic bias.)
+<dd>Trimerellids are reconstructed as paraphyletic with respect to Craniiforms. This is consistent with the affinity commonly drawn between these groups <span class="citation">(e.g. Williams, Carlson, et al., <a href="#ref-Williams2000LinguliformeaCraniiformea">2000</a><a href="#ref-Williams2000LinguliformeaCraniiformea">a</a>)</span>, and helps to account for the stratigraphically late (Ordovician) appearance of Craniids in the fossil record. (Aragonite is underrepresented in early Palaeozoic strata due to taphonomic bias.)
 </dd>
 <dd>The position of the craniiforms is not conclusively resolved; shell characters point to a relationship with the Rhynchonelliforms, which is countered by similarities between the spermatozoa of phoronids and terebratulids, indicating a craniiform + linguliform clade. This latter relationship is preferred by Fitch and inapplicable-corrected parsimony analyses.
 </dd>
 <dd>The Bayesian results offer a more surprising interpretation that places the craniiforms as paraphyletic with respect to all other brachiopods, with <em>Gasconsia</em> representing the basalmost member of the Rhynchonellid lineage, upholding suggestions <span class="citation">(Holmer et al., <a href="#ref-Holmer2014OrdovicianSilurian">2014</a>)</span> of a chileid rather than trimerellid affinity. To our knowledge, the hypothesis of a paraphyletic craniiform + trimerellid grade has never been proposed, and represents a poor fit to stratigraphic data; potentially it represents an artefact resulting from the incorrect handling of inapplicable data within the Mk model.
 </dd>
 <dt>Rhynchonelliforms</dt>
-<dd>The position of kutorginids within the rhynchonelliform stem lineage has been tricky to resolve <span class="citation">(Holmer et al., <a href="#ref-Holmer2018Theattachment">2018</a><a href="#ref-Holmer2018Theattachment">b</a>)</span>. Inapplicable-corrected parsimony places them sister to Rhynchonelliforms; Fitch parsimony places them as sister to the Chileids; and Bayesian analysis conservatively fails to distinguish between these two possibilities. These results are broadly in accord with previous proposals <span class="citation">(Holmer et al., <a href="#ref-Holmer2018Evolutionarysignificance">2018</a><a href="#ref-Holmer2018Evolutionarysignificance">a</a>)</span>. The protorthid <em>Glyptoria</em> is the earliest diverging of the included rhynchonelliform lineages.
+<dd>The position of kutorginids within the rhynchonelliform stem lineage has been tricky to resolve <span class="citation">(Holmer et al., <a href="#ref-Holmer2018Theattachment">2018</a>)</span>. Inapplicable-corrected parsimony places them sister to Rhynchonelliforms; Fitch parsimony places them as sister to the Chileids; and Bayesian analysis conservatively fails to distinguish between these two possibilities. These results are broadly in accord with previous proposals <span class="citation">(Holmer, Popov, et al., <a href="#ref-Holmer2018Evolutionarysignificance">2018</a>)</span>. The protorthid <em>Glyptoria</em> is the earliest diverging of the included rhynchonelliform lineages.
 </dd>
 <dd><p><em>Salanygolina</em> has been interpreted as a stem-group rhynchonelliform based on its combination of paterinid and chileate features <span class="citation">(Holmer et al., <a href="#ref-Holmer2009Theenigmatic">2009</a>)</span>. Our results position <em>Salanygolina</em> as sister either to the Chileids or the Chileids + Rhynchonelliforms, corroborating this interpretation.</p>
 </dd>
@@ -582,7 +609,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <dt>Linguliforms</dt>
 <dd>The reconstruction of Linguloformea comprising Linguloidea as sister to Discinoidea is as expected. Lingulellotretids also sit within this linguliform grouping; a position in the phoronid stem lineage <span class="citation">(advocated by Balthasar &amp; Butterfield, <a href="#ref-Balthasar2009EarlyCambrian">2009</a>)</span> is not upheld. Acrotretids and Siphonotretids form a clade with <em>Lingulosacculus</em>.
 </dd>
-<dd>More novel is the reconstruction of the calcitic obolellid <em>Mummpikia</em> in the linguliform total group: a rhynchonelliform affinity has been assumed based on its calcitic mineralogy. This said, <span class="citation">Balthasar (<a href="#ref-Balthasar2008iMummpikia">2008</a>)</span> has highlighted the similarities between obolellids and linguliform brachiopods, including sub-μm vertical canals and the detailed configuration of the posterior shell margin. Our analyses uphold the case for a linguliform affinity for <em>Mummpikia</em>; a calcitic shell seemingly arose through an independent change within this taxon As such, <em>Mummpikia</em> has no direct bearing on the origin of ‘Calciata’, save that shell mineralogy is perhaps less static than commonly assumed.
+<dd>More novel is the reconstruction of the calcitic obolellid <em>Mummpikia</em> in the linguliform total group: a rhynchonelliform affinity has been assumed based on its calcitic mineralogy. This said, <span class="citation">Balthasar (<a href="#ref-Balthasar2008iMummpikia">2008</a>)</span> has highlighted the similarities between obolellids and linguliform brachiopods, including sub-μm vertical canals and the detailed configuration of the posterior shell margin.
+Our analyses uphold the case for a linguliform affinity for <em>Mummpikia</em>; a calcitic shell seemingly arose through an independent change within this taxon As such, <em>Mummpikia</em> has no direct bearing on the origin of ‘Calciata’, save that shell mineralogy is perhaps less static than commonly assumed.
 </dd>
 <dd>More generally, our results identify Class Obolellata as polyphyletic: <em>Alisina</em> (Trematobolidae) plots within Rhynchonellata; <em>Tomteluva</em> is harder to place, but tends to group with <em>Salanygolina</em> stemwards of the chileids.
 </dd>
@@ -621,10 +649,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Holmer, L. E., Popov, L. E., &amp; Bassett, M. G. (2014). Ordovician–Silurian Chileida—first post-Cambrian records of an enigmatic group of Brachiopoda. <em>Journal of Paleontology</em>, <em>88</em>(3), 488–496. doi: <a href="https://doi.org/10.1666/13-104">10.1666/13-104</a></p>
 </div>
 <div id="ref-Holmer2018Evolutionarysignificance">
-<p>Holmer, L. E., Popov, L. E., Pour, M. G., Claybourn, T., Zhang, Z.-L., Brock, G. A., &amp; Zhang, Z.-F. (2018a). Evolutionary significance of a middle Cambrian (Series 3) <em>in situ</em> occurrence of the pedunculate rhynchonelliform brachiopod <em>Nisusia sulcata</em>. <em>Lethaia</em>. doi: <a href="https://doi.org/10.1111/let.12254">10.1111/let.12254</a></p>
+<p>Holmer, L. E., Popov, L. E., Pour, M. G., Claybourn, T., Zhang, Z.-L., Brock, G. A., &amp; Zhang, Z.-F. (2018). Evolutionary significance of a middle Cambrian (Series 3) <em>in situ</em> occurrence of the pedunculate rhynchonelliform brachiopod <em>Nisusia sulcata</em>. <em>Lethaia</em>. doi: <a href="https://doi.org/10.1111/let.12254">10.1111/let.12254</a></p>
 </div>
 <div id="ref-Holmer2018Theattachment">
-<p>Holmer, L. E., Zhang, Z.-F., Topper, T. P., Popov, L. E., &amp; Claybourn, T. M. (2018b). The attachment strategies of Cambrian kutorginate brachiopods: the curious case of two pedicle openings and their phylogenetic significance. <em>Journal of Paleontology</em>, <em>92</em>(1), 33–39. doi: <a href="https://doi.org/10.1017/jpa.2017.76">10.1017/jpa.2017.76</a></p>
+<p>Holmer, L. E., Zhang, Z.-F., Topper, T. P., Popov, L. E., &amp; Claybourn, T. M. (2018). The attachment strategies of Cambrian kutorginate brachiopods: the curious case of two pedicle openings and their phylogenetic significance. <em>Journal of Paleontology</em>, <em>92</em>(1), 33–39. doi: <a href="https://doi.org/10.1017/jpa.2017.76">10.1017/jpa.2017.76</a></p>
 </div>
 <div id="ref-Moysiuk2017Hyolithsare">
 <p>Moysiuk, J., Smith, M. R., &amp; Caron, J.-B. (2017). Hyoliths are Palaeozoic lophophorates. <em>Nature</em>, <em>541</em>(7637), 394–397. doi: <a href="https://doi.org/10.1038/nature20804">10.1038/nature20804</a></p>
