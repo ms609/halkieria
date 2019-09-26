@@ -14,9 +14,11 @@ start.tree <- TreeSearch(tree=rooted.tree, dataset=my_data, maxIter=3000,
                          EdgeSwapper=RootedNNISwap, verbosity=0)
 
 ew.tree <- Ratchet(start.tree, my_data, verbosity=3L,
-                   ratchHits = 20, ratchIter=4000, searchHits=55,
+                   ratchHits = 20, ratchIter = 4000,
+                   searchHits = 55, searchIter = 2000,
                    swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap))
-ew.consensus <- RatchetConsensus(ew.tree, my_data, nSearch=250, searchHits = 85,
+ew.consensus <- RatchetConsensus(ew.tree, my_data, nSearch = 250,
+                                 searchHits = 85,
                                  swappers=list(RootedTBRSwap, RootedNNISwap),
                                  verbosity=2L)
 
