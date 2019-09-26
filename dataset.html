@@ -47,6 +47,15 @@
 
 
 
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="manifest" href="icons/site.webmanifest">
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
 
 
 <style type="text/css">
@@ -87,6 +96,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -525,7 +535,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">1</span> Phylogenetic dataset</h1>
 <p>Analysis was performed on a new matrix of 73 lophotrochozoan taxa, coded for 330 morphological characters (205 neomorphic, 125 transformational). The matrix can be viewed interactively at Morphobank <a href="https://morphobank.org/permalink/?P3262">project 3262</a>; a static version can be downloaded directly in <a href="https://raw.githubusercontent.com/ms609/halkieria/master/mbank_X25605_2019-09-26-0320.nex">Nexus</a> or <a href="https://raw.githubusercontent.com/ms609/halkieria/master/mbank_X25605_2019-09-18-1031.tnt">TNT</a> format.</p>
 <p>Taxa include sipunculans and molluscs, which have previously been interpreted as having affinities with hyoliths. Other lophotrochozoan groups help to constrain the outgroup topology, and a diversity of brachiozoans helps to resolve the position of hyoliths within this group.</p>
-<p>Characters are coded following the <a href="https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/">recommendations</a> of <span class="citation">Brazeau et al. (<a href="#ref-Brazeau2018">2018</a>)</span>:</p>
+<p>Characters are coded following the <a href="https://rawgit.com/TGuillerme/Inapp/master/inst/gitbook/_book/">recommendations</a> of <span class="citation">Martin D. Brazeau et al. (<a href="#ref-Brazeau2018">2019</a>)</span>:</p>
 <ul>
 <li><p>We have employed reductive coding <span class="citation">(Wilkinson, <a href="#ref-Wilkinson1995">1995</a>)</span>, using a distinct state to mark character inapplicability. Character specifications follow the structural syntax of <span class="citation">Sereno (<a href="#ref-Sereno2007">2007</a>)</span> in order to highlight ontological dependence between characters and emphasize the structure of the dataset.</p></li>
 <li><p>We have distinguished between neomorphic and transformational characters <span class="citation">(<em>sensu</em> Sereno, <a href="#ref-Sereno2007">2007</a>)</span> by reserving the token <code>0</code> to refer to the absence of a neomorphic (i.e. presence/absence) character. The states of transformational characters (i.e. characters that describe a property of a feature) are represented by the tokens <code>1</code>, <code>2</code>, <code>3</code>, …</p></li>
@@ -741,7 +751,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Brazeau2018">
-<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2018). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>. doi: <a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2019). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>, online ahead of print. doi: <a href="https://doi.org/10.1093/sysbio/syy083">10.1093/sysbio/syy083</a></p>
 </div>
 <div id="ref-Sereno2007">
 <p>Sereno, P. C. (2007). Logical basis for morphological characters in phylogenetics. <em>Cladistics</em>, <em>23</em>(6), 565–587. doi: <a href="https://doi.org/10.1111/j.1096-0031.2007.00161.x">10.1111/j.1096-0031.2007.00161.x</a></p>
@@ -759,6 +769,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Wilkinson, M. (1995). Coping with abundant missing entries in phylogenetic inference using parsimony. <em>Systematic Biology</em>, <em>44</em>(4), 501–514. doi: <a href="https://doi.org/10.1093/sysbio/44.4.501">10.1093/sysbio/44.4.501</a></p>
 </div>
 </div>
+<script>
+/*
+Sorts the references alphabetically.
+Modified from code by Yvonne Aburrow.
+*/
+
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html().toUpperCase() > $(a).children('p').html().toUpperCase() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
             </section>
 
           </div>
@@ -795,8 +819,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/ms609/halkieria/edit/master/11_Dataset.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,

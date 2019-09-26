@@ -47,6 +47,15 @@
 
 
 
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="manifest" href="icons/site.webmanifest">
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
 
 
 <style type="text/css">
@@ -87,6 +96,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -523,10 +533,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="treesearch" class="section level1">
 <h1><span class="header-section-number">3</span> Corrected parsimony</h1>
-<p>The phylogenetic dataset contains a considerable proportion of inapplicable codings (2506, = 23.7% of 10571 non-ambiguous tokens; 10.4% of 24090 total cells), which are known to introduce error and bias to phylogenetic reconstruction when the Fitch algorithm is employed <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2018</a>; Maddison, <a href="#ref-Maddison1993">1993</a>)</span>. As such, we used the R package <em>TreeSearch</em> v0.1.2 <span class="citation">(Smith, <a href="#ref-Smith2018TreeSearch">2018</a>)</span> to conduct phylogenetic tree search with a tree-scoring algorithm that avoids logically impossible character transformations when handling inapplicable data <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2018</a>)</span>, implemented in the <em>MorphyLib</em> C library <span class="citation">(Brazeau, Smith, &amp; Guillerme, <a href="#ref-Brazeau2017Morphylib">2017</a>)</span>.</p>
+<p>The phylogenetic dataset contains a considerable proportion of inapplicable codings (2506, = 23.7% of 10571 non-ambiguous tokens; 10.4% of 24090 total cells), which are known to introduce error and bias to phylogenetic reconstruction when the Fitch algorithm is employed <span class="citation">(Martin D. Brazeau et al., <a href="#ref-Brazeau2018">2019</a>; Maddison, <a href="#ref-Maddison1993">1993</a>)</span>. As such, we used the R package <em>TreeSearch</em> v0.1.2 <span class="citation">(M. R. Smith, <a href="#ref-Smith2018TreeSearch">2018</a>)</span> to conduct phylogenetic tree search with a tree-scoring algorithm that avoids logically impossible character transformations when handling inapplicable data <span class="citation">(Martin D. Brazeau et al., <a href="#ref-Brazeau2018">2019</a>)</span>, implemented in the <em>MorphyLib</em> C library <span class="citation">(M. D. Brazeau, Smith, &amp; Guillerme, <a href="#ref-Brazeau2017Morphylib">2017</a>)</span>.</p>
 <div id="search-parameters" class="section level2">
 <h2><span class="header-section-number">3.1</span> Search parameters</h2>
-<p>Heuristic searches were conducted using the parsimony ratchet <span class="citation">(Nixon, <a href="#ref-Nixon1999">1999</a>)</span> under equal and implied weights <span class="citation">(Goloboff, <a href="#ref-Goloboff1997">1997</a>)</span>. The consensus tree presented in the main manuscript represents a strict consensus of all trees that are most parsimonious under one or more of the concavity constants (<em>k</em>) 4.5, 10.5 and 24, an approach that has been shown to produce higher accuracy (i.e. more nodes and quartets resolved correctly) than equal weights at any given level of precision <span class="citation">(Smith, <a href="#ref-Smith2017">2017</a>)</span>.</p>
+<p>Heuristic searches were conducted using the parsimony ratchet <span class="citation">(Nixon, <a href="#ref-Nixon1999">1999</a>)</span> under equal and implied weights <span class="citation">(Goloboff, <a href="#ref-Goloboff1997">1997</a>)</span>. The consensus tree presented in the main manuscript represents a strict consensus of all trees that are most parsimonious under one or more of the concavity constants (<em>k</em>) 4.5, 10.5 and 24, an approach that has been shown to produce higher accuracy (i.e. more nodes and quartets resolved correctly) than equal weights at any given level of precision <span class="citation">(M. R. Smith, <a href="#ref-Smith2017">2017</a>)</span>.</p>
 </div>
 <div id="analysis" class="section level2">
 <h2><span class="header-section-number">3.2</span> Analysis</h2>
@@ -637,7 +647,7 @@ Figure 3.5: Strict consensus of most parsimonious trees under equally weighted p
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Brazeau2018">
-<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2018). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>. doi: <a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2019). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>, online ahead of print. doi: <a href="https://doi.org/10.1093/sysbio/syy083">10.1093/sysbio/syy083</a></p>
 </div>
 <div id="ref-Brazeau2017Morphylib">
 <p>Brazeau, M. D., Smith, M. R., &amp; Guillerme, T. (2017). MorphyLib: a library for phylogenetic analysis of categorical trait data with inapplicability. <em>Zenodo</em>. doi: <a href="https://doi.org/10.5281/zenodo.815371">10.5281/zenodo.815371</a></p>
@@ -658,6 +668,20 @@ Figure 3.5: Strict consensus of most parsimonious trees under equally weighted p
 <p>Smith, M. R. (2018). TreeSearch: Phylogenetic tree search using custom optimality criteria. doi: <a href="https://doi.org/10.5281/zenodo.1042590">10.5281/zenodo.1042590</a></p>
 </div>
 </div>
+<script>
+/*
+Sorts the references alphabetically.
+Modified from code by Yvonne Aburrow.
+*/
+
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html().toUpperCase() > $(a).children('p').html().toUpperCase() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
             </section>
 
           </div>
@@ -694,8 +718,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/ms609/halkieria/edit/master/13_TreeSearch.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,

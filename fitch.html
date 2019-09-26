@@ -47,6 +47,15 @@
 
 
 
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="manifest" href="icons/site.webmanifest">
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
 
 
 <style type="text/css">
@@ -87,6 +96,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -637,6 +647,20 @@ Figure 2.5: Consensus of all trees that are optimal under equally weighted Fitch
 <p>Simmons, M. P., &amp; Freudenstein, J. V. (2011). Spurious 99% bootstrap and jackknife support for unsupported clades. <em>Molecular Phylogenetics and Evolution</em>, <em>61</em>(1), 177–191. doi: <a href="https://doi.org/10.1016/j.ympev.2011.06.003">10.1016/j.ympev.2011.06.003</a></p>
 </div>
 </div>
+<script>
+/*
+Sorts the references alphabetically.
+Modified from code by Yvonne Aburrow.
+*/
+
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html().toUpperCase() > $(a).children('p').html().toUpperCase() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
             </section>
 
           </div>
@@ -673,8 +697,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/ms609/halkieria/edit/master/12_TNT.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,

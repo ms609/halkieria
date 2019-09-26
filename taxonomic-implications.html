@@ -47,6 +47,15 @@
 
 
 
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="manifest" href="icons/site.webmanifest">
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
 
 
 <style type="text/css">
@@ -87,6 +96,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -523,7 +533,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="taxonomic-implications" class="section level1">
 <h1><span class="header-section-number">5</span> Taxonomic implications</h1>
-<p>This section briefly places key features of our results in the context of previous phylogenetic hypotheses. For brevity, we refer to the method of <span class="citation">Brazeau et al. (<a href="#ref-Brazeau2018">2018</a>)</span> as “inapplicable-corrected” parsimony, as it corrects for errors arising from the handling of inapplicable data in standard Fitch parsimony.</p>
+<p>This section briefly places key features of our results in the context of previous phylogenetic hypotheses. For brevity, we refer to the method of <span class="citation">Martin D. Brazeau et al. (<a href="#ref-Brazeau2018">2019</a>)</span> as “inapplicable-corrected” parsimony, as it corrects for errors arising from the handling of inapplicable data in standard Fitch parsimony.</p>
 <p>Crown- and stem-group terminology has great value in clarifying the early evolution of major lineages <span class="citation">(Budd &amp; Jensen, <a href="#ref-Budd2000">2000</a>; Carlson &amp; Cohen, <a href="#ref-Carlson2009">2009</a>)</span>. The crown group of a lineage is defined as the last common ancestor of all living members of a group, and all its descendants; the stem group as all taxa more closely related to the crown group than to any other extant taxon. In our selection of taxa, the brachiopod crown group corresponds to the last common ancestor of <em>Terebratulina</em>, <em>Novocrania</em>, <em>Pelagodiscus</em> and <em>Lingula</em>; the brachiopod stem group comprises anything between this node and the branching point of <em>Phoronis</em>, which marks the base of the Brachiozoan crown group.</p>
 <dl>
 <dt>Hyoliths</dt>
@@ -586,7 +596,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Balthasar, U., &amp; Butterfield, N. J. (2009). Early Cambrian soft-shelled brachiopods as possible stem-group phoronids. <em>Acta Palaeontologica Polonica</em>, <em>54</em>(2), 307–314. doi: <a href="https://doi.org/10.4202/app.2008.0042">10.4202/app.2008.0042</a></p>
 </div>
 <div id="ref-Brazeau2018">
-<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2018). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>. doi: <a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2019). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>, online ahead of print. doi: <a href="https://doi.org/10.1093/sysbio/syy083">10.1093/sysbio/syy083</a></p>
 </div>
 <div id="ref-Budd2000">
 <p>Budd, G. E., &amp; Jensen, S. (2000). A critical reappraisal of the fossil record of the bilaterian phyla. <em>Biological Reviews</em>, <em>75</em>(2), 253–295. doi: <a href="https://doi.org/10.1111/j.1469-185X.1999.tb00046.x">10.1111/j.1469-185X.1999.tb00046.x</a></p>
@@ -628,6 +638,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Zhao, F.-C., Smith, M. R., Yin, Z.-J., Zeng, H., Li, G.-X., &amp; Zhu, M.-Y. (2017). <em>Orthrozanclus elongata</em> n. sp. and the significance of sclerite-covered taxa for early trochozoan evolution. <em>Scientific Reports</em>, <em>7</em>(1), 16232. doi: <a href="https://doi.org/10.1038/s41598-017-16304-6">10.1038/s41598-017-16304-6</a></p>
 </div>
 </div>
+<script>
+/*
+Sorts the references alphabetically.
+Modified from code by Yvonne Aburrow.
+*/
+
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html().toUpperCase() > $(a).children('p').html().toUpperCase() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
             </section>
 
           </div>
@@ -664,8 +688,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/ms609/halkieria/edit/master/16_Implications.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,

@@ -47,6 +47,15 @@
 
 
 
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+<link rel="manifest" href="icons/site.webmanifest">
+<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-config" content="icons/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
 
 
 <style type="text/css">
@@ -87,6 +96,7 @@ code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* Com
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body>
@@ -528,8 +538,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="supplementary-text" class="section level1 unnumbered">
 <h1>Supplementary Text</h1>
-<p>This document comtains supplementary material to <span class="citation">Smith (n.d.)</span>.</p>
-<p>It describes the <a href="dataset.html#dataset">morphological dataset</a> and the results of tree searches using <a href="fitch.html#fitch">Fitch parsimony</a> and a <a href="#bayesian">Bayesian method</a>: approaches that are subject to errors resulting from logically incoherent treatment of inapplicable data <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>. We also present the <a href="treesearch.html#treesearch">results</a> of tree searches with the algorithm described by <span class="citation">Brazeau, Guillerme, &amp; Smith (<a href="#ref-Brazeau2018">2018</a>)</span>, which reduces error due to inapplicable data in a parsimony setting. Finally, we document how each character is parsimoniously <a href="reconstructions.html#reconstructions">reconstructed</a> on optimal trees.</p>
+<p>This document comtains supplementary material to <span class="citation">M. R. Smith (n.d.)</span>.</p>
+<p>It describes the <a href="dataset.html#dataset">morphological dataset</a> and the results of tree searches using <a href="fitch.html#fitch">Fitch parsimony</a> and a <a href="#bayesian">Bayesian method</a>: approaches that are subject to errors resulting from logically incoherent treatment of inapplicable data <span class="citation">(Maddison, <a href="#ref-Maddison1993">1993</a>)</span>. We also present the <a href="treesearch.html#treesearch">results</a> of tree searches with the algorithm described by <span class="citation">Martin D. Brazeau, Guillerme, &amp; Smith (<a href="#ref-Brazeau2018">2019</a>)</span>, which reduces error due to inapplicable data in a parsimony setting. Finally, we document how each character is parsimoniously <a href="reconstructions.html#reconstructions">reconstructed</a> on optimal trees.</p>
 <p>Supplementary <a href="#figures">figures</a> and <a href="#table">tables</a> appear after the text.</p>
 
 
@@ -540,12 +550,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3>References</h3>
 <div id="refs" class="references">
 <div id="ref-Brazeau2018">
-<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2018). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>. doi: <a href="https://doi.org/10.1101/209775">10.1101/209775</a></p>
+<p>Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2019). An algorithm for morphological phylogenetic analysis with inapplicable data. <em>Systematic Biology</em>, online ahead of print. doi: <a href="https://doi.org/10.1093/sysbio/syy083">10.1093/sysbio/syy083</a></p>
 </div>
 <div id="ref-Maddison1993">
 <p>Maddison, W. P. (1993). Missing data versus missing characters in phylogenetic analysis. <em>Systematic Biology</em>, <em>42</em>(4), 576–581. doi: <a href="https://doi.org/10.1093/sysbio/42.4.576">10.1093/sysbio/42.4.576</a></p>
 </div>
 </div>
+<script>
+/*
+Sorts the references alphabetically.
+Modified from code by Yvonne Aburrow.
+*/
+
+$(function(){
+    var elems = $('#refs').children('div').remove();
+    elems.sort(function (a, b) {
+        return $(b).children('p').html().toUpperCase() > $(a).children('p').html().toUpperCase() ? -1 : 1;
+    });
+    $('#refs').append(elems);
+})
+</script>
             </section>
 
           </div>
@@ -582,8 +606,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/ms609/halkieria/edit/master/index.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,
