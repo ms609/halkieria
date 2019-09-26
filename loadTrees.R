@@ -1,3 +1,5 @@
+library('ape')
+source('treeFunctions.R')
 ew.best <- list.files('TreeSearch', pattern='hk_ew_\\d*\\.nex', full.names=TRUE)
 ew.trees <- read.nexus(file=ew.best[which.max(file.mtime(ew.best))])
 ew.trees <- if (class(ew.trees) == 'multiPhylo') unique(ew.trees) else ew.trees
