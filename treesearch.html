@@ -546,7 +546,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The phylogenetic dataset contains a considerable proportion of inapplicable codings (2506, = 23.7% of 10571 non-ambiguous tokens; 10.4% of 24090 total cells), which are known to introduce error and bias to phylogenetic reconstruction when the Fitch algorithm is employed <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2019</a>; Maddison, <a href="#ref-Maddison1993">1993</a>)</span>. As such, we used the R package <em>TreeSearch</em> v0.1.2 <span class="citation">(M. R. Smith, <a href="#ref-Smith2018TreeSearch">2018</a>)</span> to conduct phylogenetic tree search with a tree-scoring algorithm that avoids logically impossible character transformations when handling inapplicable data <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2019</a>)</span>, implemented in the <em>MorphyLib</em> C library <span class="citation">(Brazeau, Smith, &amp; Guillerme, <a href="#ref-Brazeau2017Morphylib">2017</a>)</span>.</p>
 <div id="search-parameters" class="section level2">
 <h2><span class="header-section-number">3.1</span> Search parameters</h2>
-<p>Heuristic searches were conducted using the parsimony ratchet <span class="citation">(Nixon, <a href="#ref-Nixon1999">1999</a>)</span> under equal and implied weights <span class="citation">(Goloboff, <a href="#ref-Goloboff1997">1997</a>)</span>. The consensus tree presented in the main manuscript represents a strict consensus of all trees that are most parsimonious under one or more of the concavity constants (<em>k</em>) 4.5, 10.5 and 24, an approach that has been shown to produce higher accuracy (i.e. more nodes and quartets resolved correctly) than equal weights at any given level of precision <span class="citation">(M. R. Smith, <a href="#ref-Smith2017">2017</a>)</span>.</p>
+<p>Heuristic searches were conducted using the parsimony ratchet <span class="citation">(Nixon, <a href="#ref-Nixon1999">1999</a>)</span> under equal and implied weights <span class="citation">(Goloboff, <a href="#ref-Goloboff1997">1997</a>)</span>. The consensus tree presented in the main manuscript represents a strict consensus of all trees that are most parsimonious under one or more of the concavity constants (<em>k</em>) 4.5, 10.5 and 24, an approach that has been shown to produce higher accuracy (i.e. more nodes and quartets resolved correctly) than equal weights at any given level of precision <span class="citation">(M. R. Smith, <a href="#ref-Smith2019">2019</a>)</span>.</p>
 </div>
 <div id="analysis" class="section level2">
 <h2><span class="header-section-number">3.2</span> Analysis</h2>
@@ -671,11 +671,11 @@ Figure 3.5: Strict consensus of most parsimonious trees under equally weighted p
 <div id="ref-Nixon1999">
 <p>Nixon, K. C. (1999). The Parsimony Ratchet, a new method for rapid parsimony analysis. <em>Cladistics</em>, <em>15</em>(4), 407–414. doi: <a href="https://doi.org/10.1111/j.1096-0031.1999.tb00277.x">10.1111/j.1096-0031.1999.tb00277.x</a></p>
 </div>
-<div id="ref-Smith2017">
-<p>Smith, M. R. (2017). Quantifying and visualising divergence between pairs of phylogenetic trees: implications for phylogenetic reconstruction. <em>bioR<span class="math inline">\(\chi\)</span>iv</em>. doi: <a href="https://doi.org/10.1101/227942">10.1101/227942</a></p>
-</div>
 <div id="ref-Smith2018TreeSearch">
 <p>Smith, M. R. (2018). TreeSearch: Phylogenetic tree search using custom optimality criteria. doi: <a href="https://doi.org/10.5281/zenodo.1042590">10.5281/zenodo.1042590</a></p>
+</div>
+<div id="ref-Smith2019">
+<p>Smith, M. R. (2019). Bayesian and parsimony approaches reconstruct informative trees from simulated morphological datasets. <em>Biology Letters</em>, <em>15</em>(2), 20180632. doi: <a href="https://doi.org/10.1098/rsbl.2018.0632">10.1098/rsbl.2018.0632</a></p>
 </div>
 </div>
 <script>
@@ -743,20 +743,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
