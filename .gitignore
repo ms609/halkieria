@@ -28,7 +28,7 @@ vignettes/*.pdf
 _main.*
 /*_cache/
 /cache/
-/*_files/*
+/figure-html/
 
 # Temporary files created by R markdown
 *.utf8.md

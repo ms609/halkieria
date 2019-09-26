@@ -100,7 +100,7 @@ function updateVisible() {
       if ($(this).data('tree') != chosenTree) {
         var oldTree = $(item);
         $.ajax({
-           url: "`r getOption('ProjectName')`_files/figure-html/tree" + chosenTree
+           url: "`r figure-html/tree" + chosenTree
                 + "-char" + $(oldTree).data("char") + ".svg",
           context: item,
           datatype: 'xml'
