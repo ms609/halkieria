@@ -16,7 +16,7 @@ Italicize <- function (string) {
                                       'Hadrotreta', 'Harmothoe', 'Hydroides',
                                       'Hyolithes',
                                       'Ischnochiton', 'Kraussina',
-                                      'Laevipilina', 'Lingulella',
+                                      'Laevipilina', 'Lingulella', 'Lingulotreta',
                                       'Lochkothele', 'Loxosoma', 'Loxosomatoides',
                                       'Magelona', 'Membranipora', 'Mopalia',
                                       'Nereis', 'Neocrania', 'Neoancistrocrania',
