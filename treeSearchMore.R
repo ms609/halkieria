@@ -14,7 +14,8 @@ outgroup <- 'Yilingia_spiciformis'
 start.tree <- iw.trees[[1]][[1]]
 
 iw.tree <- IWRatchet(start.tree, iw_data, concavity=k,
-                     ratchHits = 5, ratchIter = 4000, searchHits = 56,
+                     ratchHits = 6, ratchIter = 4000,
+                     searchHits = 48, searchIter = 1600,
                      swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap),
                      verbosity=4L)
 score <- IWScore(iw.tree, iw_data, concavity=k)
@@ -25,7 +26,7 @@ ape::write.nexus(iw.tree,
 
 iw.consensus <- IWRatchetConsensus(iw.tree, iw_data, concavity = k,
                                    swappers = list(RootedTBRSwap, RootedNNISwap),
-                                   searchHits = 55, searchIter = 4000,
+                                   searchHits = 55, searchIter = 6000,
                                    nSearch = 250, verbosity = 4L)
 ape::write.nexus(
   iw.consensus,
