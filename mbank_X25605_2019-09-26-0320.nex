@@ -1,6 +1,6 @@
 #NEXUS
 
-[ File output by Morphobank v3.0 (http://www.morphobank.org); 2019-09-26 03.12.44 ]
+[ File output by Morphobank v3.0 (http://www.morphobank.org); 2019-09-26 03.20.25 ]
 
 BEGIN TAXA;
 	DIMENSIONS NTAX=76;
@@ -3479,7 +3479,7 @@ BEGIN NOTES;
 	TEXT TAXON=55 CHARACTER=4 TEXT='Smooth [@Holmer1997EarlyCambrian;@Li2004]';
 	TEXT TAXON=5 CHARACTER=4 TEXT='Smooth, following family-level codings of Williams et al. 2000, table 6';
 	TEXT TAXON=4 CHARACTER=4 TEXT='Smooth, following family-level codings of Williams et al. 2000, table 6';
-	TEXT TAXON=29 CHARACTER=4 TEXT='@Runnnegar1983';
+	TEXT TAXON=29 CHARACTER=4 TEXT='@Runnegar1983';
 	TEXT TAXON=31 CHARACTER=4 TEXT='@Nutzel2006';
 	TEXT TAXON=32 CHARACTER=4 TEXT='@AuzouxBordenave2010';
 	TEXT TAXON=30 CHARACTER=4 TEXT='@Kniprath1980';
