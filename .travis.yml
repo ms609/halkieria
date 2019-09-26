@@ -3,10 +3,6 @@ r: release
 cache: packages
 sudo: required
 latex: false
-addons:
-  apt:
-    packages:
-      - libmagick++-dev
 
 git:
   depth: 1
