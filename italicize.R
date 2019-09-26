@@ -3,9 +3,9 @@ Italicize <- function (string) {
                         paste0(gsub("_", "|", fixed = TRUE,
                                     c(taxa_names,
 
-                                      'Acila', 'Apotocardium',
+                                      'Acila', 'Antalis', 'Apotocardium',
                                       'Bactrotheca', 'Bethia', 'Bowerbankia',
-                                      'Calloria',
+                                      'Calloria', 'Crania',
                                       'Diadeloplax', 'Disoma', 'Discinisca',
                                       'Eichwaldia', 'Electra', 'Enchytraeus',
                                       'Epimenia',
