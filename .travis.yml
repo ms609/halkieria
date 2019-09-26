@@ -35,7 +35,13 @@ before_script:
   - chmod +x ./_build.sh
   - chmod +x ./_deploy.sh
 
-script:
-  - travis_wait 43 ./_build.sh
-  - ./_deploy.sh
+script: travis_wait 43 ./_build.sh
 
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_PAT
+  keep_history: true
+  local_dir: _book
+  on:
+    branch: master
