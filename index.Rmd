@@ -61,8 +61,8 @@ ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Alisina',
                  'Clupeafumosus_socialis', 'Botsfordia', 'Eoobolus', 'Ussunia',
                  'Craniops', 'Paramicrocornus', 'Bactrotheca')
                  # Also manually update tnt.run using `taxcode-`
-#ignored_taxa <- character(0)
-my_data[ignored_taxa] <- NULL
+#ignoredTaxa <- character(0)
+my_data[ignoredTaxa] <- NULL
 
 # my_data contains an inapplicable state that we should convert to ambiguous for 
 # standard fitch, for CI etc.
@@ -79,7 +79,7 @@ fitch_data <- PrepareDataIW(fitch_data)
 my_chars <- ReadCharacters(nexusFile)
 char_notes <- ReadNotes(nexusFile)
 my_states <- attr(my_chars, 'state.labels')
-my_chars <- my_chars[!(rownames(my_chars) %in% ignored_taxa), ]
+my_chars <- my_chars[!(rownames(my_chars) %in% ignoredTaxa), ]
 
 neomorphic <- vapply(my_states, IsNeomorphic, logical(1))
 
