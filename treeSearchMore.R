@@ -12,14 +12,22 @@ if (class(bestYet) == 'multiPhylo') {
 # Load data from locally downloaded copy of MorphoBank matrix
 nexusFile <- MorphoBank::MostRecentNexus()
 myData <- ReadAsPhyDat(nexusFile)
-ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Probactrotheca')
+ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Probactrotheca',
+                  'Alisina', 'Glyptoria', 'Nisusia_sulcata',
+                  'Kutorgina_chengjiangensis', 'Tomteluva_perturbata',
+                  'Salanygolina', 'Coolinia_pecten', 'Antigonambonites_planus',
+                  'Askepasma_toddense', 'Siphonobolys_priscus',
+                  'Acanthotretella_spinosa', 'Clupeafumosus_socialis',
+                  'Pelagodiscus_atlanticus', 'Botsfordia', 'Eoobolus',
+                  'Ussunia', 'Craniops', 'Paramicrocornus', 'Bactrotheca'
+)
 myData[ignoredTaxa] <- NULL
 iwData <- PrepareDataIW(myData)
-outgroup <- 'Yilingia_spiciformis'
+bestYet <- ape::drop.tip(bestYet, ignoredTaxa)
 
 iwTree <- IWRatchet(bestYet, iwData, concavity=k,
                      ratchHits = 2, ratchIter = 4000,
-                     searchHits = 48, searchIter = 1600,
+                     searchHits = 32, searchIter = 4800,
                      swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap),
                      verbosity=4L)
 score <- IWScore(iwTree, iwData, concavity=k)

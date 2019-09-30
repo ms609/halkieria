@@ -53,8 +53,15 @@ tntFiles <- tntFiles[order(tntKs)]
 tntFile <- gsub(".*(mbank_.*\\.tnt).*", "\\1", readLines(tntFiles[1], n=1))
 nexusFile <- MostRecentNexus()
 my_data <- ReadAsPhyDat(nexusFile)
-ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
-                  'Probactrotheca') # Also manually update tnt.run using `taxcode-`
+ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Probactrotheca',
+                  'Alisina', 'Glyptoria', 'Nisusia_sulcata',
+                  'Kutorgina_chengjiangensis', 'Tomteluva_perturbata',
+                  'Salanygolina', 'Coolinia_pecten', 'Antigonambonites_planus',
+                  'Askepasma_toddense', 'Siphonobolys_priscus', 
+                  'Acanthotretella_spinosa', 'Clupeafumosus_socialis', 
+                  'Pelagodiscus_atlanticus', 'Botsfordia', 'Eoobolus',
+                  'Ussunia', 'Craniops', 'Paramicrocornus', 'Bactrotheca'
+                  ) # Also manually update tnt.run using `taxcode-`
 #ignored_taxa <- character(0)
 my_data[ignored_taxa] <- NULL
 
