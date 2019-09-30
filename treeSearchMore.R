@@ -16,7 +16,7 @@ ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Probactrotheca',
                   'Alisina', 'Glyptoria', 'Nisusia_sulcata',
                   'Kutorgina_chengjiangensis', 'Tomteluva_perturbata',
                   'Salanygolina', 'Coolinia_pecten', 'Antigonambonites_planus',
-                  'Askepasma_toddense', 'Siphonobolys_priscus',
+                  'Askepasma_toddense', 'Siphonobolus_priscus',
                   'Acanthotretella_spinosa', 'Clupeafumosus_socialis',
                   'Pelagodiscus_atlanticus', 'Botsfordia', 'Eoobolus',
                   'Ussunia', 'Craniops', 'Paramicrocornus', 'Bactrotheca'
