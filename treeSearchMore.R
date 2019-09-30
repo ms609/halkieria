@@ -12,7 +12,7 @@ if (class(bestYet) == 'multiPhylo') {
 # Load data from locally downloaded copy of MorphoBank matrix
 nexusFile <- MorphoBank::MostRecentNexus()
 myData <- ReadAsPhyDat(nexusFile)
-ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Probactrotheca',
+ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
                   'Alisina', 'Glyptoria', 'Nisusia_sulcata',
                   'Kutorgina_chengjiangensis', 'Tomteluva_perturbata',
                   'Salanygolina', 'Coolinia_pecten', 'Antigonambonites_planus',
