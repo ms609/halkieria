@@ -19,10 +19,23 @@ iw.trees <- lapply(kValues, function (k) {
     list()
   } else {
     loadedTrees <- read.nexus(iw.best[which.max(vapply(iw.best, ApeTime, double(1)))])
-    ret <- lapply(if (class(loadedTrees) == 'multiPhylo') unique(loadedTrees)
-                  else as.multiPhylo(loadedTrees), RenumberTips, tipIndex)
-    ret <- structure(lapply(ret, SortTree), class= 'multiPhylo')
-    ret
+    loadedTrees <- if (class(loadedTrees) == 'multiPhylo') {
+      unique(loadedTrees)
+    } else {
+      as.multiPhylo(loadedTrees)
+    }
+    loadedLabels <- loadedTrees[[1]]$tip.label
+    if (all(tipIndex %in% loadedLabels) && all(loadedLabels %in% tipIndex)) {
+      ret <- lapply(loadedTrees, RenumberTips, tipIndex)
+      ret <- structure(lapply(ret, SortTree), class= 'multiPhylo')
+      ret
+    } else {
+      warning("Tip labels do not match ew labels for k = ", k, '.',
+              '\n  ew tree has ', length(tipIndex), ' tips, iw tree ',
+              length(loadedLabels))
+
+      list()
+    }
   }
 })
 iw.treesLoaded <- vapply(iw.trees, length, 0) > 0
