@@ -53,7 +53,7 @@ tntFiles <- tntFiles[order(tntKs)]
 tntFile <- gsub(".*(mbank_.*\\.tnt).*", "\\1", readLines(tntFiles[1], n=1))
 nexusFile <- MostRecentNexus()
 my_data <- ReadAsPhyDat(nexusFile)
-ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Probactrotheca',
+ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
                   'Alisina', 'Glyptoria', 'Nisusia_sulcata',
                   'Kutorgina_chengjiangensis', 'Tomteluva_perturbata',
                   'Salanygolina', 'Coolinia_pecten', 'Antigonambonites_planus',
