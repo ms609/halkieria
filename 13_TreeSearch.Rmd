@@ -23,7 +23,7 @@ in Rstudio, run `r GitLink("index.Rmd", "index.Rmd")`, then run each block in
 ```{r treesearch-load-morphoBank, echo=TRUE, eval=FALSE}
 # Load data from locally downloaded copy of MorphoBank matrix
 my_data <- ReadAsPhyDat(nexusFile)
-my_data[ignored_taxa] <- NULL
+my_data[ignoredTaxa] <- NULL
 iw_data <- PrepareDataIW(my_data)
 ```
 

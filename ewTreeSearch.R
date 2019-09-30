@@ -9,7 +9,7 @@ ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Alisina',
                  'Siphonobolus_priscus', 'Acanthotretella_spinosa',
                  'Clupeafumosus_socialis', 'Botsfordia', 'Eoobolus', 'Ussunia',
                  'Craniops', 'Paramicrocornus', 'Bactrotheca')
-my_data[ignored_taxa] <- NULL
+my_data[ignoredTaxa] <- NULL
 iw_data <- PrepareDataIW(my_data)
 outgroup <- 'Yilingia_spiciformis'
 
