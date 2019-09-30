@@ -17,6 +17,8 @@ ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Alisina',
                  'Tomteluva_perturbata', 'Salanygolina', 'Coolinia_pecten',
                  'Antigonambonites_planus', 'Askepasma_toddense',
                  'Siphonobolus_priscus', 'Acanthotretella_spinosa',
+                 'Longtancunella_chengjiangensis', 'Lingulosacculus',
+                 'Mummpikia_nuda', 'Cupitheca_holocyclata',
                  'Clupeafumosus_socialis', 'Botsfordia', 'Eoobolus', 'Ussunia',
                  'Craniops', 'Paramicrocornus', 'Bactrotheca')
 myData[ignoredTaxa] <- NULL

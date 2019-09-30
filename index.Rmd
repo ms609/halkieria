@@ -57,6 +57,8 @@ ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Alisina',
                  'Glyptoria', 'Nisusia_sulcata', 'Kutorgina_chengjiangensis',
                  'Tomteluva_perturbata', 'Salanygolina', 'Coolinia_pecten',
                  'Antigonambonites_planus', 'Askepasma_toddense',
+                 'Longtancunella_chengjiangensis', 'Lingulosacculus', 
+                 'Mummpikia_nuda', 'Cupitheca_holocyclata',
                  'Siphonobolus_priscus', 'Acanthotretella_spinosa',
                  'Clupeafumosus_socialis', 'Botsfordia', 'Eoobolus', 'Ussunia',
                  'Craniops', 'Paramicrocornus', 'Bactrotheca')
