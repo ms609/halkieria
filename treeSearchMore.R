@@ -1,36 +1,40 @@
-kValues <- k <- 10.5
+k <- 24
 library('TreeSearch')
-source('loadTrees.R')
+
+kTreePattern <- paste0('hk_iw_k', gsub('\\.', '\\\\.', k),
+                       '_\\d+\\.?\\d*\\.all\\.nex')
+kFile <- list.files('TreeSearch', pattern=kTreePattern, full.names=TRUE)
+bestYet <- ape::read.nexus(kFile[which.max(vapply(kFile, ApeTime, double(1)))])
+if (class(bestYet) == 'multiPhylo') {
+  bestYet <- bestYet[[1]]
+}
 
 # Load data from locally downloaded copy of MorphoBank matrix
 nexusFile <- MorphoBank::MostRecentNexus()
-my_data <- ReadAsPhyDat(nexusFile)
-ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
-                  'Probactrotheca') # Also manually update tnt.run using `taxcode-`
-my_data[ignored_taxa] <- NULL
-iw_data <- PrepareDataIW(my_data)
+myData <- ReadAsPhyDat(nexusFile)
+ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Probactrotheca')
+myData[ignoredTaxa] <- NULL
+iwData <- PrepareDataIW(myData)
 outgroup <- 'Yilingia_spiciformis'
 
-start.tree <- iw.trees[[1]][[1]]
-
-iw.tree <- IWRatchet(start.tree, iw_data, concavity=k,
+iwTree <- IWRatchet(bestYet, iwData, concavity=k,
                      ratchHits = 6, ratchIter = 4000,
                      searchHits = 48, searchIter = 1600,
                      swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap),
                      verbosity=4L)
-score <- IWScore(iw.tree, iw_data, concavity=k)
+score <- IWScore(iwTree, iwData, concavity=k)
 # Write a single best tree
-ape::write.nexus(iw.tree,
+ape::write.nexus(iwTree,
                  file=paste0("TreeSearch/hk_iw_k", k, "_",
                              signif(score, 5), ".nex", collapse=''))
 
-iw.consensus <- IWRatchetConsensus(iw.tree, iw_data, concavity = k,
+iwConsensus <- IWRatchetConsensus(iwTree, iwData, concavity = k,
                                    swappers = list(RootedTBRSwap, RootedNNISwap),
                                    searchHits = 55, searchIter = 6000,
                                    nSearch = 250, verbosity = 4L)
 ape::write.nexus(
-  iw.consensus,
+  iwConsensus,
   file = paste0("TreeSearch/hk_iw_k", k, "_",
-                signif(IWScore(iw.consensus[[1]], iw_data, concavity=k), 5),
+                signif(IWScore(iwConsensus[[1]], iwData, concavity=k), 5),
                 ".all.nex", collapse='')
 )
