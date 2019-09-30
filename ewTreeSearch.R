@@ -2,15 +2,13 @@ library('TreeSearch')
 # Load data from locally downloaded copy of MorphoBank matrix
 nexusFile <- MorphoBank::MostRecentNexus()
 my_data <- ReadAsPhyDat(nexusFile)
-ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
-                  'Alisina', 'Glyptoria', 'Nisusia_sulcata',
-                  'Kutorgina_chengjiangensis', 'Tomteluva_perturbata',
-                  'Salanygolina', 'Coolinia_pecten', 'Antigonambonites_planus',
-                  'Askepasma_toddense', 'Siphonobolus_priscus',
-                  'Acanthotretella_spinosa', 'Clupeafumosus_socialis',
-                  'Pelagodiscus_atlanticus', 'Botsfordia', 'Eoobolus',
-                  'Ussunia', 'Craniops', 'Paramicrocornus', 'Bactrotheca'
-)
+ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Alisina',
+                 'Glyptoria', 'Nisusia_sulcata', 'Kutorgina_chengjiangensis',
+                 'Tomteluva_perturbata', 'Salanygolina', 'Coolinia_pecten',
+                 'Antigonambonites_planus', 'Askepasma_toddense',
+                 'Siphonobolus_priscus', 'Acanthotretella_spinosa',
+                 'Clupeafumosus_socialis', 'Botsfordia', 'Eoobolus', 'Ussunia',
+                 'Craniops', 'Paramicrocornus', 'Bactrotheca')
 my_data[ignored_taxa] <- NULL
 iw_data <- PrepareDataIW(my_data)
 outgroup <- 'Yilingia_spiciformis'

@@ -1,4 +1,4 @@
-k <- 24
+k <- 4.5
 library('TreeSearch')
 
 kTreePattern <- paste0('hk_iw_k', gsub('\\.', '\\\\.', k),
@@ -12,15 +12,13 @@ if (class(bestYet) == 'multiPhylo') {
 # Load data from locally downloaded copy of MorphoBank matrix
 nexusFile <- MorphoBank::MostRecentNexus()
 myData <- ReadAsPhyDat(nexusFile)
-ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites',
-                  'Alisina', 'Glyptoria', 'Nisusia_sulcata',
-                  'Kutorgina_chengjiangensis', 'Tomteluva_perturbata',
-                  'Salanygolina', 'Coolinia_pecten', 'Antigonambonites_planus',
-                  'Askepasma_toddense', 'Siphonobolus_priscus',
-                  'Acanthotretella_spinosa', 'Clupeafumosus_socialis',
-                  'Pelagodiscus_atlanticus', 'Botsfordia', 'Eoobolus',
-                  'Ussunia', 'Craniops', 'Paramicrocornus', 'Bactrotheca'
-)
+ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Alisina',
+                 'Glyptoria', 'Nisusia_sulcata', 'Kutorgina_chengjiangensis',
+                 'Tomteluva_perturbata', 'Salanygolina', 'Coolinia_pecten',
+                 'Antigonambonites_planus', 'Askepasma_toddense',
+                 'Siphonobolus_priscus', 'Acanthotretella_spinosa',
+                 'Clupeafumosus_socialis', 'Botsfordia', 'Eoobolus', 'Ussunia',
+                 'Craniops', 'Paramicrocornus', 'Bactrotheca')
 myData[ignoredTaxa] <- NULL
 iwData <- PrepareDataIW(myData)
 bestYet <- ape::drop.tip(bestYet, ignoredTaxa)
