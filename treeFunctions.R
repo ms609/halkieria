@@ -18,6 +18,7 @@ as.multiPhylo <- function (obj) {
 
 GetJacks <- function (jackFile) {
   jackLines <- readLines(jackFile)
+  if (length(jackLines) < 3) return (NULL)
   jackTree <- TNTText2Tree(jackLines[3])
   jackTipOrder <- order(as.integer(jackTree$tip.label) + 1L)
   jackNodeOrder <- unique(unlist(Ancestors(jackTree, jackTipOrder)))[-1]
