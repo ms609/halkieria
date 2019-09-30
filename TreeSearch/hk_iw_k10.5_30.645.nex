@@ -1,8 +1,8 @@
 #NEXUS
-[R-package APE, Fri Sep 27 13:17:13 2019]
+[R-package APE, Mon Sep 30 15:00:31 2019]
 
 BEGIN TAXA;
-	DIMENSIONS NTAX = 73;
+	DIMENSIONS NTAX = 55;
 	TAXLABELS
 		Yilingia_spiciformis
 		Namacalathus
@@ -42,40 +42,22 @@ BEGIN TAXA;
 		Orthrozanclus
 		Halkieria_evangelista
 		Dailyatia
-		Acanthotretella_spinosa
-		Alisina
-		Askepasma_toddense
 		Micromitra
-		Antigonambonites_planus
-		Botsfordia
-		Clupeafumosus_socialis
-		Coolinia_pecten
-		Craniops
 		Eccentrotheca
-		Eoobolus
 		Gasconsia
-		Glyptoria
 		Heliomedusa_orienta
-		Kutorgina_chengjiangensis
 		Lingulosacculus
 		Lingulellotreta_malongensis
 		Longtancunella_chengjiangensis
 		Micrina
 		Mickwitzia_muralensis
 		Mummpikia_nuda
-		Nisusia_sulcata
 		Orthis
 		Paterimitra
-		Salanygolina
-		Siphonobolus_priscus
-		Tomteluva_perturbata
-		Ussunia
 		Yuganotheca_elegans
-		Bactrotheca
 		Cotyledion_tylodes
 		Cupitheca_holocyclata
 		Haplophrentis_carinatus
-		Paramicrocornus
 		Pedunculotheca_diania
 	;
 END;
@@ -119,41 +101,23 @@ BEGIN TREES;
 		36	Orthrozanclus,
 		37	Halkieria_evangelista,
 		38	Dailyatia,
-		39	Acanthotretella_spinosa,
-		40	Alisina,
-		41	Askepasma_toddense,
-		42	Micromitra,
-		43	Antigonambonites_planus,
-		44	Botsfordia,
-		45	Clupeafumosus_socialis,
-		46	Coolinia_pecten,
-		47	Craniops,
-		48	Eccentrotheca,
-		49	Eoobolus,
-		50	Gasconsia,
-		51	Glyptoria,
-		52	Heliomedusa_orienta,
-		53	Kutorgina_chengjiangensis,
-		54	Lingulosacculus,
-		55	Lingulellotreta_malongensis,
-		56	Longtancunella_chengjiangensis,
-		57	Micrina,
-		58	Mickwitzia_muralensis,
-		59	Mummpikia_nuda,
-		60	Nisusia_sulcata,
-		61	Orthis,
-		62	Paterimitra,
-		63	Salanygolina,
-		64	Siphonobolus_priscus,
-		65	Tomteluva_perturbata,
-		66	Ussunia,
-		67	Yuganotheca_elegans,
-		68	Bactrotheca,
-		69	Cotyledion_tylodes,
-		70	Cupitheca_holocyclata,
-		71	Haplophrentis_carinatus,
-		72	Paramicrocornus,
-		73	Pedunculotheca_diania
+		39	Micromitra,
+		40	Eccentrotheca,
+		41	Gasconsia,
+		42	Heliomedusa_orienta,
+		43	Lingulosacculus,
+		44	Lingulellotreta_malongensis,
+		45	Longtancunella_chengjiangensis,
+		46	Micrina,
+		47	Mickwitzia_muralensis,
+		48	Mummpikia_nuda,
+		49	Orthis,
+		50	Paterimitra,
+		51	Yuganotheca_elegans,
+		52	Cotyledion_tylodes,
+		53	Cupitheca_holocyclata,
+		54	Haplophrentis_carinatus,
+		55	Pedunculotheca_diania
 	;
-	TREE * UNTITLED = [&R] (1,((((69,(2,9)),((38,(11,10)),((48,7),(62,((73,(70,(68,(72,71)))),(57,((((53,60),(51,(56,(40,(61,6))))),(41,((42,(50,(52,(66,(47,3))))),((((45,(54,(39,64))),(55,4)),(49,(44,59))),(5,58))))),((63,(67,65)),(46,43))))))))),((36,37),(18,(17,((19,15),(16,((20,(35,((31,((26,32),(28,(30,(27,29))))),(33,34)))),(21,(25,(22,(23,24))))))))))),(8,(12,(13,14)))));
+	TREE * UNTITLED = [&R] (1,(38,((36,(37,((50,(46,((47,42),(((39,41),(51,45)),((49,6),(3,(4,((48,5),(44,43))))))))),(54,(55,53))))),(52,(40,(2,(7,((9,((8,(12,(14,13))),(((((35,17),((15,19),(16,18))),(20,(21,(25,(22,(23,24)))))),((31,(32,(26,27))),(28,(29,30)))),(34,33)))),(10,11)))))))));
 END;
