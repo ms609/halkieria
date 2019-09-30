@@ -2,8 +2,8 @@ library('TreeSearch')
 # Load data from locally downloaded copy of MorphoBank matrix
 nexusFile <- MorphoBank::MostRecentNexus()
 my_data <- ReadAsPhyDat(nexusFile)
-ignored_taxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Probactrotheca')
-my_data[ignored_taxa] <- NULL
+ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Probactrotheca')
+my_data[ignoredTaxa] <- NULL
 iw_data <- PrepareDataIW(my_data)
 outgroup <- 'Yilingia_spiciformis'
 
