@@ -13,8 +13,7 @@ rooted.tree <- EnforceOutgroup(nj.tree, outgroup)
 start.tree <- TreeSearch(tree=rooted.tree, dataset=my_data, maxIter=3000,
                          EdgeSwapper=RootedNNISwap, verbosity=0)
 
-#kValues <- c(3, 4.5, 7, 10.5, 16, 24)
-kValues <- c(4.5, 10.5, 24)
+kValues <- c(3, 4.5, 7, 10.5, 16, 24)
 
 for (k in rev(kValues)) {
   iw.tree <- IWRatchet(start.tree, iw_data, concavity=k,

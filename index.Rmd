@@ -85,12 +85,10 @@ my_chars <- my_chars[!(rownames(my_chars) %in% ignoredTaxa), ]
 
 neomorphic <- vapply(my_states, IsNeomorphic, logical(1))
 
-#kValues <- c(3, 4.5, 7, 10.5, 16, 24)
-kValues <- c(4.5, 10.5, 24)
+kValues <- c(3, 4.5, 7, 10.5, 16, 24)
 
-outgroup <- 'Loxosomella'
 outgroup <- 'Yilingia_spiciformis'
-rootingTips <- c('Tonicella', 'Serpula', 'Loxosomella')
+# rootingTips <- c('Tonicella', 'Serpula', 'Loxosomella')
 rootingTips <- outgroup
 ```
 
