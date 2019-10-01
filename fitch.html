@@ -24,7 +24,7 @@
 <meta name="author" content="Martin R. Smith" />
 
 
-<meta name="date" content="2019-09-30" />
+<meta name="date" content="2019-10-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -275,7 +275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#migration-position"><i class="fa fa-check"></i>[94] Migration: Position</a></li>
 </ul></li>
 <li class="chapter" data-level="4.12" data-path="reconstructions.html"><a href="reconstructions.html#sclerites"><i class="fa fa-check"></i><b>4.12</b> Sclerites</a><ul>
-<li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#present-in-adult"><i class="fa fa-check"></i>[95] Present in adult</a></li>
+<li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#present-in-adult-excluding-setae"><i class="fa fa-check"></i>[95] Present in adult (excluding setae)</a></li>
 <li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#periodically-shed-and-replaced"><i class="fa fa-check"></i>[96] Periodically shed and replaced</a></li>
 <li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#prominent-major-valves"><i class="fa fa-check"></i>[97] Prominent major valves</a></li>
 <li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#reduced-2"><i class="fa fa-check"></i>[98] Reduced</a></li>
@@ -587,7 +587,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>log TNT/ew.sym; ttag/; log/; <span class="comment">/* Write results to log */</span></p>
 <p>keep 0; ttag-; hold 10000; <span class="comment">/* Clear memory */</span></p>
 </blockquote>
-<p>Further searches were conducted under extended implied weighting <span class="citation">(Goloboff, <a href="#ref-Goloboff1997">1997</a>, <a href="#ref-Goloboff2014">2014</a>)</span>, under the concavity constants 4.5, 10.5 and 24:</p>
+<p>Further searches were conducted under extended implied weighting <span class="citation">(Goloboff, <a href="#ref-Goloboff1997">1997</a>, <a href="#ref-Goloboff2014">2014</a>)</span>, under the concavity constants 3, 4.5, 7, 10.5, 16 and 24:</p>
 <blockquote>
 <p>xpiwe=; <span class="comment">/* Enable extended implied weighting */</span></p>
 <p>piwe=3; xmult; <span class="comment">/* Conduct analysis at k = 3 */</span></p>
@@ -600,7 +600,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>Results can be replicated by:</p>
 <ul>
-<li>Downloading <a href="https://raw.githubusercontent.com/ms609/halkieria/master/mbank_X25605_2019-09-18-1031.tnt">the data in TNT format</a>.</li>
+<li>Downloading <a href="https://raw.githubusercontent.com/ms609/halkieria/master/mbank_X25605_2019-09-30-1114.tnt">the data in TNT format</a>.</li>
 <li>Saving <a href="https://raw.githubusercontent.com/ms609/halkieria/master/tnt.run">the script above</a> to the same directory, with the filename <code>tnt.run</code>.</li>
 <li>Opening TNT, typing <code>piwe=</code> before you load the downloaded dataset (to enable extended implied weighting), then typing <code>tnt</code> into the command box to run the script.</li>
 </ul>
@@ -619,21 +619,21 @@ Figure 2.1: Majority-rule consensus of all trees that are optimal under implied 
 </div>
 
 <div class="figure"><span id="fig:tnt-iw-indiv-1"></span>
-<img src="Scleritomorph_phylogeny_files/figure-html/tnt-iw-indiv-1-1.png" alt="Strict consensus of all optimal trees under Fitch parsimony with implied weighting at k = 4.5 and 10.5. Nodes labelled with jackknife frequencies (%)." width="681.6" />
+<img src="Scleritomorph_phylogeny_files/figure-html/tnt-iw-indiv-1-1.png" alt="Strict consensus of all optimal trees under Fitch parsimony with implied weighting at k = 3 and 4.5. Nodes labelled with jackknife frequencies (%)." width="681.6" />
 <p class="caption">
-Figure 2.2: Strict consensus of all optimal trees under Fitch parsimony with implied weighting at <em>k</em> = 4.5 and 10.5. Nodes labelled with jackknife frequencies (%).
+Figure 2.2: Strict consensus of all optimal trees under Fitch parsimony with implied weighting at <em>k</em> = 3 and 4.5. Nodes labelled with jackknife frequencies (%).
 </p>
 </div>
 <div class="figure"><span id="fig:tnt-iw-indiv-2"></span>
-<img src="Scleritomorph_phylogeny_files/figure-html/tnt-iw-indiv-2-1.png" alt="Strict consensus of all optimal trees under Fitch parsimony with implied weighting, at k = 24 and NA." width="681.6" />
+<img src="Scleritomorph_phylogeny_files/figure-html/tnt-iw-indiv-2-1.png" alt="Strict consensus of all optimal trees under Fitch parsimony with implied weighting, at k = 7 and 10.5." width="681.6" />
 <p class="caption">
-Figure 2.3: Strict consensus of all optimal trees under Fitch parsimony with implied weighting, at <em>k</em> = 24 and NA.
+Figure 2.3: Strict consensus of all optimal trees under Fitch parsimony with implied weighting, at <em>k</em> = 7 and 10.5.
 </p>
 </div>
 <div class="figure"><span id="fig:tnt-iw-indiv-3"></span>
-<img src="Scleritomorph_phylogeny_files/figure-html/tnt-iw-indiv-3-1.png" alt="Strict consensus of all optimal trees under Fitch parsimony with implied weighting, at k = NA and NA." width="681.6" />
+<img src="Scleritomorph_phylogeny_files/figure-html/tnt-iw-indiv-3-1.png" alt="Strict consensus of all optimal trees under Fitch parsimony with implied weighting, at k = 16 and 24." width="681.6" />
 <p class="caption">
-Figure 2.4: Strict consensus of all optimal trees under Fitch parsimony with implied weighting, at <em>k</em> = NA and NA.
+Figure 2.4: Strict consensus of all optimal trees under Fitch parsimony with implied weighting, at <em>k</em> = 16 and 24.
 </p>
 </div>
 <!--### Consensus of all IW trees, without wildcards
@@ -647,12 +647,6 @@ Even with the anomalous results at $k = 4.5$, the essential relationships betwee
 -->
 
 
-<div class="figure"><span id="fig:tnt-ew-consensus"></span>
-<img src="Scleritomorph_phylogeny_files/figure-html/tnt-ew-consensus-1.png" alt="Consensus of all trees that are optimal under equally weighted Fitch parsimony. Nodes labelled with jackknife frequencies (%)." width="672" />
-<p class="caption">
-Figure 2.5: Consensus of all trees that are optimal under equally weighted Fitch parsimony. Nodes labelled with jackknife frequencies (%).
-</p>
-</div>
 
 </div>
 </div>

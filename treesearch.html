@@ -24,7 +24,7 @@
 <meta name="author" content="Martin R. Smith" />
 
 
-<meta name="date" content="2019-09-30" />
+<meta name="date" content="2019-10-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -275,7 +275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#migration-position"><i class="fa fa-check"></i>[94] Migration: Position</a></li>
 </ul></li>
 <li class="chapter" data-level="4.12" data-path="reconstructions.html"><a href="reconstructions.html#sclerites"><i class="fa fa-check"></i><b>4.12</b> Sclerites</a><ul>
-<li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#present-in-adult"><i class="fa fa-check"></i>[95] Present in adult</a></li>
+<li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#present-in-adult-excluding-setae"><i class="fa fa-check"></i>[95] Present in adult (excluding setae)</a></li>
 <li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#periodically-shed-and-replaced"><i class="fa fa-check"></i>[96] Periodically shed and replaced</a></li>
 <li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#prominent-major-valves"><i class="fa fa-check"></i>[97] Prominent major valves</a></li>
 <li class="chapter" data-level="" data-path="reconstructions.html"><a href="reconstructions.html#reduced-2"><i class="fa fa-check"></i>[98] Reduced</a></li>
@@ -569,10 +569,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="treesearch" class="section level1">
 <h1><span class="header-section-number">3</span> Corrected parsimony</h1>
-<p>The phylogenetic dataset contains a considerable proportion of inapplicable codings (2520, = 23.8% of 10598 non-ambiguous tokens; 10.5% of 24090 total cells), which are known to introduce error and bias to phylogenetic reconstruction when the Fitch algorithm is employed <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2019</a>; Maddison, <a href="#ref-Maddison1993">1993</a>)</span>. As such, we used the R package <em>TreeSearch</em> v0.1.2 <span class="citation">(Smith, <a href="#ref-Smith2018TreeSearch">2018</a>)</span> to conduct phylogenetic tree search with a tree-scoring algorithm that avoids logically impossible character transformations when handling inapplicable data <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2019</a>)</span>, implemented in the <em>MorphyLib</em> C library <span class="citation">(Brazeau, Smith, &amp; Guillerme, <a href="#ref-Brazeau2017Morphylib">2017</a>)</span>.</p>
+<p>The phylogenetic dataset contains a considerable proportion of inapplicable codings (2254, = 25.6% of 8799 non-ambiguous tokens; 13.4% of 16830 total cells), which are known to introduce error and bias to phylogenetic reconstruction when the Fitch algorithm is employed <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2019</a>; Maddison, <a href="#ref-Maddison1993">1993</a>)</span>. As such, we used the R package <em>TreeSearch</em> v0.1.2 <span class="citation">(Smith, <a href="#ref-Smith2018TreeSearch">2018</a>)</span> to conduct phylogenetic tree search with a tree-scoring algorithm that avoids logically impossible character transformations when handling inapplicable data <span class="citation">(Brazeau et al., <a href="#ref-Brazeau2018">2019</a>)</span>, implemented in the <em>MorphyLib</em> C library <span class="citation">(Brazeau, Smith, &amp; Guillerme, <a href="#ref-Brazeau2017Morphylib">2017</a>)</span>.</p>
 <div id="search-parameters" class="section level2">
 <h2><span class="header-section-number">3.1</span> Search parameters</h2>
-<p>Heuristic searches were conducted using the parsimony ratchet <span class="citation">(Nixon, <a href="#ref-Nixon1999">1999</a>)</span> under equal and implied weights <span class="citation">(Goloboff, <a href="#ref-Goloboff1997">1997</a>)</span>. The consensus tree presented in the main manuscript represents a strict consensus of all trees that are most parsimonious under one or more of the concavity constants (<em>k</em>) 4.5, 10.5 and 24, an approach that has been shown to produce higher accuracy (i.e. more nodes and quartets resolved correctly) than equal weights at any given level of precision <span class="citation">(Smith, <a href="#ref-Smith2019">2019</a>)</span>.</p>
+<p>Heuristic searches were conducted using the parsimony ratchet <span class="citation">(Nixon, <a href="#ref-Nixon1999">1999</a>)</span> under equal and implied weights <span class="citation">(Goloboff, <a href="#ref-Goloboff1997">1997</a>)</span>. The consensus tree presented in the main manuscript represents a strict consensus of all trees that are most parsimonious under one or more of the concavity constants (<em>k</em>) 3, 4.5, 7, 10.5, 16 and 24, an approach that has been shown to produce higher accuracy (i.e. more nodes and quartets resolved correctly) than equal weights at any given level of precision <span class="citation">(Smith, <a href="#ref-Smith2019">2019</a>)</span>.</p>
 </div>
 <div id="analysis" class="section level2">
 <h2><span class="header-section-number">3.2</span> Analysis</h2>
@@ -584,7 +584,7 @@ in Rstudio, run <a href="https://raw.githubusercontent.com/ms609/halkieria/maste
 <h3><span class="header-section-number">3.2.1</span> Initialize and load data</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Load data from locally downloaded copy of MorphoBank matrix</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">my_data &lt;-<span class="st"> </span><span class="kw">ReadAsPhyDat</span>(nexusFile)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">my_data[ignored_taxa] &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">my_data[ignoredTaxa] &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">iw_data &lt;-<span class="st"> </span><span class="kw">PrepareDataIW</span>(my_data)</a></code></pre></div>
 </div>
 <div id="generate-starting-tree" class="section level3">
@@ -650,31 +650,37 @@ Figure 3.2: Consensus of same trees, with taxa pruned before constructing consen
 </div>
 
 
+<pre><code>## 
+##  &gt; Results not available for panel 1</code></pre>
 <div class="figure"><span id="fig:treesearch-iw-indiv-1"></span>
-<img src="Scleritomorph_phylogeny_files/figure-html/treesearch-iw-indiv-1-1.png" alt="Strict consensus trees of implied weights analyses at k = 4.5 and 10.5." width="681.6" />
+<img src="Scleritomorph_phylogeny_files/figure-html/treesearch-iw-indiv-1-1.png" alt="Strict consensus trees of implied weights analyses at k = 3 and 4.5." width="681.6" />
 <p class="caption">
-Figure 3.3: Strict consensus trees of implied weights analyses at <em>k</em> = 4.5 and 10.5.
+Figure 3.3: Strict consensus trees of implied weights analyses at <em>k</em> = 3 and 4.5.
 </p>
 </div>
 
 <pre><code>## 
-##  &gt; Results not available for panel 4</code></pre>
+##  &gt; Results not available for panel 3</code></pre>
 <div class="figure"><span id="fig:treesearch-iw-indiv-2"></span>
-<img src="Scleritomorph_phylogeny_files/figure-html/treesearch-iw-indiv-2-1.png" alt="Strict consensus trees of implied weights analyses at k = 24 and NA." width="681.6" />
+<img src="Scleritomorph_phylogeny_files/figure-html/treesearch-iw-indiv-2-1.png" alt="Strict consensus trees of implied weights analyses at k = 7 and 10.5." width="681.6" />
 <p class="caption">
-Figure 3.4: Strict consensus trees of implied weights analyses at <em>k</em> = 24 and NA.
+Figure 3.4: Strict consensus trees of implied weights analyses at <em>k</em> = 7 and 10.5.
 </p>
 </div>
 
 <pre><code>## 
 ##  &gt; Results not available for panel 5</code></pre>
-<pre><code>## 
-##  &gt; Results not available for panel 6</code></pre>
+<div class="figure"><span id="fig:treesearch-iw-indiv-3"></span>
+<img src="Scleritomorph_phylogeny_files/figure-html/treesearch-iw-indiv-3-1.png" alt="Strict consensus trees of implied weights analyses at k = 16 and 24." width="681.6" />
+<p class="caption">
+Figure 3.5: Strict consensus trees of implied weights analyses at <em>k</em> = 16 and 24.
+</p>
+</div>
 
 <div class="figure"><span id="fig:treesearch-equal-weights-results"></span>
 <img src="Scleritomorph_phylogeny_files/figure-html/treesearch-equal-weights-results-1.png" alt="Strict consensus of most parsimonious trees under equally weighted parsimony" width="576" />
 <p class="caption">
-Figure 3.5: Strict consensus of most parsimonious trees under equally weighted parsimony
+Figure 3.6: Strict consensus of most parsimonious trees under equally weighted parsimony
 </p>
 </div>
 
