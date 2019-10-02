@@ -30,6 +30,7 @@ Italicize <- function (string) {
                                       'Recilites',
                                       'Sabella', 'Scolelepis',
                                       'Terebratalia', 'Themiste', 'Tubulipora',
+                                      'Vema',
                                       'Yoldia',
 
                                       'atkinsae', 'comleyensis', 'cyrene', 'decaius',
