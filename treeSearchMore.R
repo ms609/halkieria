@@ -26,7 +26,7 @@ iwData <- PrepareDataIW(myData)
 bestYet <- ape::drop.tip(bestYet, ignoredTaxa)
 
 iwTree <- IWRatchet(bestYet, iwData, concavity=k,
-                     ratchHits = 2, ratchIter = 4000,
+                     ratchHits = 16, ratchIter = 4000,
                      searchHits = 32, searchIter = 4800,
                      swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap),
                      verbosity=4L)
@@ -39,7 +39,7 @@ ape::write.nexus(iwTree,
 iwConsensus <- IWRatchetConsensus(iwTree, iwData, concavity = k,
                                    swappers = list(RootedTBRSwap, RootedNNISwap),
                                    searchHits = 55, searchIter = 6000,
-                                   nSearch = 125, verbosity = 4L)
+                                   nSearch = 32, verbosity = 4L)
 ape::write.nexus(
   iwConsensus,
   file = paste0("TreeSearch/hk_iw_k", k, "_",
