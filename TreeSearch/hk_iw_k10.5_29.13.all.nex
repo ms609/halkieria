@@ -1,0 +1,122 @@
+#NEXUS
+[R-package APE, Tue Oct 01 18:24:13 2019]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 51;
+	TAXLABELS
+		Yilingia_spiciformis
+		Namacalathus
+		Novocrania
+		Lingula
+		Pelagodiscus_atlanticus
+		Terebratulina
+		Phoronis
+		Sipunculus
+		Loxosomella
+		Flustra
+		Amathia
+		Canadia_spinosa
+		Serpula
+		Capitella
+		Wirenia
+		Chaetoderma
+		Acaenoplax_hayae
+		Kulindroplax_perissokomos
+		Phthipodochiton_thraivensis
+		Calvapilosa_kroegeri
+		Glaphurochiton_carbonarius
+		Polysacos_vickersianum
+		Mopalia
+		Tonicella
+		Leptochiton
+		Neopilina
+		Conocardium_elongatum
+		Dentalium
+		Pojetaia_runnegari
+		Mytilus
+		Pelagiella
+		Haliotis
+		Odontogriphus_omalus
+		Wiwaxia_corrugata
+		Siphogonuchites_multa
+		Orthrozanclus
+		Halkieria_evangelista
+		Dailyatia
+		Micromitra
+		Eccentrotheca
+		Gasconsia
+		Heliomedusa_orienta
+		Lingulellotreta_malongensis
+		Micrina
+		Mickwitzia_muralensis
+		Orthis
+		Paterimitra
+		Yuganotheca_elegans
+		Cotyledion_tylodes
+		Haplophrentis_carinatus
+		Pedunculotheca_diania
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	Yilingia_spiciformis,
+		2	Namacalathus,
+		3	Novocrania,
+		4	Lingula,
+		5	Pelagodiscus_atlanticus,
+		6	Terebratulina,
+		7	Phoronis,
+		8	Sipunculus,
+		9	Loxosomella,
+		10	Flustra,
+		11	Amathia,
+		12	Canadia_spinosa,
+		13	Serpula,
+		14	Capitella,
+		15	Wirenia,
+		16	Chaetoderma,
+		17	Acaenoplax_hayae,
+		18	Kulindroplax_perissokomos,
+		19	Phthipodochiton_thraivensis,
+		20	Calvapilosa_kroegeri,
+		21	Glaphurochiton_carbonarius,
+		22	Polysacos_vickersianum,
+		23	Mopalia,
+		24	Tonicella,
+		25	Leptochiton,
+		26	Neopilina,
+		27	Conocardium_elongatum,
+		28	Dentalium,
+		29	Pojetaia_runnegari,
+		30	Mytilus,
+		31	Pelagiella,
+		32	Haliotis,
+		33	Odontogriphus_omalus,
+		34	Wiwaxia_corrugata,
+		35	Siphogonuchites_multa,
+		36	Orthrozanclus,
+		37	Halkieria_evangelista,
+		38	Dailyatia,
+		39	Micromitra,
+		40	Eccentrotheca,
+		41	Gasconsia,
+		42	Heliomedusa_orienta,
+		43	Lingulellotreta_malongensis,
+		44	Micrina,
+		45	Mickwitzia_muralensis,
+		46	Orthis,
+		47	Paterimitra,
+		48	Yuganotheca_elegans,
+		49	Cotyledion_tylodes,
+		50	Haplophrentis_carinatus,
+		51	Pedunculotheca_diania
+	;
+	TREE * UNTITLED = [&R] (1,((8,(12,(14,13))),((31,(((34,33),((17,(35,((19,15),(18,16)))),(20,(21,(25,(22,(23,24))))))),((32,(26,27)),(28,(29,30))))),(9,(38,(49,(((40,7),(((51,50),(47,(44,((45,42),((39,41),((46,6),(3,(5,(43,(4,48)))))))))),(37,36))),(2,(10,11)))))))));
+	TREE * UNTITLED = [&R] (1,((8,(12,(13,14))),((31,(((33,34),((35,(17,((16,18),(15,19)))),(20,(21,(25,(22,(24,23))))))),((32,(26,27)),(28,(30,29))))),(9,(49,(38,((11,10),((40,(((50,51),(47,(44,(((41,39),((6,46),(3,(5,(4,(48,43)))))),(42,45))))),(36,37))),(7,2)))))))));
+	TREE * UNTITLED = [&R] (1,((8,(12,(14,13))),((31,(((34,33),((35,(17,((19,15),(18,16)))),(20,(21,(25,(22,(23,24))))))),((28,(30,29)),(32,(26,27))))),(9,((40,49),((38,(2,(10,11))),(7,((36,37),((51,50),(47,(44,((45,42),((39,41),((46,6),(3,(5,(4,(48,43))))))))))))))))));
+	TREE * UNTITLED = [&R] (1,(((31,(((34,33),((35,(17,((15,19),(16,18)))),(20,(21,(25,(22,(23,24))))))),((32,(26,27)),(28,(30,29))))),(9,(38,(49,((2,(10,11)),(40,(7,(((51,50),(47,(44,(((39,41),((46,6),(3,(5,(4,(48,43)))))),(45,42))))),(37,36))))))))),(8,(12,(13,14)))));
+	TREE * UNTITLED = [&R] (1,(((9,((38,49),(((7,40),(((47,(44,(((41,39),((46,6),(3,(5,(4,(48,43)))))),(45,42)))),(51,50)),(36,37))),(2,(10,11))))),(31,(((28,(30,29)),(32,(26,27))),((34,33),((35,(17,((19,15),(16,18)))),(20,(21,(25,(22,(23,24)))))))))),(8,(12,(14,13)))));
+	TREE * UNTITLED = [&R] (1,(((31,(((33,34),((35,(20,(21,(25,(22,(24,23)))))),(17,((16,18),(15,19))))),((32,(27,26)),(28,(29,30))))),(9,(49,(38,((2,(11,10)),(7,(40,((37,36),((50,51),(47,(44,(((41,39),((6,46),(3,(5,(43,(4,48)))))),(42,45))))))))))))),(8,(12,(14,13)))));
+	TREE * UNTITLED = [&R] (1,((8,(12,(14,13))),((31,(((34,33),((17,(35,((19,15),(16,18)))),(20,(21,(25,(22,(23,24))))))),((28,(30,29)),(32,(26,27))))),(9,(49,((38,((7,40),(((51,50),(47,(44,(((39,41),((46,6),(3,(5,(43,(48,4)))))),(45,42))))),(37,36)))),(2,(10,11))))))));
+	TREE * UNTITLED = [&R] (1,(((31,(((33,34),((17,(35,((15,19),(16,18)))),(20,(21,(25,(22,(24,23))))))),((32,(27,26)),(28,(29,30))))),(9,(49,((38,(2,(11,10))),((7,40),((36,37),((47,(44,((42,45),((41,39),((6,46),(3,(5,(4,(48,43))))))))),(50,51)))))))),(8,(12,(13,14)))));
+END;
