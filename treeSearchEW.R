@@ -3,6 +3,8 @@ library('TreeSearch')
 nexusFile <- MorphoBank::MostRecentNexus()
 my_data <- ReadAsPhyDat(nexusFile)
 ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Alisina',
+                 'Amathia', # There because it has setae; Flustra doesn't
+                 'Yuganotheca_elegans', 'Lingulellotreta_malongensis',
                  'Glyptoria', 'Nisusia_sulcata', 'Kutorgina_chengjiangensis',
                  'Tomteluva_perturbata', 'Salanygolina', 'Coolinia_pecten',
                  'Antigonambonites_planus', 'Askepasma_toddense',
@@ -21,8 +23,8 @@ start.tree <- TreeSearch(tree=rooted.tree, dataset=my_data, maxIter=3000,
                          EdgeSwapper=RootedNNISwap, verbosity=0)
 
 ew.tree <- Ratchet(start.tree, my_data, verbosity=3L,
-                   ratchHits = 20, ratchIter = 4000,
-                   searchHits = 55, searchIter = 6000,
+                   ratchHits = 42, ratchIter = 1000,
+                   searchHits = 55, searchIter = 12000,
                    swappers=list(RootedTBRSwap, RootedSPRSwap, RootedNNISwap))
 ew.consensus <- RatchetConsensus(ew.tree, my_data, nSearch = 250,
                                  searchHits = 85,
