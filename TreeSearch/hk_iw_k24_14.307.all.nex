@@ -1,0 +1,119 @@
+#NEXUS
+[R-package APE, Thu Oct 03 15:44:58 2019]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 48;
+	TAXLABELS
+		Yilingia_spiciformis
+		Namacalathus
+		Novocrania
+		Lingula
+		Pelagodiscus_atlanticus
+		Terebratulina
+		Phoronis
+		Flustra
+		Loxosomella
+		Canadia_spinosa
+		Serpula
+		Capitella
+		Sipunculus
+		Wirenia
+		Chaetoderma
+		Acaenoplax_hayae
+		Kulindroplax_perissokomos
+		Phthipodochiton_thraivensis
+		Calvapilosa_kroegeri
+		Glaphurochiton_carbonarius
+		Polysacos_vickersianum
+		Mopalia
+		Tonicella
+		Leptochiton
+		Neopilina
+		Conocardium_elongatum
+		Dentalium
+		Pojetaia_runnegari
+		Mytilus
+		Pelagiella
+		Haliotis
+		Odontogriphus_omalus
+		Wiwaxia_corrugata
+		Siphogonuchites_multa
+		Orthrozanclus
+		Halkieria_evangelista
+		Dailyatia
+		Micromitra
+		Eccentrotheca
+		Gasconsia
+		Heliomedusa_orienta
+		Micrina
+		Mickwitzia_muralensis
+		Orthis
+		Paterimitra
+		Cotyledion_tylodes
+		Haplophrentis_carinatus
+		Pedunculotheca_diania
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	Yilingia_spiciformis,
+		2	Namacalathus,
+		3	Novocrania,
+		4	Lingula,
+		5	Pelagodiscus_atlanticus,
+		6	Terebratulina,
+		7	Phoronis,
+		8	Flustra,
+		9	Loxosomella,
+		10	Canadia_spinosa,
+		11	Serpula,
+		12	Capitella,
+		13	Sipunculus,
+		14	Wirenia,
+		15	Chaetoderma,
+		16	Acaenoplax_hayae,
+		17	Kulindroplax_perissokomos,
+		18	Phthipodochiton_thraivensis,
+		19	Calvapilosa_kroegeri,
+		20	Glaphurochiton_carbonarius,
+		21	Polysacos_vickersianum,
+		22	Mopalia,
+		23	Tonicella,
+		24	Leptochiton,
+		25	Neopilina,
+		26	Conocardium_elongatum,
+		27	Dentalium,
+		28	Pojetaia_runnegari,
+		29	Mytilus,
+		30	Pelagiella,
+		31	Haliotis,
+		32	Odontogriphus_omalus,
+		33	Wiwaxia_corrugata,
+		34	Siphogonuchites_multa,
+		35	Orthrozanclus,
+		36	Halkieria_evangelista,
+		37	Dailyatia,
+		38	Micromitra,
+		39	Eccentrotheca,
+		40	Gasconsia,
+		41	Heliomedusa_orienta,
+		42	Micrina,
+		43	Mickwitzia_muralensis,
+		44	Orthis,
+		45	Paterimitra,
+		46	Cotyledion_tylodes,
+		47	Haplophrentis_carinatus,
+		48	Pedunculotheca_diania
+	;
+	TREE * UNTITLED = [&R] (1,(37,((46,((2,7),(8,(9,((14,(15,(17,(18,(16,(34,(((30,((31,(27,(28,29))),(26,25))),(33,32)),(19,(20,(24,(21,(23,22)))))))))))),(13,(10,(12,11)))))))),(39,(((45,(42,(((40,38),((3,(4,5)),(6,44))),(41,43)))),(48,47)),(35,36))))));
+	TREE * UNTITLED = [&R] (1,(37,(46,((39,(((45,(42,(((40,38),((3,(4,5)),(6,44))),(41,43)))),(48,47)),(36,35))),(2,(7,(8,(9,((14,(15,(17,(18,(16,(34,((19,(20,(24,(21,(23,22))))),(((30,(31,(27,(29,28)))),(25,26)),(33,32))))))))),(13,(10,(12,11))))))))))));
+	TREE * UNTITLED = [&R] (1,(37,((46,(7,(2,(8,(9,((14,(15,(17,(18,(16,((34,((30,((31,(27,(29,28))),(25,26))),(32,33))),(19,(20,(24,(21,(22,23))))))))))),(13,(10,(11,12))))))))),(39,(((47,48),(45,(42,((((44,6),(3,(5,4))),(40,38)),(43,41))))),(36,35))))));
+	TREE * UNTITLED = [&R] (1,(37,((46,(39,(((45,(42,((((3,(4,5)),(6,44)),(40,38)),(41,43)))),(48,47)),(35,36)))),((7,2),(8,(9,((14,(15,(17,(18,(34,(16,((19,(20,(24,(21,(23,22))))),(((30,(31,(27,(28,29)))),(26,25)),(33,32))))))))),(13,(10,(11,12))))))))));
+	TREE * UNTITLED = [&R] (1,(37,((46,(39,(((45,(42,((43,41),((38,40),((3,(5,4)),(44,6)))))),(47,48)),(36,35)))),((7,2),(8,(9,((13,(10,(11,12))),(14,(15,(17,(18,(16,((34,(((30,(31,(27,(29,28)))),(25,26)),(32,33))),(19,(20,(24,(21,(22,23))))))))))))))))));
+	TREE * UNTITLED = [&R] (1,(37,((46,(39,(((47,48),(45,(42,(((38,40),((3,(5,4)),(44,6))),(41,43))))),(36,35)))),(7,(2,(8,(9,((14,(15,(17,(18,(16,((34,(19,(20,(24,(21,(22,23)))))),((30,((31,(27,(28,29))),(25,26))),(33,32)))))))),(13,(10,(12,11)))))))))));
+	TREE * UNTITLED = [&R] (1,(37,((39,(46,(((45,(42,(((40,38),((3,(4,5)),(6,44))),(41,43)))),(48,47)),(35,36)))),((7,2),(8,(9,((14,(15,(17,(18,((34,16),((19,(20,(24,(21,(23,22))))),((33,32),(30,((31,(27,(29,28))),(25,26)))))))))),(13,(10,(12,11))))))))));
+	TREE * UNTITLED = [&R] (1,(37,((46,(39,((35,36),((45,(42,((43,41),(((3,(4,5)),(6,44)),(40,38))))),(48,47))))),((7,2),(8,(9,((14,(15,(17,(18,(16,((34,(19,(20,(24,(21,(23,22)))))),((30,((31,(27,(29,28))),(26,25))),(33,32)))))))),(13,(10,(12,11))))))))));
+	TREE * UNTITLED = [&R] (1,(37,((46,(39,(((45,(42,(((40,38),((3,(4,5)),(6,44))),(41,43)))),(48,47)),(35,36)))),((2,7),(8,(9,((14,(15,(17,(18,(16,(34,((19,(20,(24,(21,(23,22))))),((33,32),((30,(31,(27,(29,28)))),(26,25)))))))))),(13,(10,(12,11))))))))));
+	TREE * UNTITLED = [&R] (1,(37,((46,(39,(((45,(42,(((40,38),((3,(4,5)),(6,44))),(41,43)))),(48,47)),(35,36)))),((2,7),(8,(9,((14,(15,(17,(18,(16,((34,((30,((31,(27,(28,29))),(26,25))),(33,32))),(19,(20,(24,(21,(23,22))))))))))),(13,(10,(12,11))))))))));
+	TREE * UNTITLED = [&R] (1,(37,((39,(46,(((45,(42,(((38,40),((3,(5,4)),(44,6))),(43,41)))),(47,48)),(36,35)))),(7,(2,(8,(9,((14,(15,(17,(18,(16,(34,((((30,(31,(27,(29,28)))),(25,26)),(32,33)),(19,(20,(24,(21,(22,23)))))))))))),(13,(10,(11,12)))))))))));
+END;
