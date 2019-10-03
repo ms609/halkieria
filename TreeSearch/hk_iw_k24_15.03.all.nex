@@ -1,0 +1,119 @@
+#NEXUS
+[R-package APE, Thu Oct 03 06:47:23 2019]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 51;
+	TAXLABELS
+		Yilingia_spiciformis
+		Namacalathus
+		Novocrania
+		Lingula
+		Pelagodiscus_atlanticus
+		Terebratulina
+		Phoronis
+		Flustra
+		Amathia
+		Loxosomella
+		Canadia_spinosa
+		Serpula
+		Capitella
+		Sipunculus
+		Wirenia
+		Chaetoderma
+		Acaenoplax_hayae
+		Kulindroplax_perissokomos
+		Phthipodochiton_thraivensis
+		Calvapilosa_kroegeri
+		Glaphurochiton_carbonarius
+		Polysacos_vickersianum
+		Mopalia
+		Tonicella
+		Leptochiton
+		Neopilina
+		Conocardium_elongatum
+		Dentalium
+		Pojetaia_runnegari
+		Mytilus
+		Pelagiella
+		Haliotis
+		Odontogriphus_omalus
+		Wiwaxia_corrugata
+		Siphogonuchites_multa
+		Orthrozanclus
+		Halkieria_evangelista
+		Dailyatia
+		Micromitra
+		Eccentrotheca
+		Gasconsia
+		Heliomedusa_orienta
+		Lingulellotreta_malongensis
+		Micrina
+		Mickwitzia_muralensis
+		Orthis
+		Paterimitra
+		Yuganotheca_elegans
+		Cotyledion_tylodes
+		Haplophrentis_carinatus
+		Pedunculotheca_diania
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	Yilingia_spiciformis,
+		2	Namacalathus,
+		3	Novocrania,
+		4	Lingula,
+		5	Pelagodiscus_atlanticus,
+		6	Terebratulina,
+		7	Phoronis,
+		8	Flustra,
+		9	Amathia,
+		10	Loxosomella,
+		11	Canadia_spinosa,
+		12	Serpula,
+		13	Capitella,
+		14	Sipunculus,
+		15	Wirenia,
+		16	Chaetoderma,
+		17	Acaenoplax_hayae,
+		18	Kulindroplax_perissokomos,
+		19	Phthipodochiton_thraivensis,
+		20	Calvapilosa_kroegeri,
+		21	Glaphurochiton_carbonarius,
+		22	Polysacos_vickersianum,
+		23	Mopalia,
+		24	Tonicella,
+		25	Leptochiton,
+		26	Neopilina,
+		27	Conocardium_elongatum,
+		28	Dentalium,
+		29	Pojetaia_runnegari,
+		30	Mytilus,
+		31	Pelagiella,
+		32	Haliotis,
+		33	Odontogriphus_omalus,
+		34	Wiwaxia_corrugata,
+		35	Siphogonuchites_multa,
+		36	Orthrozanclus,
+		37	Halkieria_evangelista,
+		38	Dailyatia,
+		39	Micromitra,
+		40	Eccentrotheca,
+		41	Gasconsia,
+		42	Heliomedusa_orienta,
+		43	Lingulellotreta_malongensis,
+		44	Micrina,
+		45	Mickwitzia_muralensis,
+		46	Orthis,
+		47	Paterimitra,
+		48	Yuganotheca_elegans,
+		49	Cotyledion_tylodes,
+		50	Haplophrentis_carinatus,
+		51	Pedunculotheca_diania
+	;
+	TREE * UNTITLED = [&R] (1,(38,((49,(40,(((47,(44,((42,45),((41,39),((3,(5,(43,(48,4)))),(46,6)))))),(50,51)),(37,36)))),(2,(7,((10,((15,(16,(18,(19,((17,35),((((31,(32,(28,(29,30)))),(26,27)),(33,34)),(20,(21,(25,(22,(23,24))))))))))),(14,(11,(12,13))))),(8,9)))))));
+	TREE * UNTITLED = [&R] (1,(38,(((40,49),(((51,50),(47,(44,((45,42),((39,41),((3,(5,(4,(43,48)))),(6,46))))))),(36,37))),(7,(2,((10,((15,(16,(18,(19,(17,((35,(20,(21,(25,(22,(24,23)))))),(((31,(32,(28,(30,29)))),(27,26)),(34,33)))))))),(14,(11,(13,12))))),(9,8)))))));
+	TREE * UNTITLED = [&R] (1,(38,((49,(40,(((47,(44,((42,45),((41,39),((3,(5,(43,(48,4)))),(46,6)))))),(50,51)),(37,36)))),(2,(7,((10,((15,(16,(18,(19,(17,((35,(((31,(32,(28,(29,30)))),(26,27)),(33,34))),(20,(21,(25,(22,(23,24))))))))))),(14,(11,(12,13))))),(8,9)))))));
+	TREE * UNTITLED = [&R] (1,(38,((40,(49,(((47,(44,((42,45),((41,39),((3,(5,(43,(48,4)))),(46,6)))))),(50,51)),(37,36)))),(7,(2,((10,((15,(16,(18,(19,((17,35),((20,(21,(25,(22,(23,24))))),(((31,(32,(28,(29,30)))),(27,26)),(33,34)))))))),(14,(11,(12,13))))),(8,9)))))));
+	TREE * UNTITLED = [&R] (1,(38,((49,(40,(((51,50),(47,(44,((45,42),((39,41),((3,(5,(43,(4,48)))),(6,46))))))),(36,37)))),((2,7),((10,((15,(16,(18,(19,((17,35),((20,(21,(25,(22,(24,23))))),(((31,(32,(28,(30,29)))),(27,26)),(34,33)))))))),(14,(11,(13,12))))),(9,8))))));
+END;
