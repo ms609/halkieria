@@ -54,6 +54,8 @@ tntFile <- gsub(".*(mbank_.*\\.tnt).*", "\\1", readLines(tntFiles[1], n=1))
 nexusFile <- MostRecentNexus()
 my_data <- ReadAsPhyDat(nexusFile)
 ignoredTaxa <- c('Conotheca', 'Maxilites', 'Pauxillites', 'Alisina',
+                 'Amathia', # There because it has setae; Flustra doesn't
+                 'Yuganotheca_elegans', 'Lingulellotreta_malongensis',
                  'Glyptoria', 'Nisusia_sulcata', 'Kutorgina_chengjiangensis',
                  'Tomteluva_perturbata', 'Salanygolina', 'Coolinia_pecten',
                  'Antigonambonites_planus', 'Askepasma_toddense',
